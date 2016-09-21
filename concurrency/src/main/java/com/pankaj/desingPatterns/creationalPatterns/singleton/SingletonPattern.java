@@ -1,4 +1,4 @@
-package com.pankaj.designPatterns.creationalPatterns.singleton;
+package com.pankaj.desingPatterns.creationalPatterns.singleton;
 
 /**
  * A class of which only a single instance can exist Ensure a class has only one
@@ -15,19 +15,20 @@ package com.pankaj.designPatterns.creationalPatterns.singleton;
  * 
  * 
  * @version 1.0
- * @author 557027(Pankaj Bharti)
+ * @author pankajbharti
+ */
+
+/**
+ * Check list 
+ * 1. Define a private static attribute in the "single instance" class. 
+ * 2. Define a public static accessor function in the class. 
+ * 3. Do "lazy initialization" (creation on first use) in the accessor function.
+ * 4. Define all constructors to be protected or private. 
+ * 5. Clients may only use the accessor function to manipulate the Singleton.
+ * 
  */
 public class SingletonPattern {
-	/**
-	 * Check list 
-	 * 1. Define a private static attribute in the "single instance" class. 
-	 * 2. Define a public static accessor function in the class. 
-	 * 3. Do "lazy initialization" (creation on first use) in the accessor function.
-	 * 4. Define all constructors to be protected or private. 
-	 * 5. Clients may only use the accessor function to manipulate the Singleton.
-	 * 
-	 * 
-	 */
+	
 	private static SingletonPattern INSTANCE;
 
 	private SingletonPattern() {

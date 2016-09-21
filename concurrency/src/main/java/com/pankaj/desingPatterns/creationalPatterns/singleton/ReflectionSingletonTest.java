@@ -1,4 +1,6 @@
-package com.pankaj.designPatterns.creationalPatterns.singleton;
+package com.pankaj.desingPatterns.creationalPatterns.singleton;
+
+
 
 import java.lang.reflect.Constructor;
 
@@ -10,8 +12,8 @@ public class ReflectionSingletonTest {
 	@SuppressWarnings("rawtypes")
 	public static void main(String[] args) {
 		
-		EnumSingleton enumSingleton =EnumSingleton.INSTANCE;
-		enumSingleton.getStringData();
+		//EnumSingleton enumSingleton =EnumSingleton.INSTANCE;
+		//enumSingleton.getStringData();
 		
 		SingletonPattern instanceOne = SingletonPattern.getBillPughInstance();
 		SingletonPattern instanceTwo = null;
