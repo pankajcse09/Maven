@@ -1,4 +1,4 @@
-package com.pankaj.constant;
+package com.pankaj.coder.constant;
 
 public class ApplicationConstants {
 

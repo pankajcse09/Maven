@@ -1,4 +1,4 @@
-package com.pankaj.utility;
+package com.pankaj.coder.utility;
 
 import java.io.BufferedReader;
 import java.io.FileReader;

@@ -9,7 +9,7 @@
  * @author pankajbharti
  */
 
-package com.pankaj.utility;
+package com.pankaj.coder.utility;
 
 import java.net.UnknownHostException;
 import java.sql.Connection;

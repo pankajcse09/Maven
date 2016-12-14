@@ -1,4 +1,4 @@
-package com.pankaj.desingPatterns.creationalPatterns.singleton;
+package com.pankaj.coder.desingPatterns.creationalPatterns.singleton;
 
 
 

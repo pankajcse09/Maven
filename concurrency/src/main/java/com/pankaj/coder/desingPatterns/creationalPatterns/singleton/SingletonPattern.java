@@ -1,4 +1,4 @@
-package com.pankaj.desingPatterns.creationalPatterns.singleton;
+package com.pankaj.coder.desingPatterns.creationalPatterns.singleton;
 
 /**
  * A class of which only a single instance can exist Ensure a class has only one

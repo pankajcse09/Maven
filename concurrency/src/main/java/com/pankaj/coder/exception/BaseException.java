@@ -1,4 +1,4 @@
-package com.pankaj.exception;
+package com.pankaj.coder.exception;
 /**
  * Copyright 2010-2017 pankajbharti.  All Rights Reserved.
  * DO NOT ALTER OR REMOVE COPYRIGHT NOTICES OR THIS FILE HEADER.

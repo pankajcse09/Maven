@@ -1,4 +1,4 @@
-package com.pankaj.concurrency;
+package com.pankaj.coder.concurrency;
 
 /**
  * Hello world!

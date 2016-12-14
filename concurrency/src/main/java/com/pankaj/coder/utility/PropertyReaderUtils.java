@@ -1,4 +1,4 @@
-package com.pankaj.utility;
+package com.pankaj.coder.utility;
 
 public class PropertyReaderUtils {
 

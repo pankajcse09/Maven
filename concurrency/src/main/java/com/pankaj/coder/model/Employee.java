@@ -1,4 +1,4 @@
-package com.pankaj.model;
+package com.pankaj.coder.model;
 
 public class Employee {
 private String name;

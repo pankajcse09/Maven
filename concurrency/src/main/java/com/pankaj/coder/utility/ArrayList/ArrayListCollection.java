@@ -1,4 +1,4 @@
-package com.pankaj.utility.ArrayList;
+package com.pankaj.coder.utility.ArrayList;
 
 import java.util.ArrayList;
 import java.util.List;
