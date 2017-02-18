@@ -1,0 +1,233 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- !DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" 
+    "http://www.springframework.org/dtd/spring-beans.dtd"-->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/aop 
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://cxf.apache.org/jaxws  
+                        http://cxf.apache.org/schemas/jaxws.xsd">
+ 
+<!--     
+<import resource="classpath:META-INF/cxf/cxf.xml" />
+<import resource="classpath:META-INF/cxf/cxf-servlet.xml" />
+<import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" />
+<import resource="classpath:META-INF/cxf/cxf-extension-http.xml" />  -->
+
+
+	
+	<bean id="propertyConfigurer"
+		      class="org.jasypt.spring.properties.EncryptablePropertyPlaceholderConfigurer">
+		      <constructor-arg ref="configurationEncryptor" />
+		<property name="locations">
+				<list>		
+				<value>classpath:mail.properties</value>		
+				<value>classpath:database.properties</value>
+				<value>classpath:ldap.properties</value>
+				</list>
+		</property>
+	</bean>
+	
+		<import resource="mailContext.xml" />
+	<bean id="configurationEncryptor"
+	    class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+                  <property name="config" ref="environmentVariablesConfiguration" />
+                </bean>
+                
+    <bean id="environmentVariablesConfiguration"
+        class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+                  <property name="algorithm" value="PBEWithMD5AndDES" />
+                  <property name="password" value="noticeApp" />
+	</bean>
+	
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">	
+			<value>com.mysql.jdbc.Driver</value>
+		</property>
+		<property name="url">
+			<value>jdbc:mysql://lxora.dlh.st.com:3346/noticedb</value>
+		</property>
+		<property name="username">
+			<value>notice</value>
+		</property>
+		<property name="password">
+			<value>noticeDB#prod#123</value>
+		</property>
+	</bean>
+	
+	<import resource="ldapContext.xml"/>
+    
+	<!-- ICC Hibernate SessionFactory  -->
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+		
+		<property name="dataSource" ref="dataSource" /> 
+		
+		<property name="packagesToScan" value="com.st.ict.qs.notice.businessbean" />
+			
+		
+		 <!-- <property name="configLocation">
+			<value>classpath:hibernate.cfg.xml</value>
+		</property> -->
+		<property name="hibernateProperties">
+	        <props>
+	        <prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect</prop>
+	            <prop key="hibernate.show_sql">true</prop> 
+	            <prop key="hibernate.c3p0.minPoolSize">5</prop>
+	            <prop key="hibernate.c3p0.maxPoolSize">20</prop>
+	            <prop key="hibernate.c3p0.timeout">1800</prop>
+	            <prop key="hibernate.c3p0.max_statement">50</prop>
+	            <prop key="hibernate.c3p0.testConnectionOnCheckout">true</prop>
+	            <prop key="connection.porovider_class">org.hibernate.connection.C3P0ConnectionProvider</prop>
+	            <prop key="hibernate.c3p0.validate">true</prop>
+	            <prop key="hibernate.c3p0.preferredTestQuery">SELECT 1;</prop> 
+	            <prop key="hibernate.order_updates ">true</prop>  
+	        
+	        
+	        <!-- 
+	        
+	        	<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+	            <prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+	            <prop key="hibernate.c3p0.minPoolSize">${hibernate.c3p0.minPoolSize}</prop>
+	            <prop key="hibernate.c3p0.maxPoolSize">${hibernate.c3p0.maxPoolSize}</prop>
+	            <prop key="hibernate.c3p0.timeout">${hibernate.c3p0.timeout}</prop>
+	            <prop key="hibernate.c3p0.max_statement">${hibernate.c3p0.max_statement}</prop> -->
+	            
+	        </props>
+       </property>
+	</bean>
+
+
+	
+
+
+
+
+	<!-- Transaction manager for a single Hibernate SessionFactory (alternative to JTA) -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />			
+	</bean>
+	
+	
+	<!-- Manager bindings -->
+	<bean id="txProxyTemplate" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED, -Exception</prop>
+			</props>
+		</property>
+	</bean>			
+	
+	<bean id="noticeDAO"
+		class="com.st.ict.qs.notice.dao.impl.NoticeDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="referentialDAO" class="com.st.ict.qs.notice.dao.impl.ReferentialDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+		<bean id="feedbackConfigDAO"
+		class="com.st.ict.qs.notice.dao.impl.FeedbackConfigDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+		</bean>
+		
+	<bean id="teamDAO"
+		class="com.st.ict.qs.notice.dao.impl.TeamDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+		<bean id="noticeManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.NoticeManagerImpl">
+			<property name="ldapUtils">
+					<ref local="ldapUtils" />
+				</property> 
+				<property name="teamManager">
+					<ref local="teamManager" />
+				</property>
+				<property name="pcmsIntegrationManager">
+					<ref local="pcmsIntegrationManager" />
+				</property>	
+				<property name="noticeDAO">
+					<ref local="noticeDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+		<bean id="feedbackConfigManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.FeedbackConfigManagerImpl">
+				<property name="feedbackConfigDAO">
+					<ref local="feedbackConfigDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+			<bean id="teamManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.TeamManagerImpl">
+				<property name="teamDAO">
+					<ref local="teamDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="pcmsIntegrationManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.integration.impl.PcmsIntegrationManagerImpl">
+			</bean>
+		</property>
+	</bean>
+	<!-- bean injected for batch Start-->
+			<bean id="noticeMailManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.MailManagerImpl">
+				<property name="mailManager">
+					<ref local="mailManager" />
+				</property>
+					<property name="noticeManager">
+					<ref local="noticeManager"/>
+				</property>
+			</bean>
+		</property>
+	</bean> 
+		<bean id="mailSender" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="batchFiles.SendNotificationMail">
+				<property name="noticeMailManager">
+					<ref local="noticeMailManager" />
+				</property>
+					<property name="noticeManager">
+					<ref local="noticeManager"/>
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<!-- bean injected for batch End-->
+	
+<!-- 	
+		<bean id="referentialManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.ReferentialManagerImpl">
+				<property name="referentialDAO">
+					<ref local="referentialDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean> -->
+	
+</beans>

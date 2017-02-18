@@ -1,0 +1,372 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+    <form-beans>    
+    </form-beans>
+    
+    <global-exceptions>    
+    </global-exceptions>
+    <global-forwards>        
+    <forward name="welcome"  path="/Welcome.do"/>
+    </global-forwards>
+    <action-mappings> 
+  
+      <action  path="/Up_Tc_Data" type="ActionClass.MyAc"  
+      input="/DynamicFees/Tc_Update.jsp" parameter="method"
+      scope="request">
+      <forward name="success" path="/DynamicFees/Tc_Update.jsp"/>
+      </action>   
+        
+      <action  path="/Up_Cc_Data" type="ActionClass.MyAc"  
+      input="/DynamicFees/Cc_Update.jsp" parameter="method"
+      scope="request">
+      <forward name="success" path="/DynamicFees/Cc_Update.jsp"/>
+      </action>    
+        
+      <action  path="/Sub_Tc_Data" type="ActionClass.MyAc"  
+      input="/DynamicFees/Tc_Entry.jsp" parameter="method"
+      scope="request">
+      <forward name="success" path="/DynamicFees/Tc_Entry.jsp"/>
+      </action>   
+        
+      <action  path="/Sub_Cc_Data" type="ActionClass.MyAc"  
+      input="/DynamicFees/Cc_Entry.jsp" parameter="method"
+      scope="request">
+      <forward name="success" path="/DynamicFees/Cc_Entry.jsp"/>
+      </action> 
+      
+      <action  path="/enterBank" type="ActionClass.MyAc"  
+      input="/DynamicFees/Bank_Entry.jsp" parameter="method"
+      scope="request">
+      <forward name="success" path="/DynamicFees/Bank_Entry.jsp"/>
+      </action>
+      
+      <action  path="/bank" type="ActionClass.MyAc"  
+      input="/DynamicFees/Bank_Entry.jsp" parameter="method"
+      scope="request">
+      <forward name="success" path="/DynamicFees/Bank_Entry.jsp"/>
+      </action>
+     
+     <action  path="/delBankname" type="ActionClass.MyAc"  
+      input="/DynamicFees/Bank_Entry.jsp" parameter="method"
+      scope="request">
+      <forward name="success" path="/DynamicFees/Bank_Entry.jsp"/>
+      </action>
+      
+      <action  path="/programmefee" type="ActionClass.MyAc"  
+      input="/DynamicFees/programmefee.jsp" parameter="method"
+      scope="request">
+      <forward name="success" path="/DynamicFees/programmefee.jsp"/>
+      </action>
+      <action  path="/delProgrammeFee" type="ActionClass.MyAc"  
+      input="/DynamicFees/programmefee.jsp" parameter="method"
+      scope="request">
+      <forward name="success" path="/DynamicFees/programmefee.jsp"/>
+      </action>
+        
+      <action  path="/List_Stud_Sub" type="ActionClass.MyAc"  
+      input="/DynamicFees/Disp_StudSub.jsp" parameter="method"
+      scope="request">
+      <forward name="success" path="/DynamicFees/Disp_StudSub.jsp"/>
+      </action>    
+    
+      <action path="/ExamAttendAction" input="/ExamAttendence.jsp"
+       parameter="method" type="schedule.MyAction1">
+      <forward name="success" path="/ExamAttendence.jsp"/>
+      </action>      
+       
+    <action path="/SelectStudentAct1"
+    type="schedule.MyAction1"    
+    parameter="method">
+    <forward name="success" path="/UpdateMarks.jsp"/>
+    </action> 
+        
+    <action path="/SelectStudentAct"
+    type="schedule.MyAction1"    
+    parameter="method">
+    <forward name="success" path="/UpdateSingleMarks.jsp"/>
+    </action>
+   
+     <action path="/UpdateMarksAct"
+    type="schedule.MyAction1"    
+    parameter="method">
+    <forward name="success" path="/UpdateMarks.jsp"/>
+    </action>     
+ 
+    <action path="/SelectInfoAct1"
+    type="schedule.MyAction1"    
+    parameter="method">
+    <forward name="success" path="/UpdateMarks.jsp"/>
+    </action> 
+    
+      <action input="/DailyAttendence.jsp"
+      path="/DailyAttendAction" parameter="method" type="ActionClassAttend.MyActionsAttend">
+      <forward name="success" path="/DailyAttendence.jsp"/>
+      </action>    
+        
+    <action path="/EnterMarksAct"
+    type="schedule.MyAction1"    
+    parameter="method">
+    <forward name="success" path="/EnterMarks.jsp"/>
+    </action>   
+        
+    <action path="/SelectInfoAct"
+    type="schedule.MyAction1"    
+    parameter="method">
+    <forward name="success" path="/EnterMarks.jsp"/>
+    </action>   
+  
+  <action path="/UserLog1"
+    type="ActionClass.MyActions"    
+    parameter="method">
+    <forward name="success" path="/MainPage.jsp"/>
+    <forward name="failure" path="/Registration/UserLogin.jsp"/>
+    </action>
+    
+     <action path="/Emp7"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Edit_Emp_Regist_7.jsp"/>
+   </action>     
+    <action path="/Emp1"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Edit_Emp_Regist_1.jsp"/>
+   </action> 
+     <action path="/Emp2"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Edit_Emp_Regist_2.jsp"/>
+   </action>
+     <action path="/Emp3"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Edit_Emp_Regist_3.jsp"/>
+   </action>
+     <action path="/Emp4"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Edit_Emp_Regist_4.jsp"/>
+   </action>
+   <action path="/Emp5"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Edit_Emp_Regist_5.jsp"/>
+   </action>
+   <action path="/Emp6"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Edit_Emp_Regist_6.jsp"/>
+   </action>  
+   
+   <action path="/UserRegist1"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Emp_Registration_1.jsp"/>
+   <forward name="failure" path="/Emp_Registration.jsp"/>
+   </action> 
+    <action path="/UserRegist2"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Emp_Registration_2.jsp"/>
+   <forward name="failure" path="/Emp_Registration.jsp"/>
+   </action>
+    <action path="/UserRegist3"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Emp_Registration_3.jsp"/>
+   <forward name="failure" path="/Emp_Registration.jsp"/>
+   </action>
+    <action path="/UserRegist"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Emp_Registration.jsp"/>
+   <forward name="failure" path="/Emp_Registration.jsp"/>
+   </action>
+   <action path="/EditUserRegist"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Registration/EditRegistration.jsp"/>
+   </action>      
+   <action path="/EditRegistration"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Registration/EditRegistration.jsp"/>
+   </action>       
+   <action path="/DeleteLoginAction1"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Registration/DeleteLoginId.jsp"/>
+   </action>     
+   <action path="/DeleteLoginId"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Registration/DeleteLoginId.jsp"/>
+   </action>     
+   <action path="/Logout"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/index.jsp"/>
+   </action>  
+   <action path="/EditUserRegist"
+   type="ActionClass.MyActions"
+   parameter="method">
+   <forward name="success" path="/Registration/EditRegistration.jsp"/>
+   </action>
+    <action path="/UserLog"
+    type="ActionClass.MyActions"    
+    parameter="method">  
+    <forward name="success1" path="/fee/FeeMainPage.jsp"/>
+    <forward name="success2" path="/fee/edit_user_pass.jsp"/>
+    <forward name="HostelPasswordChange" path="/hostel/HostelPasswordChange.jsp"/>
+    <forward name="HostelMainPage" path="/hostel/HostelMainPage.jsp"/>
+    <forward name="failure" path="/index.jsp"/>
+    </action>
+    
+    <action forward="/DynamicFees/Tc_Update.jsp" path="/Tc_Update"/>    
+    <action forward="/DynamicFees/Cc_Update.jsp" path="/Cc_Update"/>    
+    <action forward="/DynamicFees/Tc_Entry.jsp" path="/Tc_Entry"/>    
+    <action forward="/DynamicFees/Cc_Entry.jsp" path="/Cc_Entry"/>   
+    <action forward="/DynamicFees/Disp_StudSub.jsp" path="/Disp_StudSub"/>
+    
+ <!--semster_exam-->  
+    <action forward="/Semster/Semster_Report.jsp" path="/sem_report"/>
+    <action forward="/Semster/Semster_Report.jsp" path="/semster_exam"/>
+  <!--semster_exam-->
+<!--UnitTest-->
+
+ <action forward="/UnitTest/unit_test_record.jsp" path="/unit_test_record"/>
+<action forward="/UnitTest/unit_test_Report.jsp" path="/unit_test_report"/>
+  <action forward="/UnitTest/unit_test_Report.jsp" path="/unit_test"/>
+<!--UnitTest-->
+
+<!--class-time-table-->
+   
+    <action forward="/Assign_Courses/class_time_table.jsp" path="/class_time_table"/>
+    
+     <!--class-time-table-->
+     <!--view time table-->
+
+<action forward="/Assign_Courses/View_Teacher_Table.jsp" path="/get_timetable"/>
+<!--view time table-->
+
+<!--Teacher_list-->
+        <action path="/_exam_schedule" type="Assign_courses.Exam_schedule_Action"/>
+         <action forward="/Assign_Courses/Exam_Schedule_Form.jsp" path="/exam_course"/>
+         <action forward="/Assign_Courses/Exam_Schedule_Form.jsp" path="/exam_sch"/>
+         <action forward="/Assign_Courses/Student_Subject.jsp" path="/get_subdetail"/>
+        
+        <action forward="/Assign_Courses/Student_Subject.jsp" path="/get_stu"/>
+        <action path="/stdnt_sub" type="Assign_courses.Student_Subject"/>
+          <action forward="/Assign_Courses/Student_Subject.jsp" path="/get_stu_sub"/>
+        <action forward="/Assign_Courses/Teacher_exam.jsp" path="/get_details_room"/>
+       <action forward="/Assign_Courses/Student_Subject.jsp" path="/student_sub"/>
+         <action path="/exam_teach" type="Assign_courses.Examroom_teacher_Action"/>
+      <action forward="/Assign_Courses/Teacher_exam.jsp" path="/view_duties"/>
+           <action forward="/Assign_Courses/Teacher_exam.jsp" path="/teacher_exam"/>
+        <action forward="/Assign_Courses/View_Teacher_Table.jsp" path="/view_teachertab"/>
+         <action path="/class_tab" type="Assign_courses.Class_table_Action"/>
+        <action forward="/Assign_Courses/Teacher_list.jsp" path="/a_find_course"/>
+        <action forward="/Assign_Courses/Teacher_list.jsp" path="/list_teacher"/>
+                 <!--Teacher_list-->
+    
+    <action forward="/Edit_Emp_Regist_7.jsp" path="/Edit_Emp_Regist_7"/>
+    <action forward="/Edit_Emp_Regist_6.jsp" path="/Edit_Emp_Regist_6"/>
+    <action forward="/Edit_Emp_Regist_5.jsp" path="/Edit_Emp_Regist_5"/>
+    <action forward="/Edit_Emp_Regist_4.jsp" path="/Edit_Emp_Regist_4"/>
+    <action forward="/Edit_Emp_Regist_3.jsp" path="/Edit_Emp_Regist_3"/>
+    <action forward="/Edit_Emp_Regist_2.jsp" path="/Edit_Emp_Regist_2"/>
+    <action forward="/Edit_Emp_Regist_1.jsp" path="/Edit_Emp_Regist_1"/>     
+    <action forward="/EditEmployee.jsp" path="/EditEmployee"/> 
+      
+        <action forward="/Emp_Registration.jsp" path="/emp_regist"/>        
+        <action forward="/StudRegForm.jsp" path="/studnt_regist"/>          
+        <action forward="/Courses_Detail/View_UnApproved_Courses.jsp" path="/un_approv_courses"/>        
+        <action forward="/Courses_Detail/View_Approved_Courses.jsp" path="/approv_courses"/>
+        <action forward="/Courses_Detail/Courses_Req_Prof.jsp" path="/courses_req_detail"/>
+        <action forward="/Courses_Detail/Courses_Req_Prof.jsp" path="/req_courses"/>
+        <action forward="/Courses_Detail/Courses_Student_Available.jsp" path="/Available_courses"/>
+        <action forward="/Courses_Detail/Courses_Assign_Teacher.jsp" path="/courses_detail"/>
+        <action forward="/Courses_Detail/Courses_Assign_View_Prof.jsp" path="/View_Cors_assign_teach"/>
+        <action forward="/Courses_Detail/Courses_Assign_Prof_req.jsp" path="/course_assign_prof"/>
+        
+        <action forward="/Courses_Detail/Courses_Prof_Find.jsp" path="/Cors_assign_teach"/>
+        <action forward="/Courses_Detail/Courses_Detail.jsp" path="/add_course"/>        
+        
+    <action forward="/Gbpuat_Add_Dep.jsp" path="/add_dep"/>
+
+ <action forward="/Reserve_Course/Res_disp.jsp" path="/res_cour"/>  
+        
+        <action forward="/Registrar.jsp" path="/regis"/>   
+            
+      
+        <action forward="/logout.jsp" path="/SignOutUser"/>
+        <action forward="/Vaternity/Vat_Welcm.jsp" path="/prof_vater"/>
+       
+        <action forward="/Forget_Password.jsp" path="/forgetanswer"/>
+        <action forward="/Forget_Password.jsp" path="/fgtpasswd"/>   
+        
+        <action forward="/Abus_home.jsp" path="/abs"/>  
+      
+        <action forward="/Login.jsp" path="/loginn"/>  
+       
+        <action forward="/Userstype.jsp" path="/regbpuat"/>       
+           
+        <action forward="/Profile/profile.jsp" path="/prof"/>
+       
+       
+        <action path="/Welcome" forward="/welcomeStruts.jsp"/>
+    
+    <action forward="/ExamAttendence.jsp" path="/ExamAttendence"/>    
+   <action forward="/DailyAttendence.jsp" path="/DailyAttendence"/>   
+   
+    </action-mappings>
+    
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+    <message-resources parameter="com/myapp/struts/ApplicationResource"/>    
+    
+    <!-- ========================= Tiles plugin ===============================-->
+    <!--
+    This plugin initialize Tiles definition factory. This later can takes some
+    parameters explained here after. The plugin first read parameters from
+    web.xml, thenoverload them with parameters defined here. All parameters
+    are optional.
+    The plugin should be declared in each struts-config file.
+    - definitions-config: (optional)
+    Specify configuration file names. There can be several comma
+    separated file names (default: ?? )
+    - moduleAware: (optional - struts1.1)
+    Specify if the Tiles definition factory is module aware. If true
+    (default), there will be one factory for each Struts module.
+    If false, there will be one common factory for all module. In this
+    later case, it is still needed to declare one plugin per module.
+    The factory will be initialized with parameters found in the first
+    initialized plugin (generally the one associated with the default
+    module).
+    true : One factory per module. (default)
+    false : one single shared factory for all modules
+    - definitions-parser-validate: (optional)
+    Specify if xml parser should validate the Tiles configuration file.
+    true : validate. DTD should be specified in file header (default)
+    false : no validation
+
+    Paths found in Tiles definitions are relative to the main context.
+    -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />      
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+    
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+        property="pathnames"
+        value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+  
+</struts-config>

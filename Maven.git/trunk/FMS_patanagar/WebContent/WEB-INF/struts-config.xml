@@ -1,0 +1,1503 @@
+<?xml version="1.0" encoding="ISO-8859-1" ?>
+
+<!DOCTYPE struts-config PUBLIC
+          "-//Apache Software Foundation//DTD Struts Configuration 1.2//EN"
+          "http://jakarta.apache.org/struts/dtds/struts-config_1_2.dtd">
+
+<struts-config>
+    <form-beans>    
+         <form-bean name="dynaform1" type="org.apache.struts.action.DynaActionForm">
+            <form-property initial="" name="from" type="int"/>
+            <form-property initial="" name="to" type="int"/>
+            <form-property initial="" name="extype" type="java.lang.String"/>
+            <form-property initial="" name="class" type="java.lang.String"/>
+            <form-property initial="" name="sub" type="java.lang.String"/>
+            <form-property initial="" name="time" type="java.lang.String"/>
+            <form-property initial="" name="year" type="java.lang.String"/> 
+            <form-property initial="" name="type" type="java.lang.String"/> 
+            <form-property initial="" name="stream" type="java.lang.String"/>
+             <form-property initial="" name="degree" type="java.lang.String"/>
+            <form-property initial="" name="branch" type="java.lang.String"/>
+            <form-property initial="" name="duration" type="java.lang.String"/>
+           
+        </form-bean>
+        <form-bean name="dynaform5" type="org.apache.struts.action.DynaActionForm">
+            <form-property initial="" name="details" type="java.lang.String"/>
+            <form-property initial="" name="amount" type="double"/>
+            <form-property initial="" name="empname" type="java.lang.String"/>
+        </form-bean>
+        <form-bean name="UploadFileForm" type="Fee.UploadFileForm"/>
+        <form-bean name="Subject_Actionform" type="ActionClass.Subject_Actionform"/>
+        <form-bean name="UploadForm" type="Intelmind.Upload.UploadForm"/>
+        <form-bean name="StreamBean" type="Fee.UploadFileForm"/>
+    </form-beans>    
+    <global-exceptions>    
+    </global-exceptions>
+    <global-forwards>        
+    <forward name="welcome"  path="/Welcome.do"/>
+    </global-forwards>
+    <action-mappings>        
+        
+    <action name="UploadForm" path="/UploadAction" 
+    type="Intelmind.Upload.UploadAction">
+    <forward name="upload" path="/Int_Upload/upload.jsp"/> 
+    </action> 
+    
+    <action path="/DownloadAction" scope="session" 
+    type="Intelmind.Upload.DownloadAction">
+    <forward name="success" path="/Int_Upload/Doc_List.jsp"/> 
+    </action>
+    
+      <action path="/DeleteUpLoad"
+   type="Intelmind.Delete.DeleteAction"
+   parameter="method">
+   <forward name="success" path="/Int_Display/Doc_List.jsp"/>
+   </action> 
+        
+         <action path="/Del_StudRec" input="/displistofstud.jsp" 
+         parameter="method" type="AO.DynamicFeeAction">
+         <forward  name="success" path="/displistofstud.jsp"/>
+         </action>
+        
+         <action path="/RetClassSub" input="/DynamicFees/Sub_List_Classwise.jsp" 
+         parameter="method" type="AO.DynamicFeeAction">
+         <forward  name="success" path="/DynamicFees/Sub_List_Classwise.jsp"/>
+         </action>
+        
+         <action path="/EditStudAdmin2" input="/DynamicFees/EditClass_AfterSub2.jsp" 
+         parameter="method" type="AO.DynamicFeeAction">
+         <forward  name="success" path="/DynamicFees/EditClass_AfterSub.jsp"/>
+         </action>
+        
+         <action path="/EditStudAdmin" input="/DynamicFees/EditClass_AfterSub2.jsp" 
+         parameter="method" type="ActionClass.MyAc">
+         <forward  name="success" path="/DynamicFees/EditClass_AfterSub2.jsp"/>
+         </action>
+        
+        <action path="/RtBran" input="/StudentRegis.jsp" 
+         parameter="method" type="ActionClass.MyAc">
+         <forward  name="success" path="/StudentRegis.jsp"/>
+         </action>
+         
+           <action path="/RetBranch" input="/Add_Subject.jsp" 
+         parameter="method" type="ActionClass.MyAc">
+         <forward  name="success" path="/DynamicFees/Add_Subject.jsp"/>
+         </action>
+        
+         <action path="/Ra" input="/DynamicFees/View_Subject.jsp" 
+         parameter="method" type="ActionClass.MyAc">
+         <forward  name="success" path="/DynamicFees/View_Subject.jsp"/>
+         </action>
+         
+         <action path="/Rc" input="/DynamicFees/Add_Class_Fee.jsp" 
+         parameter="method" type="ActionClass.MyAc">
+         <forward  name="success" path="/DynamicFees/Add_Class_Fee.jsp"/>
+         </action>
+         
+  <action path="/Rd" input="/DynamicFees/EnterFeeHeads.jsp" 
+         parameter="method" type="ActionClass.MyAc">
+         <forward  name="success" path="/DynamicFees/EnterFeeHeads.jsp"/>
+         </action>
+         
+          <action path="/Re" input="/DynamicFees/Edit_Class_Fee.jsp" 
+         parameter="method" type="ActionClass.MyAc">
+         <forward  name="success" path="/DynamicFees/Edit_Class_Fee.jsp"/>
+         </action>
+         
+         <action path="/Rb" input="/DynamicFees/View_Subject.jsp" 
+         parameter="method" type="ActionClass.MyAc">
+         <forward  name="success" path="/DynamicFees/View_Subject.jsp"/>
+         </action>
+        
+         
+        <!--<action path="/DispTotalHeadFee" type="AO.DynamicFeeAction"  
+        parameter="method" input="/DynamicFees/DispFeeHeadwise.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/DispFeeHeadwise.jsp"/>     
+        </action>-->
+        <action path="/DispTotalHeadFee" type="AO.DynamicFeeAction"  
+        parameter="method" input="/PantReports/fundwisereport.jsp" scope="request">
+        <forward name="success" path="/PantReports/fundwisereport.jsp"/>     
+        </action>
+        <action path="/DispTotalHeadCatFee" type="AO.DynamicFeeAction"  
+        parameter="method" input="/PantReports/fundtransfer.jsp" scope="request">
+        <forward name="success" path="/PantReports/fundtransfer.jsp"/>     
+        </action>
+        <action path="/fundtransfer" type="AO.DynamicFeeAction"  
+        parameter="method" input="/PantReports/fundtransfer.jsp" scope="request">
+        <forward name="success" path="/PantReports/fundtransfer.jsp"/>     
+        </action>
+        
+        <action path="/RetStudTcData" type="AO.DynamicFeeAction"  
+        parameter="method" input="/DynamicFees/TcFormat.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/TcFormat.jsp"/>     
+        </action>
+        
+         <action path="/IncrementCounter" type="AO.DynamicFeeAction"  
+        parameter="method" input="/DynamicFees/TcFormat.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/TcFormat.jsp"/>     
+        </action>
+        
+        <action path="/RetStudData" type="AO.DynamicFeeAction"  
+        parameter="method" input="/DynamicFees/CcFormat.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/CcFormat.jsp"/>     
+        </action>
+        
+        <action path="/Add_Sub" type="AO.DynamicFeeAction"  
+        parameter="method" input="/DynamicFees/Add_Subject.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/Add_Subject.jsp"/>     
+        </action>
+        
+        <action path="/Gen_IdCard" type="AO.DynamicFeeAction"  
+        parameter="method" input="/DynamicFees/Disp_IdCard.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/Disp_IdCard.jsp"/>     
+        </action>
+        
+        <action path="/Enroll_Stud" type="AO.DynamicFeeAction"  
+        parameter="method" input="/DynamicFees/FeeReceipt_ToPay.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/FeeReceipt_ToPay.jsp"/>     
+        </action>
+   
+        <action  path="/RetFeeReceipt" type="AO.DynamicFeeAction"  
+        parameter="method" input="/DynamicFees/FeeReceipt_ToPay.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/FeeReceipt_ToPay.jsp"/>     
+        </action>
+        
+         <action path="/check" type="AO.DynamicFeeAction"  
+        parameter="method" input="/DynamicFees/StudentFee_ToPay.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/fee_receipt.jsp"/>     
+        </action>
+        
+        <action  path="/RetFeeRecipt" type="AO.DynamicFeeAction"  
+        parameter="method" input="/DynamicFees/StudentFee_ToPay.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/StudentFee_ToPay.jsp"/>     
+        </action>
+        <action  path="/retFeeRecDetail" type="Fee.FeeAction"  
+        parameter="method" input="/DynamicFees/StudentFee_ToPay.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/StudentFee_ToPay.jsp"/>     
+        </action>
+        
+        <action  path="/newAdminNodues" type="Fee.FeeAction"  
+        parameter="method" scope="request">
+        <forward name="success" path="/student_fee/NewAdminNodues.jsp"/>     
+        </action>
+        
+        <action  path="/retChangeFeeRecDetail" type="Fee.FeeAction"  
+        parameter="method" input="/DynamicFees/StudentFee_ToPay.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/StudentFee_ToPay.jsp"/>     
+        </action>
+        <!--<action  path="/subStudentFeeDetail" type="Fee.FeeAction"  
+        parameter="method" input="/DynamicFees/StudentFee_ToPay.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/StudentFee_receipt.jsp"/>  
+        <forward name="exist" path="/DynamicFees/StudentFee_ToPay.jsp"/>     
+        </action>-->
+        <action  path="/subStudentFeeDetail" type="Fee.FeeAction"  
+        parameter="method" input="/DynamicFees/StudentFee_ToPay.jsp" scope="request">
+        <forward name="success" path="/student_fee/stud_totalFeeReceipt.jsp"/>  
+        <forward name="exist" path="/DynamicFees/StudentFee_ToPay.jsp"/>     
+        </action>
+        
+        <action  path="/gen_FeeScroll" type="Fee.FeeAction"  
+        parameter="method">
+        <forward name="success" path="/DynamicFees/StudentFee_receipt.jsp"/>  
+         </action>
+         <action path="/genStudFeeScroll" type="Fee.FeeAction" parameter="method">
+        <forward name="success" path="/student_fee/feeScrollRc.jsp"/>  
+          <forward name="error" path="/student_fee/StudFeeScroll.jsp"/>  
+        </action> 
+        
+        
+        <action path="/genCmnFeeScroll" type="com.myapp.struts.Degree" parameter="method">
+               <forward name="success" path="/student_fee/commonFeeScroll.jsp"/>
+            </action>
+        <action path="/genCmn_FeeScroll" type="Fee.FeeAction" parameter="method">
+            <forward name="success" path="/student_fee/commonFeeScroll.jsp"/>  
+        </action>  
+        <action path="/delPdfScroll" type="Fee.FeeAction" parameter="method">
+            <forward name="success" path="/student_fee/commonFeeScroll.jsp"/>  
+        </action>  
+        
+        <action path="/feeScrollExcel" type="com.myapp.struts.Degree" parameter="method">
+               <forward name="success" path="/student_fee/commonFeeScrollFromExcel.jsp"/>
+            </action>
+        <action path="/genCmn_FeeScrollExcel" name="StreamBean"  type="Fee.FeeAction" parameter="method">
+            <forward name="success" path="/student_fee/commonFeeScrollFromExcel.jsp"/>  
+        </action>    
+        
+          <action path="/subm_fam" type="Fee.FeeAction" parameter="method">
+            <forward name="success" path="/student_fee/monthly_food.jsp"/>  
+        </action>   
+        <action path="/retSubm_fam" type="Fee.FeeAction" parameter="method">
+            <forward name="success" path="/student_fee/edit_monthlyfood.jsp"/>  
+        </action> 
+        <action path="/updateSubm_fam" type="Fee.FeeAction" parameter="method">
+            <forward name="success" path="/student_fee/edit_monthlyfood.jsp"/>  
+        </action>  
+        
+        <action  path="/SubStudentFee" type="AO.DynamicFeeAction"  
+        parameter="method" input="/DynamicFees/StudentFee_ToPay.jsp" scope="request">
+        <forward name="success" path="/DynamicFees/fee_receipt.jsp"/>  
+         <forward name="exist" path="/DynamicFees/StudentFee_ToPay.jsp"/>  
+        </action>
+     
+           <action  path="/DefineConcessAct" type="AO.DynamicFeeAction"  
+           input="/DynamicFees/DefineConcessions.jsp" scope="request">
+           <forward name="success" path="/DynamicFees/DefineConcessions.jsp"/>     
+           </action>
+            
+           <action  path="/upchart" type="AO.updatefeechart"  
+           input="/fee/updatefeechart.jsp" scope="request">
+           <forward name="success" path="/fee/feechart.jsp"/>     
+           </action>
+        
+           <action  path="/feech" type="AO.EnterFeeChart"  
+           input="/DynamicFees/enterfeechartDyn.jsp" scope="request">
+           <forward name="success" path="/DynamicFees/enterfeechartDyn.jsp"/>   
+           </action>
+           
+           <action  path="/SubmitFeeHead" 
+            type="schedule.MyActionFees"  
+            parameter="method"
+            input="/DynamicFees/EnterFeeHeads.jsp"
+            scope="request">
+           <forward name="success" path="/DynamicFees/EnterFeeHeads.jsp"/>
+           </action>
+           
+           <action  path="/couns" type="AO.DynamicFeeAction"  
+        parameter="method" input="/counselling/counselling_fee.jsp" scope="request">
+        <forward name="success" path="/counselling/counselling_fee.jsp"/>     
+        </action>
+        
+        <action  path="/addcouns" type="AO.DynamicFeeAction"  
+        parameter="method" input="/counselling/counselling_fee.jsp" scope="request">
+        <forward name="success" path="/counselling/couns_feercpt.jsp"/>   
+        <forward name="error" path="/counselling/counselling_fee.jsp"/>     
+        </action>
+        
+        <action  path="/ViewCounsFeeRc" type="AO.DynamicFeeAction"  
+        parameter="method" input="/counselling/ViewPrintCounsFee.jsp">
+        <forward name="success" path="/counselling/ViewPrintCounsFee.jsp"/>     
+        </action>
+        
+        <action  path="/checkref" type="AO.DynamicFeeAction"  
+        parameter="method" input="/counselling/refundCounsFree.jsp" scope="request">
+        <forward name="success" path="/counselling/refundCounsFree.jsp"/>     
+        </action>
+        
+        <action  path="/refCounsFee" type="AO.DynamicFeeAction"  
+        parameter="method" input="/counselling/refundCounsFree.jsp" scope="request">
+        <forward name="failure" path="/counselling/refundCounsFree.jsp"/> 
+         <forward name="success" path="/counselling/refundFeeReceipt.jsp"/>    
+        </action>
+        
+        <action  path="/updateCounsFeeDt" type="Fee.View_EditFee"  
+        parameter="method" input="/counselling/editCounselligFee.jsp">
+        <forward name="success" path="/counselling/editCounselligFee.jsp"/>     
+        </action>
+        <action  path="/getCounsFeeRc" type="AO.DynamicFeeAction"  
+        parameter="method" input="/counselling/editCounselligFee.jsp">
+        <forward name="success" path="/counselling/editCounselligFee.jsp"/>        
+        </action>
+        
+        <action  path="/getStuProDraft" type="Fee.View_EditFee"  
+        parameter="method">
+        <forward name="success" path="/counselling/editStudentProgFee.jsp"/>        
+        </action>
+        <action  path="/updateStuProDraft" type="Fee.View_EditFee"  
+        parameter="method" input="/counselling/viewStProgDraft.jsp">
+        <forward name="success" path="/counselling/viewStProgDraft.jsp"/>        
+        </action>
+        
+        <action  path="/getStudentFeeRecord" type="Fee.FeeAction"  
+        parameter="method">
+        <forward name="success" path="/counselling/additionalFee.jsp"/>        
+        </action>
+        <action  path="/updateStudentFeeRecord" type="Fee.FeeAction"  
+        parameter="method">
+        <forward name="success" path="/counselling/additionalFee.jsp"/>        
+        </action>
+        
+        <action  path="/getStudIdDt" type="Fee.View_EditFee"  
+        parameter="method" input="/counselling/editStudentId.jsp">
+        <forward name="success" path="/counselling/editStudentId.jsp"/>        
+        </action>
+        <action  path="/updateStudIdDt" type="Fee.View_EditFee"  
+        parameter="method" input="/counselling/editStudentId.jsp">
+        <forward name="success" path="/counselling/editStudentId.jsp"/>        
+        </action>
+        
+        <action  path="/getStudent" type="Fee.View_EditFee"  
+        parameter="method" input="/student_fee/editStudDetail.jsp">
+        <forward name="success" path="/student_fee/editStudDetail.jsp"/>        
+        </action>
+        <action  path="/updateStud" type="Fee.View_EditFee"  
+        parameter="method" input="/student_fee/editStudDetail.jsp">
+        <forward name="success" path="/student_fee/editStudDetail.jsp"/>        
+        </action>
+        <action  path="/checkDegreeChangeFee" type="Fee.View_EditFee" parameter="method" input="/student_fee/editStudDetail.jsp">
+            <forward name="success" path="/student_fee/editStudDetail.jsp"/>        
+        </action>
+   
+       <!--Student Registration -->
+                        
+           <action  path="/sregis" type="AO.StudRegisAO"  
+            input="/StudentRegis.jsp" scope="request">
+            <forward name="success" path="/stu_regis_detail.jsp"/>   
+            </action>     
+            
+           <action path="/registaction" type="pant.common.StudentsAction" scope="request" parameter="method">
+               <forward name="success" path="/students/StudentRegistration.jsp"/> 
+           </action>
+           <action path="/retRegisDt" type="pant.common.StudentsAction" scope="request" parameter="method">
+               <forward name="success" path="/students/EditStudentRegistration.jsp"/> 
+           </action>
+            <action path="/updRegisDt" type="pant.common.StudentsAction" scope="request" parameter="method">
+               <forward name="success" path="/students/EditStudentRegistration.jsp"/> 
+           </action>
+           
+            <action  path="/oldstregis" 
+            type="AO.OldStudRegisAO"  
+            input="/OldStudentRegis.jsp"
+            scope="request">
+           </action> 
+           
+            <action  path="/setsr" 
+            type="AO.Setsrnum"  
+            input="/srnum.jsp"
+            scope="request">
+           <forward name="success" path="/srnum.jsp"/>
+           </action>
+           
+           <action  path="/setr" 
+            type="AO.Setrnum"  
+            input="/rnum.jsp"
+            scope="request">
+           <forward name="success" path="/rnum.jsp"/>
+           </action>
+           
+           <action  path="/dsrec" 
+            type="AO.DnUStudRecord"  
+            input="/dnuStudRecord.jsp"
+            scope="request">
+           <forward name="success" path="/dnuStudRecord.jsp"/>
+           <forward name="failure" path="/displistofstud.jsp"/>
+           </action> 
+           
+           <action  path="/EditStud_ClassSub" 
+            type="AO.EditStudClassData"  
+            input="/DynamicFees/EditClass_AfterSub2.jsp"
+            scope="request">
+           <forward name="success" path="/DynamicFees/EditClass_AfterSub2.jsp"/>
+           </action>
+           
+            <action  path="/insstudrec" 
+            type="AO.DnUStudRecord"  
+            input="/dnuStudRecord.jsp"
+            scope="request">
+           <forward name="success" path="/dnuStudRecord.jsp"/>
+           </action> 
+           
+            <action  path="/ClassStudList" 
+            type="AO.DispListOfStud"  
+            input="/ClasswiseStudList.jsp"
+            scope="request">
+            <forward name="success" path="/ClasswiseStudList.jsp"/>
+            </action>
+           
+            <action  path="/listofstud" 
+            type="AO.DispListOfStud"  
+            input="/displistofstud.jsp"
+            scope="request">
+            <forward name="success" path="/displistofstud.jsp"/>
+            </action>
+            
+            <action  path="/listofstud2" 
+            type="AO.DispListOfStud"  
+            input="/DynamicFees/EditClass_AfterSub.jsp"
+            scope="request">
+            <forward name="success" path="/DynamicFees/EditClass_AfterSub.jsp"/>
+            </action>
+           
+           <action  path="/clsstuddet" 
+            type="AO.DispStudDetail"  
+            input="/fee/dispstuddetail.jsp"
+            scope="request">
+            <forward name="success" path="/fee/dispstuddetail.jsp"/>
+           </action>
+           
+           <action  path="/detailofstud" 
+            type="AO.DispDetailOfStud"  
+            input="/fee/dispdetailofstud.jsp"
+            scope="request">
+            <forward name="success" path="/fee/dispdetailofstud.jsp"/>
+           </action>
+           
+            <action  path="/loe" 
+            type="AO.DispListOfEmp"  
+            scope="request">    
+            <forward name="success" path="/displistofemp.jsp"/>
+            </action>
+           
+        <action path="/EditClass_AfterSub" forward="/DynamicFees/EditClass_AfterSub.jsp"/>   
+        <action path="/set" forward="/srnum.jsp"/>
+         <action path="/sr" forward="/rnum.jsp"/>
+        <action path="/streg" forward="/StudentRegis.jsp"/> 
+        <action path="/stregistration" forward="/students/StudentRegistration.jsp"/>
+        <action path="/edStregis" forward="/students/EditStudentRegistration.jsp"/>
+        <action path="/esrec" forward="/dnuStudRecord.jsp"/>
+        <action path="/los" forward="/displistofstud.jsp"/>
+        <action path="/clsd" forward="/fee/dispstuddetail.jsp"/>
+        <action path="/dos" forward="/fee/dispdetailofstud.jsp"/>
+     
+     <!-- ========================================================-->
+       
+       
+     <!-- ========================= Sonal ===============================-->
+     
+            <action path="/addTrp_route" parameter="method" type="Transport.Transport_Route">
+             <forward  name="success" path="/transport/AddTransport_route.jsp"/>
+            </action>
+            <action input="/transport/AddTransport_route.jsp" path="/adding_rt" 
+            parameter="method" type="Transport.Transport_Route">
+            <forward  name="success" path="/transport/AddTransport_route.jsp"/>
+            </action>
+            <action path="/add_rt" 
+            parameter="method" type="Transport.Transport_Route">
+            <forward  name="success" path="/transport/AddTransport_route.jsp"/>
+            </action>
+            <action path="/editTrp_route" parameter="method" type="Transport.Transport_Route">
+              <forward  name="success" path="/transport/editTransport_route.jsp"/>   
+            </action>
+            <action path="/del_rt" parameter="method" type="Transport.Transport_Route">
+              <forward  name="success" path="/transport/editTransport_route.jsp"/>   
+            </action>
+            <action path="/update_rt" parameter="method" type="Transport.Transport_Route">
+              <forward  name="success" path="/transport/editTransport_route.jsp"/>   
+            </action>
+            
+            <action input="/fee/dispstuddetail.jsp" path="/RetDataBy" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/fee/dispstuddetail.jsp"/>
+            </action>
+            
+            <action input="/fee/dispstuddetail.jsp" path="/Ret_StudListData" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/fee/dispstuddetail.jsp"/>
+            </action>
+     
+            <action input="/dnuStudRecord.jsp" path="/Stud_Regis_2" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/dnuStudRecord.jsp"/>
+            </action>
+     
+            <action input="/StudentRegis.jsp" path="/Stud_Regis_1" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/StudentRegis.jsp"/>
+            </action>
+            
+            <action input="/OldStudentRegis.jsp" path="/Stud_Regis_3" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/OldStudentRegis.jsp"/>
+            </action>
+                  
+            <action input="/DynamicFees/Add_Class_Fee.jsp" path="/Course_Type" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/DynamicFees/Add_Class_Fee.jsp"/>
+            </action>   
+            
+            <action input="/DynamicFees/lastdate_entry.jsp" path="/EnterLateFee" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/DynamicFees/lastdate_entry.jsp"/>
+            </action>
+            <action path="/lastdate" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/DynamicFees/lastdate_edit.jsp"/>
+            </action>
+             <action path="/del" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/DynamicFees/lastdate_edit.jsp"/>
+            </action>
+            <action path="/edit" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/DynamicFees/lastdate_edit.jsp"/>
+            </action>
+            <action path="/update_date" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/DynamicFees/lastdate_edit.jsp"/>
+            </action>
+            
+            <action input="/DynamicFees/Edit_Class_Fee.jsp" path="/Course_Type2" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/DynamicFees/Edit_Class_Fee.jsp"/>
+            </action>
+            
+            <action input="/DynamicFees/Add_Class_Fee.jsp" path="/SubmitClassFee" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/DynamicFees/Add_Class_Fee.jsp"/>
+            </action>
+            
+            <action input="/DynamicFees/Add_Class_Fee.jsp" path="/SubmitClassType" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/DynamicFees/Add_Class_Type.jsp"/>
+            </action>
+
+            <action input="/fee/StudFeeNotSubmit.jsp" path="/StudNotSubmitFee" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/fee/StudFeeNotSubmit.jsp"/>
+            </action>
+
+            <action input="/fee/DeleteClass.jsp" path="/DeleteClasses" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/fee/DeleteClass.jsp"/>
+            </action>
+
+
+
+        <action input="/fee/DeleteBranch.jsp" path="/DeleteBranches" 
+            parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/fee/DeleteBranch.jsp"/>
+            </action>
+
+            
+<action input="/fee/EnterClasses.jsp" name="dynaform1" 
+            path="/ClassesAction" parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/fee/EnterClasses.jsp"/>
+            <forward  name="failure" path="/fee/EnterClasses.jsp"/>
+            </action>
+        
+           <action input="/fee/CreateBranches.jsp" name="dynaform1" 
+            path="/BranchAction" parameter="method" type="ActionClass.MyAc">
+            <forward  name="success" path="/fee/CreateBranches.jsp"/>
+            <forward  name="failure" path="/fee/CreateBranches.jsp"/>
+            </action>
+        
+           <action  path="/feer" 
+            type="AO.FeeStruct"  
+            input="/fee/Newfeestruct.jsp"
+            scope="request">
+           </action>
+           
+           <action  path="/supfeer" 
+            type="AO.FeeStruct"  
+            input="/fee/SuperNewFeeStruct.jsp"
+            scope="request">
+           </action>               
+            <action path="/fch"
+            type="AO.FeesChart">
+            <forward name="success" path="/fee/feechart.jsp"/>
+            </action>
+            
+             <action  path="/updatefee" 
+            type="AO.UpdateFeeRecord"  
+            input="/fee/chkbounce.jsp"
+            scope="request">    
+           </action>
+
+            
+            <action path="/dfst"
+            type="AO.FeeStruct">
+            <forward name="success" path="/fee/Newfeestruct.jsp"/>
+            </action>
+            
+            <action path="/dutf"
+            type="AO.DnUTransFee">
+            <forward name="success" path="/fee/dnutransfee.jsp"/>
+            </action>
+            
+             <action path="/dfest"
+            type="AO.DisplayFeestruct">
+            <forward name="success" path="/fee/dispfeestruct.jsp"/>
+            </action>
+            
+             <action  path="/sfeech" 
+            type="AO.FeesChart"  
+            input="/fee/Superfeechart.jsp"
+            scope="request">
+           </action>
+               
+            <action path="/sfch"
+            type="AO.FeesChart">
+            <forward name="success" path="/fee/Superfeechart.jsp"/>
+            </action>
+            
+           <action  path="/upstr" 
+            type="AO.updatefeestr"  
+            input="/fee/updatefeestr.jsp"
+            scope="request">
+           </action>
+                  
+           <action  path="/upbsf" 
+            type="AO.UpdateTransFee"  
+            input="/fee/updatetransfee.jsp"
+            scope="request">
+           </action>
+           
+           <action  path="/uphd" 
+            type="AO.UpdateHead"  
+            input="/fee/updatehead.jsp"
+            scope="request">
+           </action>
+           
+            <action  path="/upfine" 
+            type="AO.UpdateFine"  
+            input="/fee/updatefinestr.jsp"
+            scope="request">
+           </action>
+           
+           
+            <action  path="/dispsfee" 
+            type="AO.DispSrFee"  
+            input="/fee/SubSchoolFee.jsp"
+            scope="request">
+            <forward name="success" path="/fee/SubSchoolFee.jsp"/>
+            </action>
+            
+             <action  path="/disptfee" 
+            type="AO.DispTransFee"  
+            input="/fee/SubTransFee.jsp"
+            scope="request">
+            <forward name="success" path="/fee/SubTransFee.jsp"/>
+            </action>
+         
+            <action  path="/clswise" 
+            type="AO.ChkfeeClassWise"  
+            input="/fee/chkfeeclasswise.jsp"
+            scope="request">
+            <forward name="single" path="/fee/chkfeeclasswise.jsp"/>
+            </action>
+            
+           <action  path="/dispfeerec" 
+            type="AO.DispFeeRecord"  
+            input="/fee/dispfeerecord.jsp"
+            scope="request">
+            <forward name="success" path="/fee/dispfeerecord.jsp"/>
+           </action>
+           
+            <action  path="/dispfinerec" 
+            type="AO.DispFineRecord"  
+            input="/dispfinerecord.jsp"
+            scope="request">
+            <forward name="success" path="/dispfinerecord.jsp"/>
+           </action>
+                    
+         
+               
+           <action  path="/fnex" 
+            type="AO.SchoolFineExempt"  
+            input="/fee/schoolfineExempt.jsp"
+            scope="request">
+            <forward name="success" path="/fee/schoolfineExempt.jsp"/>
+           </action>
+           
+           <action  path="/tfnex" 
+            type="AO.TransFineExempt"  
+            input="/transfineExempt.jsp"
+            scope="request">
+            <forward name="success" path="/transfineExempt.jsp"/>
+           </action>
+           
+           <action  path="/xstd" 
+            type="AO.XStud"  
+            input="/Xstudents.jsp"
+            scope="request">
+            <forward name="success" path="/Xstudents.jsp"/>
+           </action>
+           
+           <action  path="/sfrep" 
+            type="AO.SchoolFeeReport"  
+            input="/fee/schoolfeeReport.jsp"
+            scope="request">
+            <forward name="success" path="/fee/schoolfeeReport.jsp"/>
+           </action>
+           
+         
+           <action  path="/feesub" 
+            type="AO.Insertfeepaid"  
+            input="/fee/SubSchoolFee.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/feeReceipt.jsp"/>
+           </action>
+           
+                 
+          <action  path="/transfeesub" 
+            type="AO.InsertTransFee"  
+            input="/fee/SubTransFee.jsp"
+            scope="request">          
+           </action>
+           
+          <action  path="/dacd" 
+            type="AO.EditAcadDetail"  
+            input="/fee/editAcadDetail.jsp"
+            scope="request">
+           <forward name="success" path="/fee/editAcadDetail.jsp"/>
+           </action> 
+                   
+          <action  path="/editacdet" 
+            type="AO.EditAcadDetail"  
+            input="/fee/editAcadDetail.jsp"
+            scope="request">
+           <forward name="success" path="/fee/editAcadDetail.jsp"/>
+           </action> 
+           
+            
+            <action  path="/dispprofile" 
+            type="AO.DnUEmpProfile"  
+            input="/fee/DnUempProfile.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/DnUempProfile.jsp"/>
+            </action>
+            
+             <action  path="/dispdet" 
+            type="AO.EnterAcadDetail"  
+            input="/fee/StudAcademicDet.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/StudAcademicDet.jsp"/>
+            </action>
+            
+            <action  path="/entdet" 
+            type="AO.EnterAcadDetail"  
+            input="/fee/StudAcademicDet.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/StudAcademicDet.jsp"/>
+            </action>
+                        
+          
+            <action  path="/econc" 
+            type="AO.EnterConc"  
+            input="/fee/concession.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/concession.jsp"/>
+            </action>
+            
+                       
+           <action  path="/entadnfee" 
+            type="AO.EnterAdditionalFee"  
+            input="/fee/AdditionalFee.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/AdditionalFee.jsp"/>
+            </action>
+            
+           <action  path="/log" 
+            type="AO.Authentication"  
+            input="/fee/login.jsp"
+            scope="request">    
+           </action>
+           
+           <action  path="/loginregis" 
+            type="AO.RegisLogin"  
+            input="/fee/RegisLogin.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/RegisLogin.jsp"/>
+           </action>
+           
+           <action  path="/clswise" 
+            type="AO.ChkFeeClassWise"  
+            input="/fee/chkfeeclasswise.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/chkfeeclasswise.jsp"/>
+           </action>
+           
+           <action  path="/uemp" 
+            type="AO.DnUEmpProfile"  
+            input="/fee/DnUempProfile.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/DnUempProfile.jsp"/>
+           </action>
+           
+            <action  path="/entdet" 
+            type="AO.EnterAcadDetail"  
+            input="/fee/StudAcademinDet.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/StudAcademinDet.jsp"/>
+           </action>
+           
+            <action  path="/etransrut" 
+            type="AO.EnterTransFee"  
+            input="/fee/entertransfee.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/entertransfee.jsp"/>
+           </action>
+           
+           <action  path="/dasfb" 
+            type="AO.AssignFeeBook"  
+            input="/fee/assignfeebook.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/assignfeebook.jsp"/>
+           </action>
+           
+           <action  path="/rwrec" 
+            type="AO.RouteWiseReport"  
+            input="/fee/routewiserecord.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/routewiserecord.jsp"/>
+           </action>
+           
+           <action  path="/hwrec" 
+            type="AO.HouseWiseReport"  
+            input="/fee/housewiserecord.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/housewiserecord.jsp"/>
+           </action>
+           
+            <action  path="/entfeb" 
+            type="AO.AssignFeeBook"  
+            input="/fee/assignfeebook.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/assignfeebook.jsp"/>
+           </action>
+           
+            <action  path="/efeestr" 
+            type="AO.EnterFeeStruct"  
+            input="/fee/enterfeestruct.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/enterfeestruct.jsp"/>
+           </action>
+           
+           <action  path="/PProfile" 
+            type="AO.InsertEmpProfile"  
+            input="/fee/empProfile.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/empProfile.jsp"/>
+           </action>
+           
+           <action  path="/updatesrc" 
+            type="AO.UpdateStudRegisRecord"  
+            input="/fee/updatestudregisrecord.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/updatestudregisrecord.jsp"/>
+           </action>
+           
+           <action  path="/dispchk" 
+            type="AO.DispChkBounce"  
+            input="/fee/chkbounce.jsp"
+            scope="request">
+           <forward name="success" path="/fee/chkbounce.jsp"/>
+           </action>
+           
+            <action  path="/deldisp" 
+            type="AO.DelFeeRec"  
+            input="/fee/delfeerec.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/delfeerec.jsp"/>
+            </action>
+            
+             <action  path="/delufee" 
+            type="AO.DelFeeRec"  
+            input="/fee/delfeerec.jsp"
+            scope="request">    
+            <forward name="single" path="/fee/delfeerec.jsp"/>
+            </action>
+            
+            
+
+            <action  path="/dpsubmitfee" 
+            type="AO.Dispfees"  
+            input="/fee/SubSchoolFee.jsp"
+            scope="request">    
+            <forward name="single" path="/fee/SubSchoolFee.jsp"/>
+            </action>
+
+           
+            <action path="/studrec"
+            type="AO.StudRecord">
+            <forward name="success" path="/fee/studrecord.jsp"/>
+            </action>
+            
+            <action path="/studfee"
+            type="AO.DispFeeDetail">
+            <forward name="success" path="/fee/studfeerec.jsp"/>
+            </action>
+            
+             <action path="/studtransfee"
+            type="AO.DispTransFeeRecord">
+            <forward name="success" path="/fee/studtransfeerec.jsp"/>
+            </action>
+            
+            <action  path="/prntbill" 
+            type="AO.PrintOldBills"  
+            input="/fee/printoldbills.jsp"
+            scope="request">    
+            <forward name="success" path="/fee/printoldbills.jsp"/>
+            </action>
+                      
+            <action path="/supfeesb"
+            type="AO.FeeStruct">
+            <forward name="success" path="/fee/SuperNewFeeStruct.jsp"/>
+            </action>
+            
+            <action path="/usrc"
+            type="AO.DispStudRecord">
+            <forward name="success" path="/fee/updatestudregisrecord.jsp"/>
+            </action>
+
+   <action path="/UpdateAllExp1"
+   type="com.myapp.struts.MyAction"
+   parameter="method">
+   <forward name="success" path="/UpdateAllExpense1.jsp"/>
+   </action>
+             <action path="/UpdateAllExp2"
+   type="com.myapp.struts.MyAction"
+   parameter="method">
+   <forward name="success" path="/UpdateAllExpense2.jsp"/>
+   </action>
+            
+   <action path="/DeleteAllExpense"
+   type="com.myapp.struts.MyAction"
+   parameter="method">
+            <forward name="success" path="/UpdateAllExpense1.jsp"/>
+        </action>   
+        
+        
+        
+    <action path="/UpdateAllExp3"
+   type="com.myapp.struts.MyAction"
+   parameter="method">
+   <forward name="success" path="/UpdateAllExpense1.jsp"/>
+   </action>
+            <action path="/finestr"
+            type="AO.Finestr">
+            <forward name="success" path="/fee/FineStructure.jsp"/>
+            </action>
+            
+    <action path="/allexpenses" 
+    type="com.myapp.struts.MyAction"
+    name="dynaform5" input="Enter_All_Expenses.jsp" 
+    parameter="method" scope="request" validate="true">
+    <forward name="success" path="/fee/reportexpenses.jsp"/>
+    </action>
+    <action path="/expenses1"
+    type="com.myapp.struts.MyAction2"    
+    parameter="method">
+    <forward name="success" path="/Report2.jsp"/>
+    </action>
+    <action path="/DisplayFeeStr" type="ActionClass.MyAc" parameter="method">
+       <forward  name="success" path="/DynamicFees/DisplayFeeStruct_1.jsp"/>
+    </action>
+    
+     <!-- ############# Kapil Reports  ##########  -->
+     <action forward="/PantReports/dateWiseAmount.jsp" path="/dateWise_amount"/>
+     <action forward="/PantReports/totalDatewiseAdvance.jsp" path="/totDatewise_adv"/>
+     <action path="/ttsd" forward="/PantReports/TotalStud.jsp"/>
+     <action path="/ttregsd" forward="/PantReports/AllRegisteredStud.jsp"/>
+     <action path="/totalDrRef" forward="/PantReports/totalAmountRefunded.jsp"/>
+     <action path="/lfine" forward="/PantReports/LateFineReceived.jsp"/>
+     <action path="/trsd" forward="/PantReports/TransferedStudent.jsp"/>
+     <action path="/ndsd" forward="/PantReports/NoduesedStudent.jsp"/>
+     
+     <action path="/lfinereceived" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/LateFineReceived.jsp"/>
+     </action>
+     
+     <action path="/bnkam" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/AmountInAllBanks.jsp"/>
+     </action>
+     <action path="/bankamount" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/AmountInAllBanks.jsp"/>
+     </action>
+     <action path="/allreceived" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/AllReceivedAmount.jsp"/>
+     </action>
+     <action path="/RetDateWiseAmount" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/dateWiseAmount.jsp"/>
+     </action> 
+     <action path="/totalAmountRec" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/totalAmountReceived.jsp"/>
+     </action>
+     <action path="/allreceivedAmount" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/AllReceivedAmount.jsp"/>
+     </action>
+     <action path="/totalAmountRef" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/totalAmountRefunded.jsp"/>
+     </action>
+     <action path="/retDateWiseAdv" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/totalDatewiseAdvance.jsp"/>
+     </action>
+     <action path="/totBankwise_adv" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/bankwiseAdvance.jsp"/>
+     </action>
+     
+     <action path="/totBankwise_amount" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/bankWiseTotalAmount.jsp"/>
+     </action>
+      <action path="/retBankwise_amount" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/bankWiseTotalAmount.jsp"/>
+     </action>
+     
+     <action path="/retBankWiseAdv" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/bankwiseAdvance.jsp"/>
+     </action>
+     
+     <action path="/advDraftToBn" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/advDraftToBank.jsp"/>
+     </action>
+     <action path="/retAdvDraftToBn" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/advDraftToBank.jsp"/>
+     </action>
+     <action path="/updateAdvDr" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/advDraftToBank.jsp"/>
+     </action>
+     
+     <action path="/amDraftToBn" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/amDraftToBank.jsp"/>
+     </action>
+     <action path="/retAmntDraftToBn" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/amDraftToBank.jsp"/>
+     </action>
+     <action path="/updateAmntDr" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/amDraftToBank.jsp"/>
+     </action>
+     
+     <action path="/enterDate" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/EnterBankDateToDraft.jsp"/>
+     </action>
+     <action path="/updateDraft" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/EnterBankDateToDraft.jsp"/>
+     </action>
+     
+     <action path="/listofstud3" type="AO.DispListOfStud" input="/PantReports/TotalStud.jsp" scope="request">
+          <forward name="success" path="/PantReports/TotalStud.jsp"/>
+          <forward name="show" path="/PantReports/AllRegisteredStud.jsp"/>
+         </action>
+         
+     <action path="/TransStudent" type="Reports.StudentReports" parameter="method">
+         <forward name="success" path="/PantReports/TransferedStudent.jsp"/>
+     </action>    
+     <action path="/NoduesedStudent" type="Reports.StudentReports" parameter="method">
+         <forward name="success" path="/PantReports/NoduesedStudent.jsp"/>
+     </action>  
+      
+      <!-- ############# End Reports  ##########  -->
+      
+      <action forward="/PantReports/SelfFinanceAmountTransfer.jsp" path="/sfatrans"/>
+      <action forward="/student_fee/student_ladder.jsp" path="/stud_ladder"/>
+      <action forward="/students/StudentRecords.jsp" path="/stud_record"/>
+      <action forward="/student_fee/monthly_food.jsp" path="/mfp"/>
+      <action forward="/student_fee/edit_monthlyfood.jsp" path="/emfp"/>
+      <action forward="/student_fee/fine.jsp" path="/fine"/>
+      <action forward="/student_fee/nodues.jsp" path="/nodue"/>
+      <action forward="/student_fee/stud_other_inst.jsp" path="/othercollege"/>
+      <action forward="/PantReports/noduesedstudentlist.jsp" path="/noduesedstudent"/>
+      
+      <action path="/totalSelfFinanAmount" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/SelfFinanceAmountTransfer.jsp"/>
+      </action>
+      <action path="/selfFinanAmountTransfer" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/PantReports/SelfFinanceAmountTransfer.jsp"/>
+      </action>
+      <action path="/othercollegestud" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/stud_other_inst.jsp"/>
+      </action>
+      <action path="/TrStudAmount" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/stud_other_inst.jsp"/>
+      </action>
+      <action path="/studentLadder" type="Reports.StudentLadder" parameter="method">
+         <forward name="success" path="/student_fee/student_ladder.jsp"/>
+     </action>
+     <action path="/studentRecord" type="Reports.StudentLadder" parameter="method">
+         <forward name="success" path="/students/StudentRecords.jsp"/>
+     </action>
+     <action path="/fineamnt" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/fine.jsp"/>
+     </action>
+     <action path="/manualfee" forward="/student_fee/manualfeeprocess.jsp"/>
+     <action path="/manualfeeprocess" type="Fee.FeeAction" parameter="method">
+         <forward name="more_result" path="/student_fee/moremanualfee.jsp"/>
+         <forward name="success" path="/student_fee/manualfeeprocess.jsp"/>
+     </action>
+     <action path="/addManualMore" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/manualfeeprocess.jsp"/>
+     </action>
+     <action path="/fee_process" type="Reports.AmountReports" parameter="method">
+         <forward name="success" path="/student_fee/feeprocess.jsp"/>
+     </action>
+     <action path="/feeprocess" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/feeprocess.jsp"/>
+     </action>
+     
+     <action path="/fineafN" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/fineProcessAfNodues.jsp"/>
+     </action>
+     <action path="/processLateFn" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/fineProcessAfNodues.jsp"/>
+     </action>
+     <action path="/processLateFine" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/feeprocess.jsp"/>
+     </action>
+     <action path="/provideNodues" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/feeprocess.jsp"/>
+     </action>
+     <action path="/checkNoduesed" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/nodues.jsp"/>
+     </action>
+     <action path="/noduesed" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/nodues.jsp"/>
+     </action>
+     <action path="/gen_NoduesReceipt" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/nodues_receipt.jsp"/>
+     </action>
+     
+     <action path="/noduesedstudentlist" type="Reports.StudentLadder" parameter="method">
+         <forward name="success" path="/PantReports/noduesedstudentlist.jsp"/>
+     </action>
+     <action path="/noduesData" type="Reports.StudentLadder" parameter="method">
+         <forward name="success" path="/student_fee/nuduesed_list_to.jsp"/>
+     </action>
+     <action path="/noduesedExcel" forward="/PantReports/NoduesedExcelData.jsp"/>
+     <action path="/noduesExcelData" type="Reports.StudentLadder" parameter="method">
+         <forward name="success" path="/PantReports/NoduesedExcelData.jsp"/>
+     </action>
+     
+     <action path="/newProvideNodues" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/NewAdminNodues.jsp"/>
+     </action>
+     
+     <action path="/spstudent" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/spstudent.jsp"/>
+     </action>
+     <action path="/stud_transfer" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/student_fee/TransferStudent.jsp"/>
+     </action>
+     
+     <action path="/enterStudentId" type="ActionClass.Student_Id">
+         <forward name="success" path="/StudentID.jsp"/>
+     </action>  
+     <action path="/checkStudentDetail" type="Fee.FeeAction" parameter="method">
+         <forward name="success" path="/StudentID.jsp"/>
+     </action> 
+    
+    <action forward="/StudentID.jsp" path="/stud_id"/>
+    <action forward="/Int_Upload/upload.jsp" path="/upload"/> 
+    <action forward="/DynamicFees/Sub_List_Classwise.jsp" path="/Sub_List_Classwise"/>    
+    <action forward="/DynamicFees/DispFeeHeadwise.jsp" path="/DispFeeHeadwise"/>    
+    <action forward="/DynamicFees/CcFormat.jsp" path="/CcFormat"/>    
+    <action forward="/DynamicFees/TcFormat.jsp" path="/TcFormat"/>    
+    <action forward="/DynamicFees/Add_Subject.jsp" path="/Add_Subject"/>    
+    
+        
+        <action forward="/DynamicFees/View_Subject.jsp" path="/view_Subject"/> 
+        <action forward="/DynamicFees/Update_Subject.jsp" path="/update_Subject"/> 
+        
+        <!--<action forward="/DynamicFees/DisplayFeeStruct.jsp" path="/DisplayFeeStruct"/> -->
+        
+        <action path="/DisplayFeeStruct" type="com.myapp.struts.Degree" parameter="method">
+            <forward name="success" path="/DynamicFees/DisplayFeeStruct_1.jsp"/>
+        </action> 
+        
+          
+        <action forward="/DynamicFees/Disp_IdCard.jsp" path="/Disp_IdCard"/>        
+       <!-- <action forward="/DynamicFees/FeeReceipt_ToPay.jsp" path="/FeeReceipt_ToPay"/>-->
+         <action forward="/DynamicFees/fee_receipt.jsp" path="/FeeReceipt_ToPay"/>
+        
+        <action forward="/counselling/counselling_fee.jsp" path="/counsellingFee_ToPay"/>
+        <action forward="/counselling/ViewPrintCounsFee.jsp" path="/viewcounsellingFee"/>
+        <action forward="/counselling/editCounselligFee.jsp" path="/editcounsellingFee"/>
+        <action forward="/counselling/editStudentProgFee.jsp" path="/editStudProgFee"/>
+        <action forward="/counselling/editStudentId.jsp" path="/editStudId"/>
+        <action forward="/counselling/refundCounsFree.jsp" path="/refundCounsFee"/> 
+         <action forward="/student_fee/StudFeeScroll.jsp" path="/feeScroll"/> 
+         <action forward="/student_fee/editStudDetail.jsp" path="/ediStud"/>
+         <action forward="/counselling/additionalFee.jsp" path="/add_fee"/>       
+        <action forward="/ClasswiseStudList.jsp" path="/ClasswiseStudList"/>        
+        <action forward="/OldStudentRegis.jsp" path="/OldStudentRegis"/>        
+              
+        <action forward="/DynamicFees/Add_Class_Type.jsp" path="/Add_Class_Type"/>        
+        
+        <action forward="/Enter_All_Expenses.jsp" path="/Enter_All_Expenses"/>
+        <action forward="/UpdateAllExpense1.jsp" path="/UpdateAllExpense1"/>  
+             <action forward="/Report2.jsp" path="/Report2"/>
+            <action forward="/DynamicFees/DefineConcessions.jsp" path="/DefineConcessions"/>           
+            <action forward="/DynamicFees/enterfeechartDyn.jsp" path="/enterfeechartDyn"/>            
+            <action forward="/DynamicFees/DisplayHeadsList.jsp" path="/DisplayHeadsList"/>            
+            <action forward="/Report1.jsp" path="/Report1"/>         
+            
+            <action path="/EnterClasses" type="com.myapp.struts.Degree" parameter="method">
+                <forward name="success" path="/fee/EnterClasses.jsp"/>
+            </action>
+              
+            <action path="/Fee_ToPay" type="com.myapp.struts.Degree" parameter="method">
+                 <forward  name="success" path="/DynamicFees/StudentFee_ToPay.jsp"/>
+            </action> 
+            
+            <action path="/Add_Class_Fee" type="com.myapp.struts.Degree" parameter="method">
+               <forward name="success" path="/DynamicFees/Add_Class_Fee.jsp"/>
+            </action> 
+            <action path="/Edit_Class_Fee" type="com.myapp.struts.Degree" parameter="method">
+                <forward name="success" path="/DynamicFees/Edit_Class_Fee.jsp"/>
+            </action> 
+   
+       <action path="/EnterFeeHeads" type="com.myapp.struts.Degree" parameter="method">
+                <forward name="success" path="/DynamicFees/EnterFeeHeads.jsp"/>
+            </action>
+            
+            <action path="/deg" type="com.myapp.struts.Degree" parameter="method">
+                <forward name="success" path="/DynamicFees/Add_degree.jsp"/>
+            </action>
+            <action path="/degreeAction" type="com.myapp.struts.Degree" parameter="method">
+                <forward name="success" path="/DynamicFees/Add_degree.jsp"/>
+            </action>
+            <action path="/delDgree" type="com.myapp.struts.Degree" parameter="method">
+                <forward name="success" path="/DynamicFees/Add_degree.jsp"/>
+            </action>
+            <action path="/newbeni" type="pant.common.UtilityAction" parameter="method">
+                <forward name="success" path="/utility/newbeni.jsp"/>
+            </action>
+            
+            <action path="/addCollege" type="pant.common.UtilityAction" parameter="method">
+                <forward name="success" path="/utility/AddCollege.jsp"/>
+            </action>
+            <action path="/viewCollege" type="pant.common.UtilityAction" parameter="method">
+                <forward name="success" path="/utility/ViewEditCollege.jsp"/>
+            </action>
+            <action path="/editCollege" type="pant.common.UtilityAction" parameter="method">
+                <forward name="success" path="/utility/ViewEditCollege.jsp"/>
+            </action>
+            <action path="/updateCollege" type="pant.common.UtilityAction" parameter="method">
+                <forward name="success" path="/utility/ViewEditCollege.jsp"/>
+            </action>
+            <action path="/delCollege" type="pant.common.UtilityAction" parameter="method">
+                <forward name="success" path="/utility/ViewEditCollege.jsp"/>
+            </action>
+            
+            <action path="/addHostel" type="pant.common.UtilityAction" parameter="method">
+                <forward name="success" path="/utility/AddHostel.jsp"/>
+            </action>
+            <action path="/viewHostel" type="pant.common.UtilityAction" parameter="method">
+                <forward name="success" path="/utility/ViewEditHostel.jsp"/>
+            </action>
+            <action path="/editHostel" type="pant.common.UtilityAction" parameter="method">
+                <forward name="success" path="/utility/ViewEditHostel.jsp"/>
+            </action>
+            <action path="/updateHostel" type="pant.common.UtilityAction" parameter="method">
+                <forward name="success" path="/utility/ViewEditHostel.jsp"/>
+            </action>
+            <action path="/delHostel" type="pant.common.UtilityAction" parameter="method">
+                <forward name="success" path="/utility/ViewEditHostel.jsp"/>
+            </action>
+            
+       <action path="/createbranch" type="com.myapp.struts.Degree" parameter="method">
+            <forward name="success" path="/fee/CreateBranches.jsp"/>
+        </action>
+        
+        <action forward="/utility/User_Role_form.jsp" path="/user_role"/>
+       <action path="/save_Rule" type="User_Role.UserRoleAction" parameter="method">
+            <forward name="success" path="/utility/User_Role_form.jsp"/>
+        </action>
+       <action path="/view_role" parameter="method" type="User_Role.UserRoleAction">
+            <forward name="success" path="/utility/view_role.jsp"/>
+        </action>
+        <action path="/update_role" parameter="method" type="User_Role.UserRoleAction">
+          <forward name="success" path="/utility/update_role.jsp"/>
+        </action> 
+        <action path="/Update_Roles" parameter="method" type="User_Role.UserRoleAction">
+          <forward name="success" path="/utility/update_role.jsp"/>
+        </action>
+  
+      
+ <action path="/UserRegist_emp" type="ActionClass.MyActions" parameter="method">
+     <forward name="success" path="/Registration/Emp_Reg_Confirmation.jsp"/>
+     <forward name="fail" path="/Registration/Employee_Regis_Form.jsp"/>
+  </action>
+ <action path="/edit_emp_reg" type="ActionClass.MyActions" parameter="method">
+     <forward name="success" path="/Registration/Edit_Emp_Reg.jsp"/>
+ </action> 
+ <action path="/editUserRegist_emp" type="ActionClass.MyActions" parameter="method">
+     <forward name="success" path="/Registration/Edit_Emp_Reg.jsp"/>
+ </action>
+ 
+ <action path="/edit_prof" type="ActionClass.MyActions" parameter="method">
+     <forward name="success" path="/Registration/Edit_User_Pro.jsp"/>
+ </action>
+ 
+ <action path="/update_pass" type="ActionClass.MyActions" parameter="method">
+     <forward name="success" path="/Registration/update_pass.jsp"/>
+     <forward name="hostelsuccess" path="/hostel/HostelPasswordChange.jsp"/>
+ </action>
+ 
+ <action path="/editUserProfile_emp" type="ActionClass.MyActions" parameter="method">
+     <forward name="success" path="/Registration/Edit_User_Pro.jsp"/>
+ </action>
+ 
+ <action path="/updateUserProfile_emp" type="ActionClass.MyActions" parameter="method">
+     <forward name="success" path="/Registration/Edit_User_Pro.jsp"/>
+ </action>
+ 
+  <action path="/edit_emp_pro" type="ActionClass.MyActions" parameter="method">
+     <forward name="success" path="/Registration/Edit_User_Pro.jsp"/>
+ </action>
+ 
+ <action path="/updateUserRegist_emp" type="ActionClass.MyActions" parameter="method">
+     <forward name="success" path="/Registration/Edit_Emp_Reg.jsp"/>
+ </action>
+ 
+<action path="/route" type="Transport.Transport_Route"/>
+<action path="/utility" forward="/utility/utilitypage.jsp"/>  
+<action path="/user_profile" forward="/fee/edit_user_profile.jsp"/>
+<action path="/edit_user_pass" forward="/fee/edit_user_pass.jsp"/>
+<action path="/studentP" forward="/student_fee/studentpage.jsp"/>   
+<action forward="/Registration/Employee_Regis_Form.jsp" path="/emp_reg_form"/>  
+<action path="/payment" forward="/students/Old_stud_payment.jsp"/>         
+<action path="/paymentresult" forward="/students/payment_result.jsp"/>         
+
+<action path="/chkPayment" type="onlinepayment.OnlinePaymentAction" parameter="method">
+    <forward name="success" path="/students/Old_stud_payment.jsp"/>
+</action>
+<action path="/next" type="onlinepayment.OnlinePaymentAction" parameter="method">
+    <forward name="failed" path="/students/Old_stud_payment.jsp"/>
+    <forward name="success" path="/students/NextPage.jsp"/>
+</action>
+
+<action path="/manualfeePdf" forward="/student_fee/manipulationInExcelForPdf.jsp"/>         
+<action path="/manualfeePdfs" type="Fee.FeeAction" parameter="method">
+    <forward name="success" path="/student_fee/manipulationInExcelForPdf.jsp"/>  
+</action>
+
+<action path="/showWindows" type="onlinepayment.OnlinePaymentAction" parameter="method">
+    <forward name="success" path="/onlinepayment_window/ShowWindow.jsp"/>  
+</action>
+<action path="/saveWinData" type="onlinepayment.OnlinePaymentAction" parameter="method">
+    <forward name="success" path="/onlinepayment_window/ShowWindow.jsp"/>  
+</action>
+<action path="/editWindowDetail" type="onlinepayment.OnlinePaymentAction" parameter="method">
+    <forward name="success" path="/onlinepayment_window/EditWindow.jsp"/>  
+</action>
+<action path="/updateWinData" type="onlinepayment.OnlinePaymentAction" parameter="method">
+    <forward name="success" path="/onlinepayment_window/ShowWindow.jsp"/>  
+</action>
+
+            <action path="/upf" type="AO.updatefeestr"/>            
+            <action path="/insf" type="AO.Insertfeepaid"/>
+            <action path="/fns" type="AO.Finestr"/>
+            <action path="/fr" type="AO.FeeStr"/>
+            <action path="/regfee" type="AO.DispRegisFee"/>
+            <action path="/studregis" type="AO.StudRegisAO"/>  
+            <action path="/upfee" type="AO.UpdateFeeRecord"/>
+            
+        <action path="/Welcome" forward="/fee/welcomeStruts.jsp"/>      
+        <action path="/dfee" forward="/fee/dispfeerecord.jsp"/>
+        <action path="/dfine" forward="/fee/dispfinerecord.jsp"/> 
+                
+        <action path="/sfdisp" forward="/fee/SubSchoolFee.jsp"/>
+        <action path="/tfdisp" forward="/fee/SubTransFee.jsp"/>
+        <action path="/delclass" forward="/fee/DeleteClass.jsp"/>
+         <action path="/delbranch" forward="/fee/DeleteBranch.jsp"/>
+         <action path="/lastdate_entry" forward="/DynamicFees/lastdate_entry.jsp"/>
+         <action path="/college" forward="/utility/AddCollege.jsp"/>
+         <action path="/hostel" forward="/utility/AddHostel.jsp"/>
+        
+        <action path="/eprofile" forward="/fee/empProfile.jsp"/>
+        <action path="/login" forward="/fee/login.jsp"/>
+        <action path="/logregis" forward="/fee/RegisLogin.jsp"/>
+        <action path="/hm" forward="/fee/home.jsp"/>
+        <action path="/mn" forward="/fee/main.jsp"/>
+        <action path="/smn" forward="/fee/Supermain.jsp"/>
+        <action path="/fnscw" forward="/fee/chkfeeclasswise.jsp"/>
+        <action path="/usr" forward="/fee/updatestudregisrecord.jsp"/>
+        <action path="/totfee" forward="/fee/totalfee.jsp"/>
+        <action path="/notsub" forward="/fee/StudFeeNotSubmit.jsp"/>
+        <action path="/xsu" forward="/fee/Xstudents.jsp"/>
+        <action path="/dufch" forward="/fee/feechart.jsp"/>
+        <action path="/efch" forward="/fee/enterfeechart.jsp"/>
+        <action path="/efeesb" forward="/fee/enterfeestruct.jsp"/>
+        <action path="/etr" forward="/fee/entertransfee.jsp"/>
+        <action path="/concs" forward="/fee/concession.jsp"/>
+        <action path="/sacad" forward="/fee/StudAcademicDet.jsp"/>
+        <action path="/adnf" forward="/fee/AdditionalFee.jsp"/>
+        <action path="/fnexm" forward="/fee/fineExempt.jsp"/>
+        <action path="/cancel" forward="/fee/chkbounce.jsp"/>
+        <action path="/sfr" forward="/fee/schoolfeeReport.jsp"/>
+        <action path="/ecd" forward="/fee/editAcadDetail.jsp"/>
+        <action path="/asnf" forward="/fee/assignfeebook.jsp"/>
+        <action path="/rwsr" forward="/fee/routewiserecord.jsp"/>
+        <action path="/hwsr" forward="/fee/housewiserecord.jsp"/>
+        <action path="/disphd" forward="/DynamicFees/DisplayHeads.jsp"/>
+        
+        <action path="/dbk" forward="/fee/dayR.jsp"/>
+        <action forward="/fee/dayR.jsp" path="/sdf"/>
+        <action path="/dtsfr" forward="/fee/SfdatewiseR.jsp"/>
+        <action path="/sfswr" forward="/fee/SfsrwiseR.jsp"/>
+        <action path="/pob" forward="/fee/printoldbills.jsp"/>
+        
+        <action path="/tdbk" forward="/fee/TdayR.jsp"/>
+        <action forward="/fee/TdayR.jsp" path="/tdf"/>
+        <action path="/dttfr" forward="/fee/TfdatewiseR.jsp"/>
+        <action path="/tfswr" forward="/fee/TfsrwiseR.jsp"/>
+        
+        <action path="/pdsr" forward="/fee/perdayR.jsp"/>
+        <action forward="/fee/perdayR.jsp" path="/pdsfreport"/>
+        <action path="/pdtr" forward="/fee/perdayTR.jsp"/>
+        <action forward="/fee/perdayTR.jsp" path="/pdtfreport"/>
+        <action path="/delsfrec" forward="/fee/delfeerec.jsp"/>
+        
+        <action path="/cwsfr" forward="/fee/clsSchoolfee.jsp"/>
+        <action forward="/fee/clsSchoolfee.jsp" path="/clwsfreprt"/>
+        <action path="/cwtfr" forward="/fee/clsTransfee.jsp"/>
+        <action forward="/fee/clsTransfee.jsp" path="/clwtfreprt"/>
+        
+        
+   <!-- ========================================================-->      
+       
+  <!-- ===================== HOSTEL =============== -->
+       <action forward="/hostel/HostelAssign_ToStudent.jsp" path="/hos_a"/>
+       <action forward="/hostel/Monthly_FoodReport.jsp" path="/monthlyFoodReport"/>
+       <action forward="/hostel/Hostel_PostedFoodBill.jsp" path="/h_pfBill"/>
+       <action path="/checkStudent" type="pant.hostel.student.HostelStudent" parameter="method">
+           <forward name="success" path="/hostel/HostelAssign_ToStudent.jsp"/>
+       </action>
+       <action path="/assignHostel" type="pant.hostel.student.HostelStudent" parameter="method">
+           <forward name="success" path="/hostel/HostelAssign_ToStudent.jsp"/>
+       </action>
+       <action path="/monthlyFoodBillReport" type="pant.hostel.Report.HostelReport" parameter="method">
+           <forward name="success" path="/hostel/Monthly_FoodReport.jsp"/>
+       </action>
+       <action path="/checkFooBill" type="pant.hostel.student.HostelStudent" parameter="method">
+           <forward name="success" path="/hostel/Hostel_PostedFoodBill.jsp"/>
+       </action>
+       <action path="/deleteMonthlyFood" type="pant.hostel.student.HostelStudent" parameter="method">
+           <forward name="success" path="/hostel/Hostel_PostedFoodBill.jsp"/>
+       </action>
+       
+    </action-mappings>
+    
+    <controller processorClass="org.apache.struts.tiles.TilesRequestProcessor"/>
+
+    <message-resources parameter="com/myapp/struts/ApplicationResource"/>    
+    
+    <!-- ========================= Tiles plugin ===============================-->
+    <!--
+    This plugin initialize Tiles definition factory. This later can takes some
+    parameters explained here after. The plugin first read parameters from
+    web.xml, thenoverload them with parameters defined here. All parameters
+    are optional.
+    The plugin should be declared in each struts-config file.
+    - definitions-config: (optional)
+    Specify configuration file names. There can be several comma
+    separated file names (default: ?? )
+    - moduleAware: (optional - struts1.1)
+    Specify if the Tiles definition factory is module aware. If true
+    (default), there will be one factory for each Struts module.
+    If false, there will be one common factory for all module. In this
+    later case, it is still needed to declare one plugin per module.
+    The factory will be initialized with parameters found in the first
+    initialized plugin (generally the one associated with the default
+    module).
+    true : One factory per module. (default)
+    false : one single shared factory for all modules
+    - definitions-parser-validate: (optional)
+    Specify if xml parser should validate the Tiles configuration file.
+    true : validate. DTD should be specified in file header (default)
+    false : no validation
+
+    Paths found in Tiles definitions are relative to the main context.
+    -->
+    <plug-in className="org.apache.struts.tiles.TilesPlugin" >
+        <set-property property="definitions-config" value="/WEB-INF/tiles-defs.xml" />      
+        <set-property property="moduleAware" value="true" />
+    </plug-in>
+    
+    <!-- ========================= Validator plugin ================================= -->
+    <plug-in className="org.apache.struts.validator.ValidatorPlugIn">
+        <set-property
+        property="pathnames"
+        value="/WEB-INF/validator-rules.xml,/WEB-INF/validation.xml"/>
+    </plug-in>
+  
+</struts-config>

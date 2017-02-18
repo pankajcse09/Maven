@@ -1,0 +1,39 @@
+BODY {
+	MARGIN: 10px; FONT: 12px Verdana, Arial, Helvetica
+}
+* {
+	PADDING-BOTTOM: 0px; MARGIN: 0px; PADDING-LEFT: 0px; PADDING-RIGHT: 0px; PADDING-TOP: 0px
+}
+.dropdown {
+	PADDING-RIGHT: 0px
+}
+.dropdown DT {
+	BORDER-BOTTOM: #000000 0px solid; BORDER-LEFT: #000000 0px solid; PADDING-BOTTOM: 0px; PADDING-LEFT: 0px; WIDTH: auto; PADDING-RIGHT: 0px; BORDER-TOP: #000000 0px solid; CURSOR: default; FONT-WEIGHT: normal; BORDER-RIGHT: #000000 0px solid; PADDING-TOP: 0px; azimuth: center
+}
+.dropdown DT:hover {
+	BACKGROUND: url(images/header_over.gif)
+}
+.dropdown DD {
+	Z-INDEX: auto; POSITION: absolute; WIDTH: auto; DISPLAY: none; BACKGROUND: #000000; OVERFLOW: hidden; azimuth: center; opacity: 0
+}
+.dropdown UL {
+	BORDER-BOTTOM: #000000 1px solid; BORDER-LEFT: #000000 1px solid; WIDTH: 160px; BORDER-TOP: medium none; BORDER-RIGHT: #000000 1px solid; azimuth: center
+}
+.dropdown LI {
+	DISPLAY: inline
+}
+.dropdown A {
+	PADDING-BOTTOM: 8px; PADDING-LEFT: 8px; WIDTH: 150px; PADDING-RIGHT: 8px; DISPLAY: block; BACKGROUND: #7cd523; COLOR: #000000; TEXT-DECORATION: none; PADDING-TOP: 8px; azimuth: center
+}
+.dropdown A:active {
+	PADDING-BOTTOM: 8px; PADDING-LEFT: 8px; WIDTH: 150px; PADDING-RIGHT: 8px; DISPLAY: block; BACKGROUND: #7cd523; COLOR: #000000; TEXT-DECORATION: none; PADDING-TOP: 8px; azimuth: center
+}
+.dropdown A:visited {
+	PADDING-BOTTOM: 8px; PADDING-LEFT: 8px; WIDTH: 150px; PADDING-RIGHT: 8px; DISPLAY: block; BACKGROUND: #7cd523; COLOR: #000000; TEXT-DECORATION: none; PADDING-TOP: 8px; azimuth: center
+}
+.dropdown A:hover {
+	BACKGROUND: #7cd523; COLOR: #000000
+}
+.dropdown .underline {
+	BORDER-BOTTOM: #000000 1px solid
+}

@@ -1,0 +1,153 @@
+package com.st.ict.qs.icc.businessbean;
+
+
+import java.util.List;
+
+
+/**
+ * @author vincent moinard
+ * @hibernate.class table="COMBO_VALUES"
+ */
+public class ReferentialData {
+    private long internalId = 0;
+    private String type = null;
+    private String code = null;
+    private String description = null;
+    private String activity = null;
+    private String orderBy = null;
+    private List<ReferentialData> children = null;
+    private ReferentialData parent = null;
+    private int orderId;
+    
+    
+
+    public int getOrderId() {
+		return orderId;
+	}
+	public void setOrderId(int orderId) {
+		this.orderId = orderId;
+	}
+	/**
+     * @return Returns the code.
+     * @hibernate.property column="CODE" length="4"
+     */
+    public ReferentialData()
+    {
+    	
+    }
+    public ReferentialData(String code){
+		this.code=code;
+		
+	}
+    public String getCode() {
+        return code;
+    }
+
+    /**
+     * @param code The code to set.
+     */
+    public void setCode(String code) {
+        this.code = code;
+    }
+
+    /**
+     * @return Returns the description.
+     * @hibernate.property column="DESCRIPTION" length="80"
+     */
+    public String getDescription() {
+        return description;
+    }
+
+    /**
+     * @param description The description to set.
+     */
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    /**
+     * @return Returns the internalId.
+     *  * @hibernate.id column="ID" generator-class="sequence"
+     * @hibernate.generator-param name="sequence" value="COMBO_SEQ"
+     */
+    public long getInternalId() {
+        return internalId;
+    }
+
+    /**
+     * @param internalId The internalId to set.
+     */
+    public void setInternalId(long id) {
+        this.internalId = id;
+    }
+
+    /**
+     * @return Returns the type.
+     * @hibernate.property column="TYPE" length="20"
+     */
+    public String getType() {
+        return type;
+    }
+
+    /**
+     * @param type The type to set.
+     */
+    public void setType(String type) {
+        this.type = type;
+    }
+
+    /**
+     * @return Returns the children.
+     * @hibernate.bag name="children" inverse="true" lazy="true" cascade="all-delete-orphan"
+    * @hibernate.collection-key column="PARENT_ID"
+    * @hibernate.collection-one-to-many class="st.qs.eventmgt.model.ReferentialData"
+     */
+    public List<ReferentialData> getChildren() {
+        return children;
+    }
+
+    /**
+     * @param children The children to set.
+     */
+    public void setChildren(List<ReferentialData> children) {
+        this.children = children;
+    }
+
+    /**
+     * @return Returns the parent.
+     * @hibernate.many-to-one class="st.qs.eventmgt.model.ReferentialData" column="PARENT_ID"
+     */
+    public ReferentialData getParent() {
+        return parent;
+    }
+
+    /**
+     * @param parent The parent to set.
+     */
+    public void setParent(ReferentialData parent) {
+        this.parent = parent;
+    }
+
+    /**
+     * @return Returns the activity.
+     * @hibernate.property column="ACTIVITY" length="1"
+     */
+    public String getActivity() {
+        return activity;
+    }
+
+    /**
+     * @param activity The activity to set.
+     */
+    public void setActivity(String activity) {
+        this.activity = activity;
+    }
+
+	public String getOrderBy() {
+		return orderBy;
+	}
+
+	public void setOrderBy(String orderBy) {
+		this.orderBy = orderBy;
+	}
+}

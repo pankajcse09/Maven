@@ -1,0 +1,49 @@
+package com.st.ict.qs.notice.dao;
+
+import java.util.List;
+
+import st.ict.qs.core.db.DAOException;
+
+import com.st.ict.qs.notice.businessbean.InputProduct;
+import com.st.ict.qs.notice.businessbean.Notice;
+import com.st.ict.qs.notice.businessbean.Notification;
+
+public interface NoticeDAO {
+	
+	/**
+	 * @param notice
+	 * @throws DAOException
+	 */
+	void saveNotice(Notice notice) throws DAOException;
+	
+	/**
+	 * Fetches the Notice object for passed notice noticeIdFromUi 
+	 * @param noticeIdFromUi
+	 * @return Notice Object for the Passed noticeIdFromUi
+	 * @throws DAOException
+	 */
+	Notice getNotice(int noticeIdFromUi) throws DAOException;
+
+	/**
+	 * Fetches the getCustrDetialsListforNotice List for passed notice to send mail through batch 
+	 * @param customerGroupCode 
+	 * @return Object List for the Passed customerGroupCode
+	 * @throws DAOException
+	 */
+	List getCustomerDetialsListforNotice(String customerGroupCode) throws DAOException;
+
+	
+	/**
+	 * Fetches the Notification List for passed notice to send mail through batch 
+	 * @return getNotificationListforNotice
+	 * @throws DAOException
+	 */
+	List<Notification> getNotificationListforNotice() throws DAOException ;
+
+	void saveInputProdcut(List<InputProduct> inputProducts) throws DAOException;
+	
+	public List<InputProduct> getInputProduct(int noticeId) throws DAOException;
+
+	Notice getNotice() throws DAOException;
+
+}

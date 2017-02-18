@@ -1,0 +1,9 @@
+package com.st.ict.qs.notice.manager;
+
+import st.ict.qs.core.manager.ManagerException;
+
+public interface MailManager {
+	
+	public void sendNotificatonMail(String mailEvent) throws ManagerException;
+
+}

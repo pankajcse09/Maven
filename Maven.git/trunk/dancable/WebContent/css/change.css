@@ -1,0 +1,219 @@
+/* 
+    Document   : tsting
+    Created on : May 29, 2013, 2:45:32 PM
+    Author     : kapil
+    Description:
+        Purpose of the stylesheet follows.
+*/
+body{
+    margin: 0px 0px 0px 0px;
+    padding: 0px 0px 0px 0px;
+    font-family: "Trebuchet MS", Trebuchet, Verdana, Sans-Serif;
+	font-size: 13px;
+}
+/*body {
+    scrollbar-face-color: #b46868;
+}*/
+.chng{
+    
+    /*background: url('../images/CD for ballet/grey-strip.png');*/
+    width: 280px;
+    height: 40px;
+}
+
+.chang{
+    
+    background: url('../images/CD for ballet/blue-strip.png');
+    background-repeat:no-repeat;
+    width: 280px;
+    height: 40px;
+}
+
+.chng1{
+    
+    background-image: url('../images/CD for ballet/blue-strip.png');
+    background-repeat:no-repeat;
+  width: 200px;
+    height: 40px;
+ }
+ .chng1 .rave{padding:10px 20px}
+
+.b:visited
+  {
+      font-family: arial;
+      text-decoration: none;
+      color: white;
+  }
+  .b:link
+  {
+      font-family: arial;
+      text-decoration: none;
+      color: white;
+  }
+ .prmus{font-family: arial;color: #FFF;} 
+  
+  .menu_link
+  {
+      font-size: 14px;
+      text-decoration: none;
+                color: white;
+                font-weight: bold;
+  }
+  
+  .fnt{
+                font-size: 14px;
+                color: #666;
+                font-weight: 600;
+            }
+  .menu_link1
+  {
+      font-size: 14px;
+      text-decoration: none;
+                color: #3EAAAA;
+                font-weight: 600;
+  }
+  
+  .ln{
+                text-decoration: none;
+                color: black;
+                padding-left: 14px;
+                font-family: arial;
+                font-weight: bold;
+            } 
+            .bx
+            {
+                background-color: #F5F5F5;
+                width: 350px;
+                    height: 45px;
+                    border-radius: 2px 2px 0px 0px;
+                -moz-box-shadow: 0 0 2px 1px #A7ABA9;
+-webkit-box-shadow: 0 0 2px 1px #A7ABA9;
+box-shadow: 1px 1px 2px 0px #A7ABA9;
+            }
+            
+           .tx
+           {
+               padding: 0 0 0 10px;
+               outline: none;
+                width: 420px;
+              height: 35px;
+               font-size: 18px;
+               color: #C5C5C5;
+               font-family: Cambria, Cochin, Georgia, serif;
+               border: 4px solid #D1D8D7;
+               border-radius: 4px;
+           }
+           .tx:focus
+           {
+                padding: 0 0 0 10px;
+                outline: none;
+                width: 420px;
+              height: 35px;
+               font-size: 18px;
+               color: black;
+               font-family: Cambria, Cochin, Georgia, serif;
+               border: 4px solid #B6DEDE;
+               border-radius: 4px;
+           }
+           .bt
+           {
+               background-color: #C6E6E8;
+               cursor: pointer;
+                width: 90px;
+                height: 38px;
+                font-family: Arial,Helvetica,sans-serif;
+                color: #2E2E22;
+                font-weight: bold;
+                    border-radius: 18px;
+                    border: 4px solid #F2F9F9;
+                -moz-box-shadow: 0 0 2px 1px #A7ABA9;
+-webkit-box-shadow: 0 0 2px 1px #A7ABA9;
+box-shadow: 1px 1px 2px 0px #A7ABA9;
+           }
+           
+           .btn
+           {
+              background: url('../images/myaccount/login-button.png') 10px;
+              cursor: pointer;
+    background-repeat:no-repeat;
+    width: 95px;
+    height: 62px; 
+           }
+           
+           .btn:hover
+           {
+              background: url('../images/myaccount/login-button.png') 10px;
+              cursor: pointer;
+    background-repeat:no-repeat;
+    width: 95px;
+    height: 62px; 
+           }
+   
+.related
+   {
+    background: url('../images/homepage/bottom grey.png');
+    background-repeat:no-repeat;
+    width: 85%;
+    /*height: 800px;*/ 
+  } 
+.rel_label{color: #3EAAAA;font-family: arial;font-size: 15px;font-weight: bold;padding:10px;}  
+.rel_items{position:relative;}
+.rel_items .itmimg{
+    display: block;
+    padding: 5px;
+    line-height: 100%;
+    position: relative;
+}
+.itmimg{
+    margin: 0 0 20px 0;
+    width: 30%;
+    float: left;
+    text-align: center;
+}
+
+.rel_itemImg{border:0px;width:100px;height:100px;}
+
+.rel_items .rel_itemDetail{
+    display: block;
+    padding: 10px;
+    position: relative;
+    border:0px solid yellow;
+    font-family: arial;
+    font-size: 12px;
+    font-weight: 600;
+}
+
+.rel_itemDetail{
+    box-shadow: 0 0 5px rgba(0,0,0,0.2);
+    margin: 7px 0 0 0px;
+    width: 58%;
+    float: left;
+    text-align: left;
+}
+
+
+.scrol
+{
+    display: block;
+    
+    overflow-y: scroll;
+    
+}
+/*::-webkit-scrollbar {
+      width: 15px;
+} 
+::-webkit-scrollbar-track {
+      background-color: #b46868;
+}  the new scrollbar will have a flat appearance with the set background color 
+ 
+::-webkit-scrollbar-thumb {
+      background-color: rgba(0, 0, 0, 0.2); 
+}  this will style the thumb, ignoring the track 
+ 
+::-webkit-scrollbar-button {
+      background-color: #7c2929;
+}  optionally, you can style the top and the bottom buttons (left and right for horizontal bars) 
+ 
+::-webkit-scrollbar-corner {
+      background-color: black;
+}  if both the vertical and the horizontal bars appear, then perhaps the right bottom corner also needs to be styled */

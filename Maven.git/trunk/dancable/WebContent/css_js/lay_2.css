@@ -1,0 +1,605 @@
+/* 
+    Document   : lay_2
+    Created on : May 25, 2013, 6:48:48 PM
+    Author     : kapil
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#header
+{
+    width: 100%;
+    /*height: 607px;*/
+    height: 586px;
+    border: 0px solid red;
+}
+
+#topdesign
+{
+    background: url('../images/CD for ballet/grey-bar.png');
+  width: 100%;
+height: 135px;
+position: relative;
+border: 0px solid green;  
+}
+
+#headdesign
+{
+width: 100%;
+height: 135px;
+position: relative;
+border: 0px solid green;
+}
+.header1{
+    position: relative;
+height: 80px;
+float: left;
+padding: 50px 0px 0px 145px;
+border: 0px solid yellow;
+}
+
+.header2
+{
+    vertical-align: top;
+ position: relative;
+width: 800px;
+/*height: 100px;*/
+padding: 0px 0px 0px 395px; 
+  border: 0px solid yellow;
+}
+.header2 header2_1
+{
+    width: 750px;
+    text-align: right;
+}
+.header2_2
+{
+    position: relative;
+    width: auto;
+    border: 0px solid orange;
+}
+
+.user{
+   position: relative;
+width: auto;
+height: 65px;
+/*line-height: 25px;*/
+color: white;
+border: 0px solid orange;
+text-align: right;
+/*right: 15px;*/
+}
+
+.login
+{
+  position: relative;
+width: auto;
+/*text-align: right;*/
+height: 50%;
+/*left: 560px;*/
+top: 18px;
+padding-right: 0px;
+}
+
+.tb{
+    background: url('../images/homepage/main-page-image.png') -4px -4px no-repeat;
+    /*width: 100%;*/
+/*    height: 607px;*/
+width: 100%;
+height: 586px;
+    border: 0px solid yellow;
+}
+
+.cel{
+    padding: 50px 0px 0px 70px;
+}
+
+.cel1{
+    padding: 0px 0px 0px 0px;
+}
+
+.pad
+{
+    padding: 30px 0px 0px 10px;
+    
+}
+.pad1
+{
+    padding: 20px 0px 0px 20px;
+    
+}
+
+.shadow
+{
+/*    background: url('../images/homepage/bottom grey box.png');
+    width: 98%;*/
+    height: 180px;
+    
+    -moz-box-shadow: 0 0 25px 1px #A7ABA9;
+-webkit-box-shadow: 0 0 25px 1px #A7ABA9;
+box-shadow: 5px 5px 25px 1px #A7ABA9;
+/*padding: 0 5px 10px 5px;*/
+  
+}
+
+.fnt{
+     font-family:arial, verdana, sans-serif;
+     font-weight: 800;
+     height: 35px;
+}
+
+.fnt1
+{
+    font-family: arial;
+     font-weight: bold;
+     color: black;
+  }
+  .fnt2
+  {
+      font-family: arial;
+      font-size: 15px;
+     font-weight: bold;
+  }
+  
+  .fnt3
+  {
+      font-family: arial;
+      font-size: 14px;
+     /*color:#999999;*/
+  }
+  .a:visited
+  {
+      color: black;
+  }
+  .a:link
+  {
+      color: black;
+  }
+  
+  a.lnkk
+{
+    vertical-align: top;
+ color: #DC3F0A;
+font-size: 16px;
+font-family: Cambria, Cochin, Georgia, serif;
+text-decoration: none;
+}
+  
+  .b:visited
+  {
+      font-family: arial;
+      text-decoration: none;
+      color: white;
+  }
+  .b:link
+  {
+      font-family: arial;
+      text-decoration: none;
+      color: white;
+  }
+  
+  .tbl
+  {
+      background: url('../images/homepage/bottom grey.png');
+      border-radius: 5px;
+    width: 100%;
+    height: 225px;
+    padding-left: 10px;
+    padding-top: 15px;
+  }
+  .tbl1
+  {
+      background: url('../images/homepage/GREEN BOX.png');
+    width: 100%;
+    height: 225px;
+    padding-left: 15px;
+    padding-top: 20px;
+    }
+    
+.logoimg
+{
+    width: 240px;
+    border: 0px;
+}
+    
+.topmenu_tb
+{
+    width: 770px;
+    height: 60px;
+    background-color: rgba(0,0,0,0.50);
+    padding: 0px 0px 0px 25px;
+}    
+
+/* shopcart */
+
+#av{
+    position: relative;
+ /*left: 500px;*/
+    width: 100%;
+    height:50%;
+    /*padding-right: 12px;*/
+    border: 0px solid yellow;
+    vertical-align: top;
+}
+#shp_cart
+{
+    display: none;
+    position: absolute;
+    right: 5px;
+    width: 300px;
+    z-index: 1400;
+    color: #666;
+background: #fff;
+border: 5px #ccc solid;
+border-top: 1px #ccc dotted;
+}
+.shp_txt
+{
+    text-align: left;
+}
+#av .shp
+{
+    text-align: center;
+    padding: 10px 5px 8px;
+}
+#shp_cart .sh
+{
+     text-align: center;
+}
+.wishshop{position: absolute;width: 42%;height: 100%;left: 437px;}
+.wishlist{position: relative;float: right;}
+.shopping{position:relative;float: right;}
+#av .shopping:hover .shp
+{
+    display: block;
+}
+
+#items
+{
+    vertical-align: top;
+    color: white;
+    padding: 0px 3px 0 3px;
+    background-color: #ED0326;
+        -moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+border-radius: 2px;
+}
+
+.shp_item
+{
+    vertical-align: top;
+    background: #801519;
+color: #fff;
+padding: 2px 5px;
+text-decoration: none;
+/*margin-left: .5em;*/
+-moz-border-radius: 2px;
+-webkit-border-radius: 2px;
+border-radius: 2px;
+}
+
+.inner1_2
+    {
+   /*vertical-align: top;*/
+padding-top: 0px;
+width: 100%;
+border: 0px solid red;
+    }
+
+.txt{
+font-family: Cambria, Cochin, Georgia, serif;
+color: #606560;
+font-size: 1.3em;
+/*vertical-align: top;*/
+}   
+
+#cartmg{vertical-align: top;height: 30px;}
+#cartmg a{vertical-align: top;height: 30px;}
+#av .shp_txt .cartdt{position: relative;vertical-align: top;width:auto;height: 30px;}
+
+
+.raveblock{position:relative;}
+.raveblock .raveimg{
+    display: block;
+    /*padding: 5px;*/
+    padding-right:40px;
+    line-height: 100%;
+    position: relative;
+}
+.raveimg{
+    margin: 0 0 20px 0;
+    width: 38%;
+    float: left;
+/*    text-align: center;*/
+}
+.raveimg img{width:100%;border:0;}
+
+.rel_itemImg{border:0px;width:100px;height:100px;}
+
+.raveblock .raveDetail{
+    display: block;
+    padding: 10px;
+    position: relative;
+    border:0px solid yellow;
+    font-family: arial;
+/*    font-size: 12px;
+    font-weight: 600;*/
+}
+
+.raveDetail{
+    /*box-shadow: 0 0 5px rgba(0,0,0,0.2);*/
+    margin: 7px 0 0 0px;
+    width: 58%;
+    float: left;
+    text-align: left;
+}
+
+  
+    
+    /*---- OLD ----*/
+#conta {
+		min-height: 100%;
+		position: relative;
+
+width: 100%;
+margin: auto;
+	}
+        #conta_1 {
+		min-height: 117px;
+		position: relative;
+background: #333333;
+WIDTH: 904px;
+margin: auto;
+	}
+#comp{
+          height: 80%;
+           background: #000000;  
+}
+
+/*	#header {
+		WIDTH: 100%;
+		padding-top: 2px;
+               
+                background: #000000;
+	}*/
+        
+        #footerone {
+		WIDTH: 904px;
+		
+                height: 50px;
+                background: #000000;
+	}
+         #footerone_1 {
+		WIDTH: 100%;
+		
+                height: 50px;
+                background: #000000;
+	}
+        
+     #headerb {
+               display: inline-block;
+		 border: 1px solid black;
+		width: 904px;
+                height: 37px;
+                float: left;
+             background: #000000;
+	}
+.logo_img {
+position: absolute;
+top: 10px;
+WIDTH: 188px; HEIGHT: 37px;  
+left: 1%;
+}
+
+.items{
+    position: relative;
+    top: 5px;
+    left: 312px;
+    color: #EEF3F6;
+    font-family: arial;
+    font-size: 12px;
+}
+
+
+	#body {
+            background: url('../images/homepage/bottom grey.png');
+                 padding-top: 0px;
+		width: 100%;
+		padding-bottom: 50px;
+                 height: 500px;
+               border: 0px solid red;
+            
+
+	/* Height of the footer */
+	}
+        #body_1 {
+                 padding-top: 0px;
+		width: 904px;
+		padding-bottom: 50px;
+                 height: 100%;
+               border: 0px solid red;
+            
+
+	/* Height of the footer */
+	}
+
+
+
+	#footer {
+              /*   padding-top: 20px; */
+		 /*position: absolute; */
+		bottom: 0;
+		width: 100%;
+		height: 50px;	
+
+color: #666666;
+LETTER-SPACING: 1px;
+TEXT-ALIGN: justify; 
+font-size: 0.7em;
+font-weight: normal;
+
+ 
+		/* Height of the footer */
+		
+	}
+.tlimg {
+		width: 225px;
+	}
+
+.tablefoot{
+ 
+padding-left: 28%;
+}
+.bodyfull {
+
+  padding-left: 0%; FLOAT: left; WIDTH: 100%; 
+FONT-FAMILY: Avenir-Heavy, Helvetica,SALFrutiger-Medium, FrutigerLTStd-Bold,SALFrutiger-Medium,Helvetica,Candara,AvantGarde Bk BT, Arial, sans-serif, Verdana;
+color: #666666;
+
+font-size: .8em;
+font-weight: normal;
+LETTER-SPACING: 1px;
+TEXT-ALIGN: justify;
+}
+.left {
+position: absolute;
+  padding-left: 20%;
+
+}
+
+.right {
+    position: absolute;
+	padding-left: 60%;
+
+}
+
+
+.readmorecnt {
+  padding-left: 17%; FLOAT: left; WIDTH: 80%; 
+FONT-FAMILY: Helvetica,SALFrutiger-Medium, FrutigerLTStd-Bold,SALFrutiger-Medium,Helvetica,Candara,AvantGarde Bk BT, Arial, sans-serif, Verdana;
+color: #666666;
+LETTER-SPACING: 1px;
+TEXT-ALIGN: justify; 
+font-size: 0.8em;
+font-weight: normal;
+border: 0 px solid red;
+}
+
+.tdhead{
+
+  WIDTH: 80%; 
+FONT-FAMILY: Edwardian Script ITC,Helvetica,SALFrutiger-Medium, FrutigerLTStd-Bold,SALFrutiger-Medium,Helvetica,Candara,AvantGarde Bk BT, Arial, sans-serif, Verdana;
+color: #996600;
+font-size: 2em;
+}
+.goa {
+padding-left: 14%; FLOAT: left; height: 792; align: center;
+
+}
+.ringimage {
+padding-left: 3%; FLOAT: left; height: 792; 
+
+}
+.ringimage_1 {
+padding-left:7%; FLOAT: left; height: 792;
+}
+
+.cart{
+    padding-left:1%; FLOAT: left; height: 792;
+}
+
+.ringimg{
+    width: 225px;
+    height: 260px;
+}
+
+
+.ringimageb {
+padding-left: 14%; FLOAT: left; height: 792; 
+
+}	
+.appointment {
+position: absolute;
+padding-top: 0;
+WIDTH: 291px; HEIGHT: 24px;  
+left: 5%;
+
+border: 0px solid black;
+}
+
+
+
+
+.apimg:hover img{
+border: 1px solid #996600;
+}
+
+
+
+
+.searc {
+position: absolute;
+padding-top: 0%;
+WIDTH: 194px; HEIGHT: 59px;  
+left: 77%;
+border: 0px solid black;
+}
+.pno {
+position: absolute;
+padding-top: 3%;
+WIDTH: 194px; HEIGHT: 59px;  
+left: 77%;
+border: 0px solid black;
+}
+
+#slidebar{
+position: absolute;
+WIDTH: 38px; HEIGHT: 301px;  
+left: 0%;
+float: left;
+}
+
+#slidebarother{
+position: absolute;
+WIDTH: 38px; HEIGHT: 301px;  
+left: 0%;
+}
+
+.headline {
+WIDTH: 431px; HEIGHT: 70px;  
+left: 5%;
+padding-bottom: 0px;
+border: 0px solid black;
+}
+/* other non-essential CSS */
+	
+
+
+        .clear {
+	CLEAR: both;
+}
+
+/*.login{
+    padding-left: 6%; FLOAT: left; WIDTH: 50%;
+    padding-top: 0px;
+}*/
+
+.text{
+    width: 100px;
+    padding: 3px;
+    border-radius: 5px;
+    background-color: #383636;
+    border: 0px solid #000000;
+    font-family: Cambria, Cochin, Georgia, serif;
+    color: #A1A9A9;
+    
+font-size: 13px;
+background-image: url('./aless/search box.png');
+}
+
+.text_1{
+    color: #A1A5B9;
+}
+    
+  
+  

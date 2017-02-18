@@ -1,0 +1,294 @@
+/** 
+ * CustReleaseEntity.java created on Mon Jun 03 15:52:10 IST 2013
+ */
+package com.st.ict.qs.notice.web.pages;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+
+import java.lang.reflect.InvocationTargetException;
+import java.text.ParseException;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import com.st.ict.qs.general.util.ldap.service.LDAPService;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.st.ict.qs.notice.manager.ReferentialManager;
+
+import com.st.ict.qs.general.util.ldap.STEmployee;
+import com.st.ict.qs.notice.businessbean.CustomerGroup;
+import com.st.ict.qs.notice.businessbean.ReleaseEntity;
+import com.st.ict.qs.notice.common.BeanConverter;
+import com.st.ict.qs.notice.manager.BeanFactory;
+import com.st.ict.qs.notice.manager.FSEConfigurationManager;
+import com.st.ict.qs.notice.manager.ReferentialManager;
+import com.st.ict.qs.notice.web.constants.ApplicationConstant;
+import com.st.ict.qs.notice.web.constants.PageConstants;
+import com.st.ict.qs.notice.web.dataservice.CustomerGroupingEntityDataService;
+import com.st.ict.qs.notice.businessbean.ReleaseEntity;
+import com.st.ict.qs.notice.businessbean.Reviewer;
+import com.st.ict.qs.notice.common.BeanConverter;
+import com.st.ict.qs.notice.manager.BeanFactory;
+import com.st.ict.qs.notice.manager.FSEConfigurationManager;
+import com.st.ict.qs.notice.manager.ReviewManager;
+import com.st.ict.qs.notice.web.constants.PageConstants;
+import com.st.ict.qs.notice.web.dataservice.CustomerReleaseEntityDataService;
+import com.st.ict.qs.notice.web.formBean.CustReleaseEntityBean;
+import com.st.ict.qs.notice.web.formBean.ReleaseEntityBean;
+import com.st.ict.qs.notice.web.formBean.ReviewersBean;
+import com.st.ict.qs.notice.web.formBean.CustReleaseEntityBean;
+import com.st.ict.qs.notice.web.formBean.CustomerGroupBean;
+import com.st.ict.qs.notice.web.formBean.ReleaseEntityBean;
+
+import st.ict.qs.core.basepage.AppDefaultPage;
+import st.ict.qs.core.manager.ManagerException;
+import st.ict.qs.core.manager.ManagerException;
+import st.ict.qs.core.util.GeneralUtils;
+import st.liotrox.WRequest;
+import st.liotrox.db.dataservice.DataService;
+import st.liotrox.page.ajax.AjaxEvent;
+
+/** 
+ * Class created with LX component wizard
+ */
+public class CustReleaseEntity extends AppDefaultPage
+{
+	static Logger logger = LoggerFactory.getLogger(CustReleaseEntity.class);
+	private LDAPService ldapService=(LDAPService)BeanFactory.getBean("ldapUtils");
+	
+	ReferentialManager referentialManager=(ReferentialManager)getBean(PageConstants.REF_MGR);
+
+	// FSEConfigurationManager fseConfiguationManager=(FSEConfigurationManager)getBean(PageConstants.FSE_CONFIGURATION_MANAGER);
+	
+	public DataService getCustomerReleaseEntityDataService()
+	{
+		WRequest request = WRequest.getCurrentInstance();
+		DataService dataService = (CustomerReleaseEntityDataService) request.getSessionAttribute("ajaxGrid_CustomerReleaseEntityDataService");
+		if(dataService == null)
+		{
+			dataService = new CustomerReleaseEntityDataService();
+			request.setSessionAttribute("ajaxGrid_CustomerReleaseEntityDataService", dataService);
+		}
+
+		logger.debug("CustomerReleaseEntity : getCustomerReleaseEntityDataService : End");
+
+		return dataService;
+	}
+	public void saveReleaseEntity(List<CustReleaseEntityBean> custReleaseEntityBeans) throws ManagerException
+	{
+		List<ReleaseEntity> releaseEntities;
+		FSEConfigurationManager fseConfiguationManager = (FSEConfigurationManager) BeanFactory.getBean(PageConstants.FSE_CONFIGURATION_MANAGER);
+		try{
+			releaseEntities=BeanConverter.custReleaseEntityFormBeanListToBizListConverter(custReleaseEntityBeans);
+			fseConfiguationManager.saveReleaseEntity(releaseEntities);
+		}catch(IllegalAccessException iE)
+		{
+			iE.printStackTrace();
+		}
+		catch (InvocationTargetException iTE) {
+			iTE.printStackTrace();
+		}
+		
+	}
+	public void deleteReleaseEntity(List<CustReleaseEntityBean> custReleaseEntityBeans) throws ManagerException
+	{
+		List<ReleaseEntity> releaseEntities=null;
+		FSEConfigurationManager fseConfiguationManager = (FSEConfigurationManager) BeanFactory.getBean(PageConstants.FSE_CONFIGURATION_MANAGER);
+		try{
+			releaseEntities=BeanConverter.custReleaseEntityFormBeanListToBizListConverter(custReleaseEntityBeans);
+			//fseConfiguationManager.deleteReleaseEntity(releaseEntities);
+		}catch(IllegalAccessException iE)
+		{
+			iE.printStackTrace();
+		}
+		catch (InvocationTargetException iTE) {
+			iTE.printStackTrace();
+		}
+		
+	}
+	public List<CustReleaseEntityBean> getReleaseEntityList() throws ManagerException{
+		List<CustReleaseEntityBean> custReleaseEntityBeans=null;
+		FSEConfigurationManager fseConfiguationManager=(FSEConfigurationManager)BeanFactory.getBean(PageConstants.FSE_CONFIGURATION_MANAGER);
+		List<ReleaseEntity> releaseEntities=fseConfiguationManager.getReleaseEntities();
+		try {
+			custReleaseEntityBeans=BeanConverter.bizListToCustReleaseEntityFormBeanListConverter(releaseEntities);
+		} catch (IllegalAccessException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (InvocationTargetException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return custReleaseEntityBeans;
+	}
+	
+	
+	
+	public static void replaceCustomerRelease(WRequest request,List<ReleaseEntityBean> custReleaseBeanList) throws Exception {
+		
+			logger.info("CustReleaseEntity : replaceCustomerRelease : Start");
+		
+			FSEConfigurationManager fseConfiguationManager = (FSEConfigurationManager)BeanFactory.getBean(PageConstants.FSE_CONFIGURATION_MANAGER);
+			List<ReleaseEntity> custReleaseList=new ArrayList<ReleaseEntity>();
+			try{
+					BeanConverter.CustReleaseFormToCustConverter(custReleaseBeanList,custReleaseList);
+					
+					
+					fseConfiguationManager.saveCustomerRelease(custReleaseList);
+			}
+			catch(ManagerException me)
+			{
+				logger.error("CustReleaseEntity : replaceCustomerRelease : Manager Exception Caught" + GeneralUtils.getStackTrace(me));
+				throw me;
+			}catch(Exception e)
+			{
+				logger.error("CustReleaseEntity : replaceCustomerRelease : Exception Caught" + GeneralUtils.getStackTrace(e));
+				throw e;
+			}
+				logger.info("CustReleaseEntity : replaceCustomerRelease : Ended");
+					
+		}
+
+	public static void deleteCustomerRelease(WRequest request,List<ReleaseEntityBean> deleteCustomerReleaseBean) throws Exception{
+		
+			List<ReleaseEntity> deleteCustReleaseList=new ArrayList <ReleaseEntity>();
+			FSEConfigurationManager fseConfiguationManager = (FSEConfigurationManager)BeanFactory.getBean(PageConstants.FSE_CONFIGURATION_MANAGER);
+			try{
+				BeanConverter.deleteCustReleaseList2deleteCustomerReleaseBean(deleteCustomerReleaseBean, deleteCustReleaseList);
+				
+				
+				for(ReleaseEntity ReleaseEntity : deleteCustReleaseList)
+				{
+					fseConfiguationManager.deleteFseCustomerRelease(ReleaseEntity.getInternalId());
+				}
+			}
+		catch (ManagerException e) 
+		{
+			log.error("AdminSupplierKeyProcess : deleteCustomerRelease : Manager Exception Caught"+ GeneralUtils.getStackTrace(e));
+			
+		}catch (Exception e) {
+			log.error("AdminSupplierKeyProcess : deleteCustomerRelease : Exception Caught"+ GeneralUtils.getStackTrace(e));
+			
+		} 
+		}
+
+	/*public List<CustReleaseEntityBean> getCustomerReleaseCode() throws IllegalAccessException, InvocationTargetException, ParseException, ManagerException
+		{
+			FSEConfigurationManager fseConfiguationManager = (FSEConfigurationManager)BeanFactory.getBean(PageConstants.FSE_CONFIGURATION_MANAGER);
+			List<ReleaseEntity> ReleaseEntity=fseConfiguationManager.getCustomerReleaseCode();
+			List<CustReleaseEntityBean> custReleaseBean=BeanConverter.CustReleazeBizToFormConverter(ReleaseEntity);
+		return custReleaseBean;
+		}*/
+	
+	
+public Map getReleaseFSECoordinatorContact(WRequest request, AjaxEvent event) 
+{
+	Map details = new HashMap();
+	try{
+	
+		int startLimit = request.getParameterAsInteger("start", 0);
+		int pageSize = request.getParameterAsInteger("limit", 10);
+
+		List list = new ArrayList();
+
+		String searchValue = request.getParameter("query");
+
+		
+
+		if (!(searchValue != null && searchValue.trim().length() > 0)) {
+
+	
+
+			details.put(ApplicationConstant.MAP_COUNT, 0);
+			details.put(ApplicationConstant.MAP_COLLECTION, list);
+
+		//	log.info("SearchIcc : getEmployeeDetails : End");
+			return details;
+		}
+
+		List<STEmployee> stEmployeeDetails=ldapService.getUserInfoForCN(searchValue);
+
+
+		details.put(ApplicationConstant.MAP_COUNT, stEmployeeDetails.size());
+
+		int tempLimit = startLimit + pageSize;
+		if ((tempLimit) < stEmployeeDetails.size()) {
+			details.put(ApplicationConstant.MAP_COLLECTION,
+					stEmployeeDetails.subList(startLimit, tempLimit));
+		} else {
+			details.put(
+					ApplicationConstant.MAP_COLLECTION,
+					stEmployeeDetails.subList(startLimit, startLimit
+							+ (stEmployeeDetails.size() - startLimit)));
+		}
+		// details.put(ApplicationConstant.MAP_COLLECTION, list);
+
+		
+		return details;
+	
+
+	}catch(Exception e){
+		log.error("CustReleaseEntity : getFSECoordinatorContact : ManagerException Caught "+GeneralUtils.getStackTrace(e));
+		
+		
+	}
+	return details;
+
+}
+
+//public Map getCpCombo(WRequest request, AjaxEvent event) {
+	/*log.info("CustReleaseEntity : getCpCombo : Start");
+	Map details = null;
+	String searchValue = request.getParameter("query");
+	
+
+	if (searchValue == null)
+		searchValue = "";
+	else
+		searchValue = searchValue.trim();
+	
+	try {
+		String keyProcess = request.getParameter(ApplicationConstant.ICC_SESSION_CODEVAL);
+		
+		logEvent=builder.createDataAccess(request, "CustReleaseEntity : getCpCombo");
+		logger.log(logEvent);
+					
+		details = refManager.getPlant(keyProcess,searchValue);
+	} catch (Exception e) {
+		// e.printStackTrace();
+		log.error("CustReleaseEntity : getCpCombo : Exception Caught "
+				+ GeneralUtils.getStackTrace(e));
+		
+		
+		logEvent=builder.createCriticalError(request, e.getMessage());
+		logger.log(logEvent);
+	}*/
+//	return null;
+//}
+public Map getCustGroupDescRelease(WRequest request, AjaxEvent event) {
+	logger.info("CustReleaseEntity : getCustGroupDescRelease : Start");
+	Map details = null;
+	//code for search
+	String searchValue = request.getParameter("query");
+	
+	if (searchValue == null)
+		searchValue = "";
+	else
+		searchValue = searchValue.trim();
+			
+	try {
+		details = referentialManager.getCustDescRelease(searchValue);
+	} catch (Exception e) {
+		// e.printStackTrace();
+		logger.error("CustReleaseEntity : getCustGroupDescRelease : Exception Caught "
+				+ GeneralUtils.getStackTrace(e));
+	}
+	return details;
+}
+}	
+		
+	

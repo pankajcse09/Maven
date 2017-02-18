@@ -1,0 +1,16 @@
+<?xml version="1.0"?>
+
+<digester-rules>
+<object-create-rule pattern="MAIL_RULES" classname="com.st.ict.core.mail.beans.MailRuleEventList"/>
+
+   <pattern value="MAIL_RULES/Event">
+      <object-create-rule classname="com.st.ict.core.mail.beans.MailRuleEvent"/>
+         <call-method-rule pattern="ID" methodname="setId"  paramcount="0" />
+         <call-method-rule pattern="TO" methodname="setTo"  paramcount="0" />
+         <call-method-rule pattern="CC" methodname="setCc"  paramcount="0" />
+         <call-method-rule pattern="TEMPLATE" methodname="setTemplate"  paramcount="0" />
+         <call-method-rule pattern="SUBJECT" methodname="setSubject"  paramcount="0" />
+      <set-next-rule methodname="addMailEvent"/>
+   </pattern>
+
+</digester-rules>

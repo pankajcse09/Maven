@@ -1,0 +1,19 @@
+package com.st.ict.qs.notice.dao.impl;
+
+import java.util.List;
+
+import st.ict.qs.core.db.DAOException;
+
+import com.st.ict.qs.notice.dao.HomeDAO;
+
+public class HomeDAOImpl implements HomeDAO{
+
+	@Override
+	public List getMyNotice(String euid) throws DAOException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+ 
+	
+
+}

@@ -1,0 +1,30 @@
+<?xml version="1.0"?>
+
+<digester-rules>
+<object-create-rule pattern="pageVisibility" classname="st.ict.qs.core.basevisibility.ConditionList"/>
+
+   <pattern value="pageVisibility/condition">
+      <object-create-rule classname="st.ict.qs.core.basevisibility.Condition"/>
+      <set-properties-rule>
+            <alias attr-name="status" prop-name="status"/>
+         </set-properties-rule>
+         <set-properties-rule>
+            <alias attr-name="role" prop-name="role"/>
+         </set-properties-rule>
+
+     <pattern value="item">
+         <object-create-rule classname="st.ict.qs.core.basevisibility.Items"/>
+         <set-properties-rule>
+            <alias attr-name="display" prop-name="display"/>
+         </set-properties-rule>
+         <set-properties-rule>
+            <alias attr-name="value" prop-name="value"/>
+         </set-properties-rule>
+
+         <set-next-rule methodname="addItem"/>
+      </pattern>
+
+      <set-next-rule methodname="addCondition"/>
+   </pattern>
+
+</digester-rules>

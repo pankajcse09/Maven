@@ -1,0 +1,539 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- !DOCTYPE beans PUBLIC "-//SPRING//DTD BEAN//EN" "http://www.springframework.org/dtd/spring-beans.dtd" -->
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p" xmlns:jaxws="http://cxf.apache.org/jaxws"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd
+                        http://www.springframework.org/schema/aop 
+                        http://www.springframework.org/schema/aop/spring-aop.xsd
+                        http://cxf.apache.org/jaxws  
+                        http://cxf.apache.org/schemas/jaxws.xsd">
+
+
+	<!-- <context:annotation-config/> -->
+	<!-- <context:component-scan base-package="com.st.ict.qs.notice"/> -->
+	<!-- <import resource="classpath:META-INF/cxf/cxf.xml" /> <import resource="classpath:META-INF/cxf/cxf-servlet.xml" 
+		/> <import resource="classpath:META-INF/cxf/cxf-extension-soap.xml" /> <import 
+		resource="classpath:META-INF/cxf/cxf-extension-http.xml" /> -->
+
+
+	<import resource="mailContext.xml" />
+
+	<bean id="propertyConfigurer"
+		class="org.jasypt.spring.properties.EncryptablePropertyPlaceholderConfigurer">
+		<constructor-arg ref="configurationEncryptor" />
+		<property name="locations">
+			<list>
+				<value>classpath:mail.properties</value>
+				<value>classpath:database.properties</value>
+				<value>classpath:ldap.properties</value>
+				<value>classpath:webServices.properties</value>
+			</list>
+		</property>
+	</bean>
+
+	<bean id="configurationEncryptor" class="org.jasypt.encryption.pbe.StandardPBEStringEncryptor">
+		<property name="config" ref="environmentVariablesConfiguration" />
+	</bean>
+
+	<bean id="environmentVariablesConfiguration"
+		class="org.jasypt.encryption.pbe.config.EnvironmentStringPBEConfig">
+		<property name="algorithm" value="PBEWithMD5AndDES" />
+		<property name="password" value="noticeApp" />
+	</bean>
+
+	<bean id="dataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>${hibernate.connection.driver_class}</value>
+		</property>
+		<property name="url">
+			<value>${hibernate.connection.url}</value>
+		</property>
+		<property name="username">
+			<value>${hibernate.connection.username}</value>
+		</property>
+		<property name="password">
+			<value>${hibernate.connection.password}</value>
+		</property>
+	</bean>
+
+	<!-- Esicom2 data source -->
+	<bean id="esicom2DataSource"
+		class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName">
+			<value>${Esicom2.hibernate.connection.driver_class}</value>
+		</property>
+		<property name="url">
+			<value>${Esicom2.hibernate.connection.url}</value>
+		</property>
+		<property name="username">
+			<value>${Esicom2.hibernate.connection.username}</value>
+		</property>
+		<property name="password">
+			<value>${Esicom2.hibernate.connection.password}</value>
+		</property>
+	</bean>
+
+	<import resource="ldapContext.xml" />
+
+	<!-- ICC Hibernate SessionFactory -->
+	<import resource="webServicesContext.xml"/>
+	<import resource="mailContext.xml"/>
+	<bean id="sessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+
+		<property name="dataSource" ref="dataSource" />
+
+		<property name="packagesToScan" value="com.st.ict.qs.notice.businessbean" />
+
+
+		<!-- <property name="configLocation"> <value>classpath:hibernate.cfg.xml</value> 
+			</property> -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<prop key="hibernate.c3p0.minPoolSize">${hibernate.c3p0.minPoolSize}</prop>
+				<prop key="hibernate.c3p0.maxPoolSize">${hibernate.c3p0.maxPoolSize}</prop>
+				<prop key="hibernate.c3p0.timeout">${hibernate.c3p0.timeout}</prop>
+				<prop key="hibernate.c3p0.max_statement">${hibernate.c3p0.max_statement}</prop>
+
+			</props>
+		</property>
+	</bean>
+
+
+	<!-- Esicom2 Hibernate SessionFactory -->
+	<bean id="esicom2SessionFactory"
+		class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
+
+		<property name="dataSource" ref="esicom2DataSource" />
+		<!-- <property name="configLocation"> <value>classpath:hibernate.cfg.xml</value> 
+			</property> -->
+		<property name="hibernateProperties">
+			<props>
+				<prop key="hibernate.dialect">${Esicom2.hibernate.dialect}</prop>
+				<prop key="hibernate.show_sql">${hibernate.show_sql}</prop>
+				<!-- <prop key="hibernate.c3p0.minPoolSize">${hibernate.c3p0.minPoolSize}</prop> 
+					<prop key="hibernate.c3p0.maxPoolSize">${hibernate.c3p0.maxPoolSize}</prop> 
+					<prop key="hibernate.c3p0.timeout">${hibernate.c3p0.timeout}</prop> <prop 
+					key="hibernate.c3p0.max_statement">${hibernate.c3p0.max_statement}</prop> -->
+			</props>
+		</property>
+	</bean>
+
+
+
+
+
+	<!-- Transaction manager for a single Hibernate SessionFactory (alternative 
+		to JTA) -->
+	<bean id="transactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<!-- Esicom2 transaction manager -->
+	<bean id="esicom2TransactionManager"
+		class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+		<property name="sessionFactory" ref="esicom2SessionFactory" />
+	</bean>
+
+	<!-- Manager bindings -->
+	<bean id="txProxyTemplate" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="transactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED, -Exception</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="esicom2txProxyTemplate" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager" ref="esicom2TransactionManager" />
+		<property name="transactionAttributes">
+			<props>
+				<prop key="*">PROPAGATION_REQUIRED</prop>
+			</props>
+		</property>
+	</bean>
+
+
+	<bean id="noticeDAO" class="com.st.ict.qs.notice.dao.impl.NoticeDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="plmIntegrationDAO" class="com.st.ict.qs.notice.dao.impl.PlmIntegrationDAOImpl">
+		<property name="sessionFactory" ref="esicom2SessionFactory" />
+	</bean>
+	<bean id="teamDAO"
+		class="com.st.ict.qs.notice.dao.impl.TeamDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="teamManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.TeamManagerImpl">
+				<property name="teamDAO">
+					<ref local="teamDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="billingBacklogIntegrationDAO"
+		class="com.st.ict.qs.notice.dao.impl.BillingBacklogIntegrationDAOImpl">
+		<property name="sessionFactory" ref="esicom2SessionFactory" />
+	</bean>
+	
+	<bean id="noticeManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.NoticeManagerImpl">
+				<property name="noticeDAO">
+					<ref local="noticeDAO" />
+				</property>
+				<property name="teamManager">
+					<ref local="teamManager" />
+				</property>
+				<property name="pcmsIntegrationManager">
+					<ref local="pcmsIntegrationManager" />
+				</property>
+				<property name="ldapUtils">
+					<ref local="ldapUtils" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+
+	
+	<bean id="plmIntegrationManager" parent="esicom2txProxyTemplate">
+		<property name="target">
+			<bean
+				class="com.st.ict.qs.notice.integration.impl.PlmIntegrationManagerImpl">
+				<property name="plmIntegrationDAO">
+					<ref local="plmIntegrationDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="billingBacklogIntegrationManager" parent="esicom2txProxyTemplate">
+		<property name="target">
+			<bean
+				class="com.st.ict.qs.notice.integration.impl.BillingBacklogIntegrationManagerImpl">
+				<property name="billingBacklogIntegrationDAO">
+					<ref local="billingBacklogIntegrationDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="reviewDAO" class="com.st.ict.qs.notice.dao.impl.ReviewDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="reviewManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.ReviewManagerImpl">
+				<property name="noticeMgr" ref="noticeManager"/>
+				<property name="notificationMgr" ref="notificationManager"/>
+				<property name="impactedProductMgr" ref="impactedProductManager"/>
+				<property name="excelFileWriter" ref="excelFileWriter"/>
+				<property name="reviewDAO" ref="reviewDAO"></property>
+				<property name="noticeMailManager" ref="noticeMailManager"></property>
+			</bean>
+		</property>
+	</bean>
+		<bean id="reviewConfigDAO" class="com.st.ict.qs.notice.dao.impl.ReviewConfigDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	
+	<bean id="reviewConfigManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.ReviewConfigManagerImpl">
+				<property name="reviewConfigDAO" ref="reviewConfigDAO"></property>
+			</bean>
+		</property>
+	</bean>
+
+
+	<bean id="fseConfigurationDAO" class="com.st.ict.qs.notice.dao.impl.FSEConfigurationDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+
+	<bean id="fseConfigurationManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.FSEConfigurationManagerImpl">
+				<property name="fseConfigurationDAO" ref="fseConfigurationDAO"></property>
+			</bean>
+		</property>
+	</bean>
+
+
+	<bean id="impactedProductDAO" class="com.st.ict.qs.notice.dao.impl.ImpactedProductDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="impactedProductManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.ImpactedProductManagerImpl">
+				<property name="impactedProductDAO" ref="impactedProductDAO"></property>
+				<property name="noticeManager">
+					<ref local="noticeManager" />
+				</property>
+				<property name="plmIntegrationManager">
+					<ref local="plmIntegrationManager" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<bean id="reportManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.ReportManagerImpl">
+				<property name="notificationManager" ref="notificationManager"></property>
+				<property name="excelFileWriter" ref="excelFileWriter"></property>
+				<property name="impactedProductManager" ref="impactedProductManager"></property>
+					<property name="approvalManager" ref="approvalManager"></property>
+			</bean>
+		</property>
+	</bean>
+	
+	<bean id="feedbackActionDAO" class="com.st.ict.qs.notice.dao.impl.FeedbackActionDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory"></property>
+	</bean>
+	<bean id="feedbackActionManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.FeedbackActionManagerImpl">
+				<property name="feedbackActionDAO" ref="feedbackActionDAO"></property>
+				<property name="actionIntegrationManager" ref="actionIntegrationManager"></property>
+				
+			</bean>
+		</property>
+	</bean>
+
+
+<bean id="excelFileWriter" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.ExcelFileWriterImpl">
+				
+			</bean>
+		</property>
+	</bean>
+
+
+
+
+
+
+
+
+
+
+	<bean id="notificationDAO" class="com.st.ict.qs.notice.dao.impl.NotificationDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+
+	<bean id="notificationManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.NotificationManagerImpl">
+				<property name="billingBacklogIntegrationManager">
+					<ref local="billingBacklogIntegrationManager" />
+				</property>
+
+				<property name="notificationBusinessRule">
+					<ref local="notificationBusinessRule" />
+				</property>
+
+				<property name="fseConfigurationManager">
+					<ref local="fseConfigurationManager" />
+				</property>
+				<property name="impactedProductManager">
+					<ref local="impactedProductManager" />
+				</property>
+ 				<property name="noticeManager"> 
+ 					<ref local="noticeManager" /> 
+ 				</property> 
+
+				<property name="notificationDAO">
+					<ref local="notificationDAO" />
+				</property>
+
+			</bean>
+		</property>
+	</bean>
+
+
+
+
+
+
+	<bean id="notificationBusinessRule"
+		class="com.st.ict.qs.notice.manager.impl.NotificationBusinessRuleImpl">
+		<property name="fseConfigurationDAO">
+			<ref local="fseConfigurationDAO" />
+		</property>
+
+	</bean>
+	
+	<bean id="feedbackConfigDAO" class="com.st.ict.qs.notice.dao.impl.FeedbackConfigDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="documentDAO" class="com.st.ict.qs.notice.dao.impl.DocumentDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	<bean id="documentManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.DocumentManagerImpl">
+				<property name="documentDAO">
+					<ref local="documentDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+
+	<bean id="feedbackConfigManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.FeedbackConfigManagerImpl">
+				<property name="feedbackConfigDAO">
+					<ref local="feedbackConfigDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+	<!-- <bean id="pcmsIntegrationManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="com.st.ict.qs.notice.integration.impl.PcmsIntegrationManagerImpl">
+			</bean>
+		</property>
+	</bean> -->
+
+	<!-- bean injected for batch Start -->
+	<bean id="noticeMailManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.MailManagerImpl">
+				<property name="mailManager">
+					<ref local="mailManager" />
+				</property>
+				<property name="noticeManager">
+					<ref local="noticeManager" />
+				</property>
+				<property name="notificationManager">
+					<ref local="notificationManager" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+	<bean id="referentialManager" parent="txProxyTemplate">
+	<property name="target">
+		<bean class="com.st.ict.qs.notice.manager.impl.ReferentialManagerImpl">
+			<property name="referentialDAO">
+				<ref local="referentialDAO" />
+			</property>
+		</bean>
+	</property>
+</bean>
+<bean id="referentialDAO" class="com.st.ict.qs.notice.dao.impl.ReferentialDAOImpl">
+  	<property name="sessionFactory" ref="sessionFactory" />
+ </bean>
+	<!-- bean injected for batch End -->
+	
+	<bean id="homeDAO" class="com.st.ict.qs.notice.dao.impl.HomeDAOImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+ 	</bean>
+ 
+	<bean id="homeManager" parent="txProxyTemplate">
+	<property name="target">
+		<bean class="com.st.ict.qs.notice.manager.impl.HomeManagerImpl">
+			<property name="homeDAO">
+				<ref local="homeDAO" />
+			</property>
+		</bean>
+	</property>
+	</bean>
+
+	
+<bean id="approvalDAO"
+		class="com.st.ict.qs.notice.dao.impl.ApprovalDAOImpl">
+		<property name="sessionFactory" ref="sessionFactory" />
+	</bean>
+	
+	<bean id="approvalManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean class="com.st.ict.qs.notice.manager.impl.ApprovalManagerImpl">
+				<property name="reviewManager">
+					<ref local="reviewManager" />
+				</property>
+				<property name="noticeDAO">
+					<ref local="noticeDAO" />
+				</property>
+				<property name="approvalDAO">
+					<ref local="approvalDAO" />
+				</property>
+			</bean>
+		</property>
+	</bean>
+
+
+	<bean id="userPreferenceDAO" class="com.st.ict.qs.notice.dao.impl.UserPreferenceDAOImpl">
+                                <property name="sessionFactory" ref="sessionFactory" />
+                </bean>
+                <bean id="userPreferenceManager" parent="txProxyTemplate">
+                                <property name="target">
+                                                <bean class="com.st.ict.qs.notice.manager.impl.UserPreferenceManagerImpl">
+                                                                <property name="userPreferenceDAO">
+                                                                                <ref local="userPreferenceDAO" />
+                                                                </property>
+                                                </bean>
+                                </property>
+                </bean>
+
+<bean id="searchDAO" class="com.st.ict.qs.notice.dao.impl.SearchDAOImpl">
+                                <property name="sessionFactory" ref="sessionFactory" />
+                </bean>
+
+                <bean id="searchManager" parent="txProxyTemplate">
+                                <property name="target">
+                                                <bean class="com.st.ict.qs.notice.manager.impl.SearchManagerImpl">
+                                                                <property name="searchDAO">
+                                                                                <ref local="searchDAO" />
+                                                                </property>
+                                                </bean>
+                                </property>
+                </bean>
+
+
+<bean id="sampleDAO" class="com.st.ict.qs.notice.dao.impl.SampleDAOImpl">
+  		<property name="sessionFactory" ref="sessionFactory" />
+ 	</bean>
+ 
+	 <bean id="sampleManager" parent="txProxyTemplate">
+		<property name="target">
+			<bean
+				class="com.st.ict.qs.notice.manager.impl.SampleManagerImpl">
+				<property name="sampleDAO">
+					<ref local="sampleDAO" />
+				</property>
+				<property name="impactedProductManager">
+					<ref local="impactedProductManager" />
+				</property>
+	
+			</bean>
+		</property>
+	</bean>
+	
+
+</beans>
+
+
+
+
+
+

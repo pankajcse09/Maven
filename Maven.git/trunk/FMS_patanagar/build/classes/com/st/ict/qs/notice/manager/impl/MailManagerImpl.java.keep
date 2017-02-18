@@ -1,0 +1,180 @@
+package com.st.ict.qs.notice.manager.impl;
+
+import java.io.FileNotFoundException;
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.mail.MessagingException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+import org.springframework.core.io.Resource;
+import org.springframework.mail.MailException;
+
+import st.ict.qs.core.manager.ManagerException;
+import st.ict.qs.core.util.GeneralUtils;
+import batchFiles.MailNotice;
+
+import com.st.ict.core.mail.beans.UserBean;
+import com.st.ict.core.mail.exception.MailEventException;
+import com.st.ict.core.mail.exception.MailServiceException;
+import com.st.ict.qs.notice.businessbean.Notification;
+import com.st.ict.qs.notice.businessbean.NotificationContacts;
+import com.st.ict.qs.notice.businessbean.NotificationDocument;
+import com.st.ict.qs.notice.manager.BeanFactory;
+import com.st.ict.qs.notice.manager.MailManager;
+import com.st.ict.qs.notice.manager.NoticeManager;
+import com.st.ict.qs.notice.manager.NotificationManager;
+import com.st.ict.qs.notice.web.constants.ApplicationConstant;
+
+public class MailManagerImpl implements MailManager{
+	private static Logger logger = LoggerFactory.getLogger(MailManagerImpl.class);
+	private com.st.ict.core.mail.MailManager mailManager;
+	private NoticeManager noticeManager;
+	private NotificationManager notificationManager;
+	
+	public NotificationManager getNotificationManager() {
+		return notificationManager;
+	}
+
+	public void setNotificationManager(NotificationManager notificationManager) {
+		this.notificationManager = notificationManager;
+	}
+
+	public NoticeManager getNoticeManager() {
+		return noticeManager;
+	}
+
+	public void setNoticeManager(NoticeManager noticeManager) {
+		this.noticeManager = noticeManager;
+	}
+
+	public com.st.ict.core.mail.MailManager getMailManager() {
+		return mailManager;
+	}
+
+	public void setMailManager(com.st.ict.core.mail.MailManager mailManager) {
+		this.mailManager = mailManager;
+	}
+	
+	
+	
+	public void sendNotificatonMail(String mailEvent) throws ManagerException {
+		
+		String comment = "Send mail to Customer from batch";
+		List <Notification> notificationList = null;
+	
+		UserBean userMailBean = null;
+		MailNotice mailNotice = null;
+		List<UserBean> beanList = new ArrayList<UserBean>();
+		
+		 List<Resource> resourceList = null;
+		try {
+			logger.debug("MailManagerImpl : sendNoticficatonMail : Starting");
+			mailManager = (com.st.ict.core.mail.MailManager) BeanFactory
+					.getBean("mailManager");
+			  ApplicationContext ctx = new ClassPathXmlApplicationContext("applicationContext.xml");			    
+			  		//Getting notificationList
+			    	notificationList = notificationManager.getNotification();
+		
+			   if (!notificationList.isEmpty()) {
+				   for(Notification notification : notificationList){
+					   int noticeId =	notification.getNotice().getInternalId();
+					   if(ApplicationConstant.AUTO_EMAIL_Y.equalsIgnoreCase(notification.getAutoEmail())){
+						   mailNotice = new MailNotice();
+						   //Getting Attached Document with notification
+						   List<NotificationDocument> documentsList  = notification.getDocumentList();
+						   
+						   if  (!documentsList.isEmpty()){
+							   for (NotificationDocument document : documentsList){
+								   String fileLocation = "file:/"+document.getStorageLocation() +""+document.getStorageFileName();
+								   logger.debug("MailManagerImpl : sendNoticficatonMail : fileLocation" + fileLocation);
+								   /*FileReader file = new FileReader(fileLocation);
+							        BufferedReader br = new BufferedReader(file);
+							        	String scan;
+							        while((scan = br.readLine()) != null)
+							                {
+							            System.out.println(scan);
+							                }*/
+								   Resource resource= ctx.getResource(fileLocation);
+								   if (null != resource){
+									   resourceList = new ArrayList<Resource>();
+									   resourceList.add(resource);						
+								}
+
+							}
+					}
+
+						if (null != notification.getCustomerGroupCode()){
+							logger.debug("MailManagerImpl : sendNoticficatonMail : CustomerGroupCode" + notification.getCustomerGroupCode());
+							List<NotificationContacts> contactsList  = noticeManager.getCustomerDetails(notification.getCustomerGroupCode());
+							if  (!contactsList.isEmpty()){
+							for (NotificationContacts contacts : contactsList){
+								userMailBean = new UserBean();
+								userMailBean.setUserName(contacts.getCustomerName());
+								userMailBean.setUserEmail(contacts.getEmail());
+								userMailBean.setRoleName(ApplicationConstant.CUSTOMER);
+								beanList.add(userMailBean);
+							}
+						}
+					}
+
+						if (!notification.getNotice().getUserRolesList().isEmpty()){
+						 
+						 for(com.st.ict.qs.notice.businessbean.UserRole userRole : notification.getNotice().getUserRolesList()){
+							 
+							 userMailBean = new UserBean();
+							 userMailBean.setRoleName(userRole.getRole());
+							 userMailBean.setUserEmail(userRole.getUserDetails().getEmail());
+								
+							 if (ApplicationConstant.NOTICE_COORDINATOR.equalsIgnoreCase(userRole.getRole())){
+								  mailNotice.setInternalId(noticeId);
+								  mailNotice.setUserName(userRole.getUserDetails().getName());		
+								  userMailBean.setUserEmail(userRole.getUserDetails().getEmail());
+							 }
+							 beanList.add(userMailBean);
+						 }
+					 }
+					 String fileLocation = "file:/home/bhartip/Desktop/p.txt";			
+						Resource resource= ctx.getResource(fileLocation);			
+						if (null != resource){
+							resourceList = new ArrayList<Resource>();
+							resourceList.add(resource);	
+							mailManager.sendMail(mailEvent, beanList, resourceList, mailNotice, 0);
+						} else
+							mailManager.sendMail(mailEvent, beanList, mailNotice, 0);
+						notification.setStatus(ApplicationConstant.PUBLISHED);
+						notification.setAutoEmail(ApplicationConstant.AUTO_EMAIL_N);
+					notificationManager.saveNotification(notification, noticeId);
+					}
+				}
+			}
+			logger.debug("MailManagerImpl : sendNoticficatonMail : Ending");
+			} catch (FileNotFoundException e) {
+				logger.error("SendNotificationMail : FileNotFoundException : FileNotFoundExceptionCaught "+ GeneralUtils.getStackTrace(e));
+			// mailManager.sendMail(mailEvent, beanList, resourceList, mailNotice, 0);	
+			 
+				for (int i = 0; i < notificationList.size(); i++) {
+					notificationList.get(i).setStatus(
+							ApplicationConstant.PUBLISHED);
+					notificationList.get(i).setAutoEmail("N");
+				}
+				//notificationManager.saveNotification(notificationList);
+				
+			
+			logger.info("MailManagerImpl : sendNoticficatonMail : Ending");
+			}} catch (FileNotFoundException e) {
+			throw new ManagerException(e, e.getMessage());
+		} 
+		 catch (IOException e) {
+			logger.error("SendNotificationMail : MailEventException : MailEventExceptionCaught "+ GeneralUtils.getStackTrace(e));
+			logger.error("SendNotificationMail : MailServiceException : MailServiceExceptionCaught "+ GeneralUtils.getStackTrace(e));
+			logger.error("SendNotificationMail : MailException : MailExceptionCaught "+ GeneralUtils.getStackTrace(e));
+			logger.error("SendNotificationMail : MessagingException : MessagingExceptionCaught "+ GeneralUtils.getStackTrace(e));
+		}
+		}
+	
+	}
+

@@ -1,0 +1,91 @@
+package com.st.ict.qs.notice.manager;
+
+import java.util.List;
+import java.util.Map;
+
+import st.ict.qs.core.manager.ManagerException;
+
+import com.st.ict.qs.notice.businessbean.Document;
+import com.st.ict.qs.notice.businessbean.InputProduct;
+import com.st.ict.qs.notice.businessbean.Notice;
+import com.st.ict.qs.notice.businessbean.Notification;
+import com.st.ict.qs.notice.businessbean.UserDetail;
+import com.st.ict.qs.notice.integration.bean.PcpBean;
+
+
+public interface NoticeManager  {
+	/**
+	 * @param Notice notice, User euid
+	 * @return Notice object 
+	 * for Notice
+	 * @throws ManagerException
+	 */
+	Notice saveNotice(Notice notice, String eduid,
+			List<UserDetail> productManagerList,
+			List<UserDetail> marketingManagerList,
+			List<UserDetail> qualityManagerList) throws ManagerException;
+	
+	/**
+	 * @param Notice's internalId
+	 * @return Notice object 
+	 * for Notice
+	 * @throws ManagerException
+	 */
+	Notice getNotice(int noticeIdFromUi)throws ManagerException;
+	
+	/**
+	 * @return Notice object 
+	 * for Notice
+	 * @throws ManagerException
+	 */
+	Notice getNotice()throws ManagerException;
+	
+	/**
+	 * @param query creteria 
+	 * @return Map of  PCP ID from PCMS Interface
+	 * for Notice
+	 * @throws ManagerException
+	 */
+	Map getPcpIds(String searchValue) throws ManagerException;
+	
+	/**
+	 * @param PCP's pcpId 
+	 * @return PcpBean from PCMS Interface
+	 * for Notice
+	 * @throws ManagerException
+	 */
+	PcpBean getFromPcms(String pcpId) throws ManagerException;
+	
+	/**
+	 * @param customerGroupCode 
+	 * @param PCP's pcpId 
+	 * @return PcpBean from PCMS Interface
+	 * for Notice
+	 * @throws ManagerException
+	 */
+	List getCustomerDetails(String customerGroupCode) throws ManagerException;
+
+
+	/**
+	 * @param Notificaiton's notificationId 
+	 * @return Document  List 
+	 *  for send mail Notification
+	 * @throws ManagerException
+	 */	
+	List<Document> getDocumentList(int id) throws ManagerException;
+
+	/**
+	 * @return Notification List 
+	 *  for send mail Notification
+	 * @throws ManagerException
+	 */	
+	List<Notification> getNotificationDetails()  throws ManagerException ;
+
+	List<InputProduct> getInputProduct(int noticeId) throws ManagerException;
+
+	void saveInputProduct(List<InputProduct> inputProducts)  throws ManagerException;
+
+	
+
+	
+}

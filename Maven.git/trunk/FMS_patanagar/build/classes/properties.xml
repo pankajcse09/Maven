@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE properties SYSTEM "http://java.sun.com/dtd/properties.dtd">
+
+<properties version="1.0">
+
+	<!-- SQL Database Properties -->
+	<entry key="MY_SQL_DRIVER">http://eul2c3.sgp.st.com:8180/pcms/pcpUrl?pcpId=</entry>
+	<entry key="MY_SQL_URL">http://eul2c3.sgp.st.com:8180/pcms/pcpUrl?pcpId=</entry>
+
+	<!-- MongoDB Database Properties -->
+
+
+	<!-- Oracle Database Properties -->
+
+
+	<!-- Derby Database Properties -->
+	<entry key="MY_SQL_DRIVER">org.apache.derby.jdbc.ClientDriver</entry>
+	<entry key="MY_SQL_URL">jdbc:derby://localhost:1527/sample</entry>
+	<property name=”hibernate.dialect”>org.hibernate.dialect.DerbyDialect</property>
+
+</properties>   

@@ -1,0 +1,53 @@
+table.res   
+{
+width :800;
+
+<!-- main table -->
+}
+
+td.main
+{
+width :850;
+}
+
+
+td.left
+{
+width: 20;
+}
+
+table.base
+{
+width : 726
+}
+
+img.mp
+{
+width: 915;
+height: 120;
+}
+
+
+img.gps
+{
+width: 940;
+height: 320;
+}
+
+img.home
+{
+width: 850;
+height: 330;
+}
+
+
+td.map{
+	FONT-SIZE: 10pt; font-style: normal; FONT-WEIGHT: 700;  COLOR: #007abd; 
+
+
+
+}
+td.sitemap
+a {
+  text-decoration: none }
+

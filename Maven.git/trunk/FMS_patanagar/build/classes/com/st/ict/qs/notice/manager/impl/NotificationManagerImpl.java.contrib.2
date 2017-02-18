@@ -1,0 +1,727 @@
+package com.st.ict.qs.notice.manager.impl;
+
+import java.io.IOException;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.xml.bind.ValidationException;
+
+import net.sf.jxls.exception.ParsePropertyException;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import st.ict.qs.core.db.DAOException;
+import st.ict.qs.core.manager.ManagerException;
+import st.ict.qs.core.util.GeneralUtils;
+
+import com.st.ict.qs.notice.businessbean.CustomerGroup;
+import com.st.ict.qs.notice.businessbean.ImpactedProduct;
+import com.st.ict.qs.notice.businessbean.Notice;
+import com.st.ict.qs.notice.businessbean.Notification;
+import com.st.ict.qs.notice.businessbean.NotificationDetail;
+import com.st.ict.qs.notice.businessbean.ReleaseEntity;
+import com.st.ict.qs.notice.dao.NotificationDAO;
+import com.st.ict.qs.notice.integration.BillingBacklogIntegrationManager;
+import com.st.ict.qs.notice.integration.bean.ImpactedCustomer;
+import com.st.ict.qs.notice.manager.ExcelFileWriter;
+import com.st.ict.qs.notice.manager.FSEConfigurationManager;
+import com.st.ict.qs.notice.manager.ImpactedProductManager;
+import com.st.ict.qs.notice.manager.NoticeManager;
+import com.st.ict.qs.notice.manager.NotificationBusinessRule;
+import com.st.ict.qs.notice.manager.NotificationManager;
+import com.st.ict.qs.notice.web.constants.ApplicationConstant;
+import com.st.ict.qs.notice.web.formBean.ConfirmSendingBean;
+import com.st.ict.qs.notice.web.formBean.OnGoingCustPCN;
+
+public class NotificationManagerImpl implements NotificationManager {
+
+	Logger logger = LoggerFactory.getLogger(NotificationManagerImpl.class);
+
+	private NotificationBusinessRule notificationBusinessRule;
+	private BillingBacklogIntegrationManager billingBacklogIntegrationManager;
+	private ImpactedProductManager impactedProductManager;
+	private FSEConfigurationManager fseConfigurationManager;
+	private NoticeManager noticeManager;
+
+	public NoticeManager getNoticeManager() {
+		return noticeManager;
+	}
+
+	public void setNoticeManager(NoticeManager noticeManager) {
+		this.noticeManager = noticeManager;
+	}
+
+	// private ExcelFileWriter excelFileWriter;
+	public FSEConfigurationManager getFseConfigurationManager() {
+		return fseConfigurationManager;
+	}
+
+	public void setFseConfigurationManager(
+			FSEConfigurationManager fseConfigurationManager) {
+		this.fseConfigurationManager = fseConfigurationManager;
+	}
+
+	private NotificationDAO notificationDAO;
+
+	private ExcelFileWriter excelFileWriter;
+
+	public NotificationBusinessRule getNotificationBusinessRule() {
+		return notificationBusinessRule;
+	}
+
+	public void setNotificationBusinessRule(
+			NotificationBusinessRule notificationBusinessRule) {
+		this.notificationBusinessRule = notificationBusinessRule;
+	}
+
+	public BillingBacklogIntegrationManager getBillingBacklogIntegrationManager() {
+		return billingBacklogIntegrationManager;
+	}
+
+	public void setBillingBacklogIntegrationManager(
+			BillingBacklogIntegrationManager billingBacklogIntegrationManager) {
+		this.billingBacklogIntegrationManager = billingBacklogIntegrationManager;
+	}
+
+	public NotificationDAO getNotificationDAO() {
+		return notificationDAO;
+	}
+
+	public void setNotificationDAO(NotificationDAO notificationDAO) {
+		this.notificationDAO = notificationDAO;
+	}
+
+	public ImpactedProductManager getImpactedProductManager() {
+		return impactedProductManager;
+	}
+
+	public void setImpactedProductManager(
+			ImpactedProductManager impactedProductManager) {
+		this.impactedProductManager = impactedProductManager;
+	}
+
+	public ExcelFileWriter getExcelFileWriter() {
+		return excelFileWriter;
+	}
+
+	public void setExcelFileWriter(ExcelFileWriter excelFileWriter) {
+		this.excelFileWriter = excelFileWriter;
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.st.ict.qs.notice.manager.NotificationManager#generateCustomer(java
+	 * .lang.String)
+	 */
+	public NotificationDetail generateCustomer(Integer noticeId)
+			throws ManagerException {
+
+		logger.debug("NotificationManagerImpl : generateCustomer : Started");
+
+		try {
+
+			// check availability of records in database .
+			List<Notification> notifications = notificationDAO
+					.getImpactedCustomer(noticeId);
+			if (notifications.size() == 0) {
+				Notice notice = new Notice();
+				notice.setInternalId(noticeId);
+				notifications = computeNotificationUsingImpcatedCustomer(noticeId);
+				notificationDAO.saveNotification(notifications, notice);
+			}
+			logger.info("NotificationManagerImpl : generateCustomer : Ended");
+
+		} catch (DAOException e) {
+			logger.error("NotificationManagerImpl : generateCustomer : DAOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		} catch (ManagerException e) {
+			logger.error("NotificationManagerImpl : generateCustomer : DAOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+			throw e;
+		}
+		return null;
+	}
+
+	private List<Notification> computeNotificationUsingImpcatedCustomer(
+			int noticeId) throws ManagerException {
+		List<ImpactedProduct> impactedProducts = new ArrayList<>();
+
+		impactedProducts = impactedProductManager
+				.getNotificationProducts(noticeId);
+
+		List<ImpactedCustomer> customers = billingBacklogIntegrationManager
+				.getImpactedCustomer(impactedProducts);
+
+		List<ReleaseEntity> releaseEntities = fseConfigurationManager
+				.getReleaseEntities();
+
+		List<CustomerGroup> customerGroups = fseConfigurationManager
+				.getCustomerGroupCode();
+
+		List<Notification> notifications = notificationBusinessRule
+				.computeNotification(customers, releaseEntities,
+						customerGroups, impactedProducts, noticeId);
+
+		return notifications;
+	}
+
+	public void unDeleteNotification(String notificationId)
+			throws ManagerException, ValidationException {
+		try {
+			logger.debug("ImpactedProductManagerImpl : unDeleteImpactedProduct : Started ");
+			// Integer notificationids = Integer.parseInt(notificationId);
+			List<Notification> impactedCustomer = notificationDAO
+					.getNotificationList(notificationId);
+			Notice notice = new Notice();
+			notice = impactedCustomer.get(0).getNotice();
+			String type="";
+			for (Notification notification : impactedCustomer) {
+				
+
+				if (ApplicationConstant.DELETED.equalsIgnoreCase(notification
+						.getType())) {
+					 type = notification.getType();
+					notification.setType(notification.getPrevType());
+					notification.setPrevType(type);
+				}
+
+				else {
+					throw new ValidationException(
+							"Please select deleted notification only");
+				}
+
+			}
+
+			notificationDAO.saveNotification(impactedCustomer, notice);
+			logger.debug("ImpactedProductManagerImpl : unDeleteImpactedProduct : Ended ");
+
+		} catch (DAOException de) {
+			logger.error(" Exception Caught in unDeleteImpactedProduct : "
+					+ GeneralUtils.getStackTrace(de));
+			throw new ManagerException(de, de.getMessage());
+		}
+
+	}
+
+	@Override
+	public void deleteNotification(List<Notification> notifications,
+			Integer noticeId) throws ManagerException {
+
+		try {
+			logger.debug("NotificationManagerImpl : deleteNotification : Started");
+
+			for (Notification impactedCustomer : notifications) {
+				impactedCustomer.setPrevType((impactedCustomer.getType()));
+				impactedCustomer.setType(ApplicationConstant.DELETED);
+
+			}
+			Notice notice = new Notice();
+			notice.setInternalId(noticeId);
+
+			notificationDAO.saveNotification(notifications, notice);
+			logger.info("NotificationManagerImpl : deleteNotification : Ended");
+		} catch (DAOException e) {
+
+			logger.error("NotificationManagerImpl : deleteNotification : DAOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+
+		}
+
+	}
+
+	@Override
+	public List<Notification> getImpactedCustomer(Integer noticeId) {
+		List<Notification> notifications = null;
+		try {
+			logger.debug("NotificationManagerImpl : getImpCust : Started");
+
+			notifications = notificationDAO.getImpactedCustomer(noticeId);
+
+			logger.debug("NotificationManagerImpl : getImpCust : End");
+
+		} catch (DAOException e) {
+
+			logger.error("NotificationManagerImpl : getImpCust : DAOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+
+		}
+		return notifications;
+	}
+
+	@Override
+	public void saveNotification(List<Notification> notifications,
+			Integer noticeId) throws ManagerException {
+
+		try {
+			logger.debug("NotificationManagerImpl : saveNotification : Started");
+			Notice notice = new Notice();
+			notice.setInternalId(noticeId);
+			for (Notification notification : notifications) {
+				notification.setNotice(notice);
+				if ("".equals(notification.getType())) {
+					notification.setType(("Inserted"));
+
+				}
+			}
+			notificationDAO.saveNotification(notifications, notice);
+			logger.info("NotificationManagerImpl : saveNotification : Ended");
+		} catch (DAOException e) {
+			logger.error("NotificationManagerImpl : saveNotification : DAOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+
+		}
+	}
+
+	@Override
+	public void refereshCustomerList(Integer noticeId, String eduid)
+			throws ManagerException {
+
+		List<Notification> computedNotification = computeNotificationUsingImpcatedCustomer(noticeId);
+
+		// Step 2 Fetch all records of notification from DB base on noticeId
+
+		try {
+			List<Notification> dbNotification = notificationDAO
+					.getImpactedCustomer(noticeId);
+			Map<String, Notification> coputedNotificationMap = createNotificationMap(computedNotification);
+
+			String key = null;
+			String keySeprator = "@";
+			Map<String, Notification> refreshNotificationMap = new HashMap<>();
+			// Looking new added impacted Customer in BillingBackLog and adding
+			// into the refresh list
+
+			for (Notification impactedCustomer : dbNotification) {
+				key = impactedCustomer.getLevel() + keySeprator
+						+ impactedCustomer.getQualificationStructure()
+						+ keySeprator + impactedCustomer.getCustomerGroupCode()
+						+ keySeprator + impactedCustomer.getCustomerName();
+//				if (coputedNotificationMap.containsKey(key)
+//						&& ApplicationConstant.DELETED
+//								.equalsIgnoreCase(impactedCustomer.getType())) {
+//					impactedCustomer.setType(ApplicationConstant.DELETED);
+//				}
+
+				refreshNotificationMap.put(key, impactedCustomer);
+			}
+
+			for (Notification impactedCustomer : computedNotification) {
+				key = impactedCustomer.getLevel() + keySeprator
+						+ impactedCustomer.getQualificationStructure()
+						+ keySeprator + impactedCustomer.getCustomerGroupCode()
+						+ keySeprator + impactedCustomer.getCustomerName();
+				if (!refreshNotificationMap.containsKey(key)) {
+					refreshNotificationMap.put(key, impactedCustomer);
+				}
+			}
+
+			logger.debug("ImpactedProductManagerImpl : refereshProductList : Ended ");
+			// Notice notice = new Notice();
+
+			Notice notice = noticeManager.getNotice(noticeId);
+			notice.setRefreshDateOfImpactedCustomer(new Date());
+
+			List<Notification> refreshImpactedCustomerList = new ArrayList<Notification>(
+					refreshNotificationMap.values());
+			// step 4 save new notification in db.
+			notificationDAO.saveNotification(refreshImpactedCustomerList,
+					notice);
+			//noticeManager.saveNotice(notice, eduid);
+
+		} catch (DAOException e) {
+			logger.error(" Exception Caught in refereshProductList : "
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		}
+
+	}
+
+	// Step 3 Apply logice for deleted/undelete records
+
+	private Map<String, Notification> createNotificationMap(
+			List<Notification> notification) {
+		String key = null;
+		String keySeprator = "@";
+		Map<String, Notification> notificationMap = new HashMap<>();
+		for (Notification impactedCustomer : notification) {
+			key = impactedCustomer.getLevel() + keySeprator
+					+ impactedCustomer.getQualificationStructure()
+					+ keySeprator + impactedCustomer.getCustomerGroupCode()
+					+ keySeprator + impactedCustomer.getCustomerName();
+			notificationMap.put(key, impactedCustomer);
+		}
+		return notificationMap;
+	}
+
+	@Override
+	public List<NotificationDetail> getNotificationDetailBYNoticeId(
+			Integer noticeId) throws ManagerException {
+		List<NotificationDetail> notificationDetails = null;
+		logger.debug("NotificationManagerImpl : getImpCust : Started");
+
+		try {
+			notificationDetails = notificationDAO
+					.getNotificationDetailBYNoticeId(noticeId);
+		} catch (DAOException e) {
+			logger.error("NotificationManagerImpl : getNotificationDetailBYNoticeId : DAOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		}
+
+		logger.debug("NotificationManagerImpl : getImpCust : End");
+		return notificationDetails;
+	}
+
+	@Override
+	public List<NotificationDetail> getNotificationDetailBYNotificationId(
+			String notificationId) throws ManagerException {
+		// TODO Auto-generated method stub
+		List<NotificationDetail> notificationDetails = null;
+
+		logger.debug("NotificationManagerImpl : getImpCust : Started");
+
+		try {
+			notificationDetails = notificationDAO
+					.getNotificationDetailBYNotificationId(notificationId);
+		} catch (DAOException e) {
+			logger.error("NotificationManagerImpl : getNotificationDetailBYNotificationId : DAOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		}
+
+		logger.debug("NotificationManagerImpl : getImpCust : End");
+		return notificationDetails;
+	}
+
+	public List<OnGoingCustPCN> getOnGoingCustPCN(String customerName)
+			throws ManagerException {
+		// TODO Auto-generated method stub
+		List<OnGoingCustPCN> onGoingCustPCNs = new ArrayList<>();
+		List<Notice> notices = null;
+
+		logger.debug("NotificationManagerImpl : getImpCust : Started");
+
+		try {
+			notices = notificationDAO.getOnGoingCustPCN(customerName);
+
+			for (Notice notice : notices) {
+				OnGoingCustPCN onGoingCustPCN = new OnGoingCustPCN();
+				onGoingCustPCN.setPcnCustId(notice.getInternalId());
+				onGoingCustPCNs.add(onGoingCustPCN);
+			}
+		} catch (DAOException e) {
+			logger.error("NotificationManagerImpl : getOnGoingCustPCN : DAOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+
+		}
+		logger.debug("NotificationManagerImpl : getImpCust : End");
+		return onGoingCustPCNs;
+
+	}
+
+	public void downloadNotification(int noticeId, String outPutFileName)
+			throws ManagerException {
+
+		List<Notification> notifications = null;
+		try {
+			logger.debug("NotificationManagerImpl : getImpCust : Started");
+
+			notifications = notificationDAO.getImpactedCustomer(noticeId);
+			String templateName = "";
+			try {
+				excelFileWriter.createReport(notifications, templateName,
+						outPutFileName);
+			} catch (org.apache.poi.openxml4j.exceptions.InvalidFormatException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+
+			logger.debug("NotificationManagerImpl : getImpCust : End");
+
+		} catch (DAOException e) {
+			logger.error("NotificationManagerImpl : getImpCust : DAOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		} catch (ParsePropertyException e) {
+			logger.error("NotificationManagerImpl : getImpCust : DAOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		}
+		// catch (InvalidFormatException e) {
+		// logger.error("NotificationManagerImpl : getImpCust : InvalidFormatException Caught"
+		// + GeneralUtils.getStackTrace(e));
+		// throw new ManagerException(e, e.getMessage());
+		// }
+		catch (IOException e) {
+			logger.error("NotificationManagerImpl : getImpCust : IOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		}
+	}
+
+	@Override
+	public void sendNotification(String notificationIds,String sendToCustomerComment)
+			throws ManagerException {
+
+		logger.info("NotificationManagerImpl : sendNotification : Started");
+		try {
+
+			List<Notification> notificationList = notificationDAO
+					.getNotificationList(notificationIds);
+
+			if (null != notificationList && notificationList.size() > 0) {
+
+				for (int i = 0; i < notificationList.size(); i++) {
+					notificationList.get(i).setAutoEmail(ApplicationConstant.AUTO_EMAIL_Y);
+					notificationList.get(i).setStatus(ApplicationConstant.TO_SEND);
+					notificationList.get(i).setComment(sendToCustomerComment);
+				}
+				notificationDAO.saveNotification(notificationList);
+			}
+
+			logger.info("NotificationManagerImpl : sendNotification : Ended");
+
+		} catch (DAOException de) {
+			logger.error("NotificationManagerImpl : sendNotification : DAO Exception Caught"
+					+ GeneralUtils.getStackTrace(de));
+			throw new ManagerException(de);
+		}
+
+	}
+
+	@Override
+	public void sentNotificationManually(String notificationIds,String sentManuallyComment, String sentManuallyReason)
+			throws ManagerException {
+
+		logger.info("NotificationManagerImpl : sentNotificationManually : Started");
+		try {
+
+			List<Notification> notificationList = notificationDAO
+					.getNotificationList(notificationIds);
+			if (null != notificationList && notificationList.size() > 0) {
+
+				for (int i = 0; i < notificationList.size(); i++) {
+					notificationList.get(i).setAutoEmail(ApplicationConstant.AUTO_EMAIL_N);
+					notificationList.get(i).setStatus(ApplicationConstant.PUBLISHED);
+					notificationList.get(i).setStatusComment(ApplicationConstant.SENT_MANUALLY);
+					notificationList.get(i).setComment(sentManuallyComment+"" +sentManuallyReason );
+				}
+				notificationDAO.saveNotification(notificationList);
+			}
+
+			logger.info("NotificationManagerImpl : sentNotificationManually : Ended");
+
+		} catch (DAOException de) {
+			logger.error("NotificationManagerImpl : sentNotificationManually : DAO Exception Caught"
+					+ GeneralUtils.getStackTrace(de));
+			throw new ManagerException(de);
+		}
+
+	}
+
+	@Override
+	public void cancelNotification(String notificationIds,String notTosentComment, String notTosentReason)
+			throws ManagerException {
+
+		logger.info("NotificationManagerImpl : cancelNotification : Started");
+		try {
+
+			List<Notification> notificationList = notificationDAO
+					.getNotificationList(notificationIds);
+			if (null != notificationList && notificationList.size() > 0) {
+
+				for (int i = 0; i < notificationList.size(); i++) {
+					notificationList.get(i).setAutoEmail(ApplicationConstant.AUTO_EMAIL_N);
+					notificationList.get(i).setStatus(ApplicationConstant.DECIDED_NOT_TO_SEND);
+					notificationList.get(i).setStatusComment(ApplicationConstant.DECIDED_NOT_TO_SEND);
+					notificationList.get(i).setComment(notTosentComment+ "" +notTosentReason );
+				}
+				notificationDAO.saveNotification(notificationList);
+			}
+
+			logger.info("NotificationManagerImpl : cancelNotification : Ended");
+
+		} catch (DAOException de) {
+			logger.error("NotificationManagerImpl : cancelNotification : DAO Exception Caught"
+					+ GeneralUtils.getStackTrace(de));
+			throw new ManagerException(de);
+		}
+
+	}
+
+	@Override
+	public List<ConfirmSendingBean> getAllNotificationsForSendingTab(
+			int noticeId, String eduid) throws ManagerException {
+		//List<Notification> notificationList = null;
+		List<Notification> notificationListForFse = null;
+		List<ConfirmSendingBean> confirmSendingBeansList = null;
+		ConfirmSendingBean sendingBgetAllNotificationsForSendingTabean = null;
+		logger.debug("NotificationManagerImpl : getAllNotificationsForSendingTab : Started");
+
+		try {
+			notificationListForFse = notificationDAO
+					.getAllNotificationsForFse(noticeId, eduid);
+			if(!(null != notificationListForFse && notificationListForFse.size()>0)){
+				notificationListForFse = notificationDAO.getAllNotificationsForSendingTab(noticeId);				
+			}
+			if (null != notificationListForFse && notificationListForFse.size() > 0){
+				ConfirmSendingBean sendingBean = null;
+				confirmSendingBeansList = new ArrayList<ConfirmSendingBean>();
+				for (Notification notification : notificationListForFse) {
+					/*if ((eduid).equalsIgnoreCase(notification.getFseEduid())) {*/
+						sendingBean = new ConfirmSendingBean();
+						sendingBean.setNotificationId(notification.getInternalId());
+						sendingBean.setLevel(notification.getLevel());
+						sendingBean.setQualifStruc(notification.getQualificationStructure());
+						sendingBean.setCustGrpDesc(notification.getCustomerGroupDescr());
+						sendingBean.setCustGroupCode(notification.getCustomerGroupCode());
+						sendingBean.setType(notification.getType());
+						sendingBean.setDate(notification.getUpdatedBy());
+						sendingBean.setComment(notification.getComment());
+						sendingBean.setFseCoordinatorName(notification.getFseName());
+						sendingBean.setFseCoordinatorDelName(notification.getFseName());
+						sendingBean.setMacroDesc(notification.getMacroSegmentDescr());
+						sendingBean.setMacroCode(notification.getMacroSegmentCode());
+						sendingBean.setCustType(notification.getCustomerType());
+						sendingBean.setEmail(notification.getAutoEmail());
+						
+						if (null != notification.getNotificationDetailList() && 
+								notification.getNotificationDetailList().size() > 0) {
+							for (NotificationDetail detail : notification.getNotificationDetailList()) 
+							{
+								if (null != notification.getCustomerGroupCode()
+										&& null != detail.getCustomerNameCode()) 
+								{
+									if ((notification.getCustomerGroupCode()).equals(detail.getCustomerNameCode())) 
+									{
+										sendingBean.setCp(detail.getCommercialProduct());
+										sendingBean.setFg(detail.getFinishedGood());
+										sendingBean.setCustPartNb(detail.getPartNumber());
+										sendingBean.setCollectivePartNb(detail.getCollectivePartNumber());
+									}
+								}
+							}
+							confirmSendingBeansList.add(sendingBean);
+						}
+			}
+			}
+			}
+		
+		catch (DAOException e) {
+			logger.error("NotificationManagerImpl : getAllNotificationsForSendingTab : DAO Exception Caught"
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e);
+
+		}
+
+		logger.debug("NotificationManagerImpl : getAllNotificationsForSendingTab : End");
+		return confirmSendingBeansList;
+	}
+
+	@Override
+	public List<ConfirmSendingBean> getAllNotificationsForSendingTab(
+			String notificationIds) throws ManagerException {
+		List<Notification> notificationList = null;
+		List<ConfirmSendingBean> confirmSendingBeansList = null;
+		ConfirmSendingBean sendingBean = null;
+		logger.debug("NotificationManagerImpl : getAllNotificationsForSendingTab : Started");
+
+		try {
+			notificationList = notificationDAO
+					.getNotificationList(notificationIds);
+
+			if (null != notificationList && notificationList.size() > 0) {
+				confirmSendingBeansList = new ArrayList<ConfirmSendingBean>();
+				for (Notification notification : notificationList) {
+					sendingBean = new ConfirmSendingBean();
+					sendingBean.setNotificationId(notification.getInternalId());
+					sendingBean.setLevel(notification.getLevel());
+					sendingBean.setQualifStruc(notification
+							.getQualificationStructure());
+					sendingBean.setCustGrpDesc(notification
+							.getCustomerGroupDescr());
+					sendingBean.setCustGroupCode(notification
+							.getCustomerGroupCode());
+					sendingBean.setType(notification.getType());
+					sendingBean.setDate(notification.getUpdatedBy());
+					sendingBean.setComment(notification.getComment());
+					sendingBean
+							.setFseCoordinatorName(notification.getFseName());
+					sendingBean.setFseCoordinatorDelName(notification
+							.getFseName());
+					sendingBean.setMacroDesc(notification
+							.getMacroSegmentDescr());
+					sendingBean
+							.setMacroCode(notification.getMacroSegmentCode());
+					sendingBean.setCustType(notification.getCustomerType());
+					sendingBean.setEmail(notification.getAutoEmail());
+					if (null != notification.getNotificationDetailList()
+							&& notification.getNotificationDetailList().size() > 0) {
+						for (NotificationDetail detail : notification
+								.getNotificationDetailList()) {
+							if (null != notification.getCustomerGroupCode()
+									&& null != detail.getCustomerNameCode()) {
+								if ((notification.getCustomerGroupCode())
+										.equals(detail.getCustomerNameCode())) {
+									sendingBean.setCp(detail
+											.getCommercialProduct());
+									sendingBean.setFg(detail.getFinishedGood());
+									sendingBean.setCustPartNb(detail
+											.getPartNumber());
+									sendingBean.setCollectivePartNb(detail
+											.getCollectivePartNumber());
+								}
+							}
+						}
+
+					}
+					confirmSendingBeansList.add(sendingBean);
+				}
+			}
+		} catch (DAOException e) {
+			logger.error("NotificationManagerImpl : getAllNotificationsForSendingTab : DAO Exception Caught"
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e);
+
+		}
+		logger.debug("NotificationManagerImpl : getAllNotificationsForSendingTab : End");
+		return confirmSendingBeansList;
+	}
+
+	@Override
+	public List<Notification> getNotification(int noticeId) throws ManagerException {
+		
+		
+		List<Notification> notifications = null;
+		try {
+			logger.debug("NotificationManagerImpl : getNotification : Started");
+
+			notifications = notificationDAO.getNotification(noticeId);
+
+			logger.debug("NotificationManagerImpl : getImpCust : End");
+
+		} catch (DAOException e) {
+
+			logger.error("NotificationManagerImpl : getNotification : DAOException Caught"
+					+ GeneralUtils.getStackTrace(e));
+
+		}
+		return notifications;
+	}
+		
+		
+		
+	}
+
+	
+	
+

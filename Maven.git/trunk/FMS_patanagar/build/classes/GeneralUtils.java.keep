@@ -1,0 +1,387 @@
+package st.ict.qs.core.util;
+
+
+import static st.ict.qs.core.constant.GenericConstant.APP_XMLS_PATH;
+
+import java.io.PrintWriter;
+import java.io.StringWriter;
+import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Date;
+import java.util.List;
+import java.util.Map;
+import java.util.StringTokenizer;
+
+
+import st.ict.qs.core.constant.GenericConstant;
+import st.liotrox.LIOTROX;
+import st.liotrox.db.BasicCondition;
+import st.liotrox.db.DataSet;
+import st.liotrox.db.DefaultDataSet;
+
+
+
+
+public class GeneralUtils {
+	
+	private static final String DOT_ZERO = ".0"; //to be used for truncating .0 from a given string
+	public static final String PROPERTY_SEPARATOR = ",";
+    public static final String VALUE_SEPARATOR = "=";
+
+	public static String getXMLHome()
+	{
+		return LIOTROX.getHome()+APP_XMLS_PATH;
+	}
+	
+	public static String getLiotroXHome()
+	{
+		return LIOTROX.getHome();
+	}
+	
+	public static String removeDotZero(String zeroStr)
+	{
+		if(zeroStr.indexOf(DOT_ZERO) > -1)
+			return zeroStr.substring(0,zeroStr.indexOf(DOT_ZERO));
+		else
+			return zeroStr;
+	}
+	
+	public static String getStackTrace(Throwable t)
+	{
+		StringWriter sw = new StringWriter() ;
+		PrintWriter pw = new PrintWriter(sw) ;
+		
+		pw.println() ;
+		pw.println() ;
+		pw.println("Stack Trace") ;
+		pw.println("===================================================") ;
+		t.printStackTrace(pw) ;
+		pw.println("===================================================") ;
+		pw.flush() ;
+		
+		
+		return sw.toString() ;
+	}
+	
+/*	public static String getAlertMessage(String msgId,String lables)
+	{           
+		if(msgId == null || msgId.equals(GenericConstant.EMPTY_STRING))
+			return GenericConstant.EMPTY_STRING;
+		
+		String retMessage = XmlHandler.getAlertMessage(msgId);
+		 XmlMessage xmldata = XmlHandler.getAlertMessage(msgId) ;
+		 String retMessage = xmldata.getText() ;
+		if(lables!=null)
+		 retMessage = GeneralUtils.replace$Message(retMessage,lables) ;
+		
+		if(retMessage == null || retMessage.equals(GenericConstant.EMPTY_STRING))
+			return GenericConstant.EMPTY_STRING;
+		
+		return retMessage ;
+	}
+*/	
+	
+/*	public static String getAlertMessage(String msgId)
+	{       
+		return getAlertMessage(msgId,null) ;
+	}
+	
+*/
+	/*
+	 * It takes input string having "~^" as seperator and 
+	 * replace it with comma
+	 * 
+	 * @param String  String to change
+	 * 
+	 * @return String converted string
+	 * 
+	 */
+	public static String convertString(String str)
+	{
+		StringTokenizer strToken = new StringTokenizer(str , GenericConstant.APP_SEPERATOR);
+		StringBuffer convertedStr = new StringBuffer("");
+		
+		while( strToken.hasMoreTokens())
+		{
+			convertedStr.append(strToken.nextToken());
+			convertedStr.append(",");
+			
+		}
+		convertedStr.deleteCharAt(convertedStr.length()-1);
+		return convertedStr.toString();
+	}// END of convertString(..)
+	
+	/*
+	 * 
+	 * Takes input as String seperated with ~^ seperator and return 
+	 * SQL in pattern for example if you input str1~^str2~^str3
+	 * it will return (str1,str2,str3)
+	 * 
+	 * @param String string to convert into SQL in pattern
+	 * 
+	 * @return converted string 
+	 * 
+	 */
+	public static String getSQLinString(String str)
+	{
+		StringBuffer s = new StringBuffer(convertString(str));
+		char c = '(';
+		
+		s.append(")");
+		s.insert(0,c);
+		
+		return s.toString();
+	}// END of getSQLinString(..)
+	
+	
+	/**
+     * Purpose  This method replaces all the $ char with FIELD_VALUE_SEPERATOR seperated values provided and returns the final string.
+     * @author  gurdeepm
+     * @param   msg : Origional message containg $ seperators.
+     * @param   values : comma seperated the values to be used to replace
+     * @return  String : the final string after replacing all the occourances of $ with the values provided.
+     */ 
+    public static String replace$Message(String msg,String values)
+    {       
+        if(msg==null || msg.equals(GenericConstant.EMPTY_STRING))
+            return GenericConstant.EMPTY_STRING;
+        
+        StringBuilder finalMsg = new StringBuilder(msg);
+        StringTokenizer    st = new StringTokenizer(values,GenericConstant.APP_SEPERATOR);        
+        
+        
+        while( st.hasMoreTokens())            
+        {
+        	String value = st.nextToken();
+        	if(finalMsg.indexOf(GenericConstant.CHAR_TO_REPLACE) != -1)
+        		finalMsg.replace(finalMsg.toString().indexOf(GenericConstant.CHAR_TO_REPLACE),finalMsg.toString().indexOf(GenericConstant.CHAR_TO_REPLACE)+1,value);
+        }
+        
+        return finalMsg.toString();
+    }
+    
+    /**
+     * Purpose  this method accepts a string array and returns a comma separated string contain the <br> elements of the array which can be used in the IN clause of  a select query.
+     * @author  devesh paliwal
+     * @param   strArray : a string array whose elements are used to form a comma seperated string.
+     * @return  String : comma seperated string.
+     */ 
+    public static String prepareInClauseForString(String[] strArray)
+    {
+        if(strArray == null || strArray.length <= 0)
+            return GenericConstant.EMPTY_STRING;
+        
+        StringBuilder strBuf = new StringBuilder();
+        
+        for(int i = 0; i < strArray.length; i++) {
+            if(i==0)
+                strBuf.append("'" + strArray[i] + "'") ;
+            else
+                strBuf.append(", " + "'" + strArray[i] + "'") ;
+        }
+        return strBuf.toString();
+    }
+    
+    /**
+     * Purpose  this method breaks the string message into smaller string seperated by FIELD_VALUE_SEPERATOR '^~' and puts them into a String array and returns it.
+     * @author  ritua
+     * @param   message : The origional string message which containg FIELD_VALUE_SEPERATOR '^~'.
+     * @return  String [] : array of strings.
+     */ 
+    public static String[] breakStringBySeparator(String message)
+    {
+        String[] listOfVal ;
+        int count = 0;
+        
+        if(message == null || GenericConstant.EMPTY_STRING.equals(message)) //if the message is null return null
+        {
+            return null;
+        }
+        
+        StringTokenizer    st = new StringTokenizer(message,GenericConstant.APP_SEPERATOR);
+        listOfVal = new String[st.countTokens()];
+        
+        while(st.hasMoreTokens())
+        {
+            String value = st.nextToken();
+            listOfVal[count++] = value;
+        }
+        
+        return listOfVal;
+    }
+    
+    /**
+     * Purpose  This method returns a string contain all the elements of the String array seperated by the delimeter.
+     * @author  gurdeepm
+     * @param   strArr : String array whose elements are to be delimited.
+     * @param   delimiter :  the delimiter to appended between each element of the array.
+     * @return  String : the final string created.
+     */ 
+    public static String returnDelimitedString(String[] strArr,String delimiter)
+    {        
+        if(strArr==null || strArr.length<=0)
+            return "";
+        
+        StringBuilder strBuf = new StringBuilder();
+        for(int i = 0; i < strArr.length; i++) {
+            if(i==0)
+                strBuf.append(strArr[i]) ;
+            else
+                strBuf.append(delimiter+strArr[i]) ;
+        }
+        return strBuf.toString();
+    }
+    
+    /***
+     * Purpose This method checks that if the parameter is null , it returns empty string else toString of that object.
+     * @author arvinder
+     * @param  ob
+     * @return String
+     */
+    public static String nullToString(Object ob)
+	{
+		if (ob == null)
+			return "";
+		else
+			return ob.toString();
+	}
+
+    /***
+     * Purpose This method checks that if the parameter is null , it returns empty string else toString of that object.
+     * @author arvinder
+     * @param  ob
+     * @return String
+     */
+    public static String nullToSpaceString(Object ob)
+	{
+		if (ob == null)
+			return " &nbsp; ";
+		else
+			return ob.toString();
+	}
+    public static boolean emptyDataSet(DataSet ds) {
+		// Empty DataSet
+		if(ds == null || ds.getRowCount() == 0){
+			return true;
+		}
+		for(int row=1; row<=ds.getRowCount(); row++){
+			for(int col=1; col<=ds.getColumnCount(); col++){
+				if(ds.getValue(row,col) instanceof Boolean){
+					Boolean value=(Boolean)ds.getValue(row,col);
+					if(value!=null) return false;
+				}
+				if(ds.getValue(row,col) instanceof String){
+					String value = ((String)ds.getValue(row, col));
+					if(value!= null && !"".equals(value.trim())){
+						return false;
+					}
+				}
+			}
+		}
+		
+		return true;
+	}
+    
+    
+
+     
+   /* public static List string2List(String propsString) {
+        List list= new ArrayList();
+
+        if ((propsString != null) && (propsString.length() > 0)) {
+            StringTokenizer tokenizer = new StringTokenizer(propsString, ApplicationConstant.ITEM_SELECTOR_DELIMITER);
+            
+
+            while (tokenizer.hasMoreTokens()) {
+            	
+                String value = tokenizer.nextToken();
+
+               list.add(value);
+            }
+        }
+
+        return list;
+    }*/
+    
+    public static List getCodeListFromCodeDescrList(List<String> codeDescrList)
+    {
+    	List codeList = new ArrayList<String>();
+    	
+    	if(codeDescrList!=null)
+    	{
+    		for(String str : codeDescrList)
+    		{
+    			if(str!=null && str.contains("---"))
+    			{
+    				String code = str.substring(0,str.indexOf("---"));
+    				codeList.add(code);
+    			}
+    				
+    		}
+    	}
+    	
+    	return codeList;
+    	
+    }
+    
+      
+   
+    
+    /**
+     * Purpose  Extracts the sub dataset after searching in the master dataset provided as a parameter, on the bases of column and value provided. 
+     * @author  gurdeepm
+     * @param   masterDataSet : the origional dataset from which a sub dataset needs to be extracted.
+     * @param   columnName : The column name which is to be matched in the master dataset.
+     * @param   value : The value, on the bases of which sub dataset is to be extracted.
+     * @return  DataSet : the resultant dataset extracted on the bases of the colunm value.
+     */ 
+    public static DataSet getNestedDataSetFile(DataSet masterDataSet, String columnName, String value)
+    {
+        DataSet nestedDataSet = null ;
+        nestedDataSet = masterDataSet.extractDataSet(masterDataSet.search(new DefaultDataSet.ColumnCondition[] { 
+                new DefaultDataSet.ColumnCondition(columnName, BasicCondition.OPERATOR_EQUALS , value) }, "and")) ;
+        return nestedDataSet ;
+    }
+    
+    
+/*    public static void getReturnMapFromStringArray(Map retMap, String[][] typeMap) {
+		if (typeMap != null && typeMap.length > 0) {
+			List<ReferentialData> refDataList = new ArrayList<ReferentialData>();
+
+			for(int i=0;i<typeMap.length;i++)
+			{
+				ReferentialData ref = new ReferentialData();
+				ref.setCode(typeMap[i][0]);
+				ref.setDescription(typeMap[i][1]);
+				refDataList.add(ref);
+
+			}
+
+			retMap.put(ApplicationConstant.MAP_COUNT, typeMap.length);
+			retMap.put(ApplicationConstant.MAP_COLLECTION, refDataList);
+		} else {
+			retMap.put(ApplicationConstant.MAP_COUNT, 0);
+			retMap.put(ApplicationConstant.MAP_COLLECTION, typeMap);
+		}
+	}	*/
+    
+    
+    public static boolean compareDate(Date d1 , Date d2)
+    {
+    	Calendar calender1 = Calendar.getInstance();
+		Calendar calendar2 = Calendar.getInstance();
+		calender1.set(d1.getYear(), d1.getMonth(), d1.getDate());
+		calendar2.set(d2.getYear(),d2.getMonth(),d2.getDate());
+		return calender1.after(calendar2);
+    }
+
+	public static void getReturnMapFromStringArray(Map retMap,
+			String[][] typeMap) {
+		// TODO Auto-generated method stub
+		
+	}
+    
+}
+
+
+

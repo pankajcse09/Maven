@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd                        
+                        http://www.springframework.org/schema/aop 
+                        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                        http://www.springframework.org/schema/util 
+                        http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+                        
+ 	<bean id="ldapPropertyConfigurer"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:ldap.properties</value>
+		</property>
+	</bean>
+	       
+   <bean id="contextSourceTarget" class="org.springframework.ldap.core.support.LdapContextSource">
+      <property name="url"      value="${ldap.host.url}" />
+      <property name="base"     value="${ldap.search.base}" />
+      <property name="userDn"   value="${ldap.login.name}" />
+      <property name="password" value="${ldap.login.pwd}" />
+      <property name="pooled"   value="false" />
+  
+   </bean>
+   
+   <bean id="dirContextValidator"
+         class="org.springframework.ldap.pool.validation.DefaultDirContextValidator" />
+   
+   <bean id="contextSource" class="org.springframework.ldap.pool.factory.PoolingContextSource">
+      <property name="contextSource" ref="contextSourceTarget" />
+      <property name="dirContextValidator" ref="dirContextValidator" /> 
+      <property name="testOnBorrow" value="true" />
+      <property name="testWhileIdle" value="true" />
+      <property name="minIdle" value="2" />
+      <property name="maxIdle" value="2" />
+      <property name="maxTotal" value="2" />
+      <property name="maxActive" value="2" />
+   </bean>
+
+   <bean id="ldapTemplate" class="org.springframework.ldap.core.LdapTemplate">
+      <constructor-arg ref="contextSource" />
+   </bean>
+
+   <bean id="ldapUtils" class="com.st.ict.qs.general.util.ldap.service.impl.LDAPServiceImpl">
+      <property name="ldapTemplate" ref="ldapTemplate" />
+   </bean>
+</beans>
+

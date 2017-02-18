@@ -1,0 +1,24 @@
+package com.st.ict.qs.notice.manager;
+
+import java.util.List;
+
+import com.st.ict.qs.notice.businessbean.Notice;
+import com.st.ict.qs.notice.businessbean.UserDetail;
+import com.st.ict.qs.notice.businessbean.UserRole;
+
+import st.ict.qs.core.manager.ManagerException;
+
+
+public interface TeamManager {
+
+	void saveUserDetail(UserDetail userDetail)throws ManagerException;
+
+	void addUser(UserRole role) throws ManagerException;
+
+	String[] getRoleArrayforUser(Notice notice, String uid) throws ManagerException;
+
+	UserDetail getUserDetail(String stEduid) throws ManagerException;
+
+	List<UserRole> getTeamRoles(int noticeId) throws ManagerException;
+
+}

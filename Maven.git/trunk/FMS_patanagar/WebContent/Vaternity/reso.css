@@ -1,0 +1,49 @@
+table.hh   
+{
+width :820;
+<!-- main table -->
+}
+table.tt 
+{
+width :140;
+height :280;
+<!-- left navi -->
+}
+
+img.nn
+{
+border-style: none;
+height :280;
+width :430;
+<!-- middle image -->
+}
+td.nn1
+{
+border-style: none;
+height :280;
+width :140;
+<!--top right image -->
+}
+
+td.dd  
+{
+width :140;
+height :280;
+<!-- coming events -->
+}
+
+td.bb
+{
+height :280;
+width :560;
+<!--news and content -->
+}
+
+td.bb1
+{
+height :280;
+width :170;
+<!--recent event -->
+}
+
+

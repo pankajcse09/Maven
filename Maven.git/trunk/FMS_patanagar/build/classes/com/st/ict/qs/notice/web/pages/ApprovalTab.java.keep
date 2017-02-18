@@ -1,0 +1,28 @@
+package com.st.ict.qs.notice.web.pages;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import st.ict.qs.core.basepage.AppDefaultPage;
+import st.liotrox.Event;
+import st.liotrox.WRequest;
+
+
+	
+	public class ApprovalTab extends AppDefaultPage 
+	{
+		public static final Logger logger = LoggerFactory.getLogger(ApprovalTab.class);
+		
+		
+		public void render(WRequest request)  {
+			// TODO Auto-generated method stub
+			
+		}
+		
+		public void save(WRequest req,Event e)
+		{
+			
+		}
+
+		
+	}

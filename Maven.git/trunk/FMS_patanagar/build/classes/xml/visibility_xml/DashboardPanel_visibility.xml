@@ -1,0 +1,228 @@
+<?xml version="1.0"?>
+
+<pageVisibility>
+
+	<condition status="NOT_DEFINED" role="*">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="true" />
+	</condition>
+
+	<condition status="*" role="PCN Coordinator">
+		<item display="editable" value="true" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT" role="PCN Coordinator">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-DEFINE" role="PCN Coordinator">
+		<item display="editable" value="true" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-REVIEW" role="PCN Coordinator">
+		<item display="editable" value="true" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-APPROVAL" role="PCN Coordinator">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="OPEN" role="PCN Coordinator">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="CLOSED" role="PCN Coordinator">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT" role="FSE">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-DEFINE" role="FSE">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-REVIEW" role="FSE">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-APPROVAL" role="FSE">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="OPEN" role="FSE">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="CLOSED" role="FSE">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT" role="Reviewers">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-DEFINE" role="Reviewers">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-REVIEW" role="Reviewers">
+		<item display="editable" value="true" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-APPROVAL" role="Reviewers">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="OPEN" role="Reviewers">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="CLOSED" role="Reviewers">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+
+	<condition status="DRAFT" role="Approvers">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-DEFINE" role="Approvers">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-REVIEW" role="Approvers">
+		<item display="editable" value="true" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-APPROVAL" role="Approvers">
+		<item display="editable" value="true" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="OPEN" role="Approvers">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="CLOSED" role="Approvers">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT" role="PCRB members">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-DEFINE" role="PCRB members">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-REVIEW" role="PCRB members">
+		<item display="editable" value="true" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-APPROVAL" role="PCRB members">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="OPEN" role="PCRB members">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="CLOSED" role="PCRB members">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+
+
+	<condition status="DRAFT" role="Samples owners">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-DEFINE" role="Samples owners">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-REVIEW" role="Samples owners">
+		<item display="editable" value="true" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-APPROVAL" role="Samples owners">
+		<item display="editable" value="true" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="OPEN" role="Samples owners">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="CLOSED" role="Samples owners">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT" role="Qualification owners">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-DEFINE" role="Qualification owners">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-REVIEW" role="Qualification owners">
+		<item display="editable" value="true" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="DRAFT-APPROVAL" role="Qualification owners">
+		<item display="editable" value="true" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="OPEN" role="Qualification owners">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+	<condition status="CLOSED" role="Qualification owners">
+		<item display="editable" value="false" />
+		<item display="msgTemplate" value="false" />
+	</condition>
+
+</pageVisibility>

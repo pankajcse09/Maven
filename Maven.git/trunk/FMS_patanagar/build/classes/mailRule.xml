@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<MAIL_RULES>
+	<Event>
+		<ID>Testing_Mail</ID>
+		<TO>PCN Coordinator</TO>
+		<CC>PCN Coordinator</CC>
+		<TEMPLATE>Notice_Mail_template.ftl</TEMPLATE>
+		<SUBJECT>Testing mail for Notice ${internalId}</SUBJECT>
+	</Event>	
+</MAIL_RULES>
+
+<MAIL_RULES>
+	<Event>
+		<ID>NOTICE_SEND_REVIEW</ID>
+		<TO>NOTICE REVIEWER</TO>
+		<CC>PCN Coordinator</CC>
+		<TEMPLATE>send_for_review_template.ftl</TEMPLATE>
+		<SUBJECT>Send For Review for PCN ${internalId}</SUBJECT>
+	</Event>	
+</MAIL_RULES>
+
+<MAIL_RULES>
+	<Event>
+		<ID>NOTICE_CANCEL_REVIEW</ID>
+		<TO>NOTICE REVIEWER</TO>
+		<CC>PCN Coordinator</CC>
+		<TEMPLATE>cancel_review_template.ftl</TEMPLATE>
+		<SUBJECT>Review cancelled for PCN ${internalId}</SUBJECT>
+	</Event>	
+</MAIL_RULES>

@@ -1,0 +1,247 @@
+
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+<%@page language="java"%>
+<%@page import ="Main_category.item_bean"%>
+<%@page import="java.text.DecimalFormat"%>
+<%@page import="java.text.NumberFormat"%>
+<%@page import="java.util.ArrayList" %>
+<%@page import="java.util.*"%>
+<%@page import="java.sql.Timestamp"%>
+
+<html>
+    <head>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+        <title>Danceables</title>
+        
+        <link rel="stylesheet" type="text/css" href="<%=request.getContextPath()%>/pro_drop_1/laycss.css" />
+         <script language="javascript" src="kk/resolution.js">
+                </script>
+        
+        <script language="javascript">
+            function item_order()
+            {
+            
+       document.forms[0].method="POST";
+       document.forms[0].action="Alessio_Order"
+       document.forms[0].submit();
+
+            }
+            </script>
+    </head>
+    
+    <body>
+   
+    <%
+       
+    int tot_quantity=0;
+double tot_amount=0.0;
+
+%>
+
+<%if(request.getAttribute("tot_quantity")!=null)
+{
+    try{
+    tot_quantity=Integer.parseInt(request.getAttribute("tot_quantity").toString());
+     } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        }  
+    //out.println(tot_quantity);
+}
+%>
+
+<%if(request.getAttribute("tot_amount")!=null){
+    try{
+    tot_amount=Double.parseDouble(request.getAttribute("tot_amount").toString());
+     } catch (NumberFormatException ex) {
+            ex.printStackTrace();
+        }  
+   // out.println(tot_amount);
+}
+%>
+
+<% item_bean ship_bill=new item_bean();
+List ar2=new ArrayList();
+        Map hm1=new HashMap();
+        Map hm2=new HashMap();
+        Map hm3=new HashMap();       
+         Map hm4=new HashMap();   
+%>
+    <%if(request.getAttribute("ship_bill")!=null){
+    ship_bill=(item_bean)request.getAttribute("ship_bill");
+    //out.println(ship_bill);
+    
+    }%>
+     <%if(request.getAttribute("ar2")!=null){
+    ar2=(ArrayList)request.getAttribute("ar2");
+    //out.println(ar2);
+    
+    }%>
+    <%if(request.getAttribute("hm1")!=null){
+    hm1=(HashMap)request.getAttribute("hm1");
+   // out.println(hm1);
+    
+    }%>
+    <%if(request.getAttribute("hm2")!=null){
+    hm2=(HashMap)request.getAttribute("hm2");
+   // out.println(hm2);
+    
+    }%>
+    <%if(request.getAttribute("hm3")!=null){
+    hm3=(HashMap)request.getAttribute("hm3");
+  //  out.println(hm3);
+    
+    }%>
+    <%if(request.getAttribute("hm4")!=null){
+    hm4=(HashMap)request.getAttribute("hm4");
+  //  out.println(hm4);
+    
+    }%>
+    
+    <div id="conta">   
+        <div id="header" align="center">
+               
+                <div class="logo_img">
+              <a href="<%=request.getContextPath()%>/fm_home.do?name=home"><img  src="./aless/logo.png" border="0"></a></img>
+             
+             </div> 
+            </div>
+       
+           <div id="headerb">
+             
+         
+            <%@include file="/headmenu.jsp"%>
+       
+           
+	</div>  
+	  
+        <div class="clear"></div>
+    
+    <table align="center">
+        <form name="alessioorder">
+        <tr><td align="center"><table>
+<td valign="top">
+  <table align="center" bgcolor="white"  border="1">
+      <tr><td>S.no</td><td>pic</td><td>price</td><td>quantity</td><td>subtotal</td><td></td></tr>
+      <%for(int i=0;i<ar2.size();i++){%>
+      
+      <tr><td><%=i+1%></td><td><img src="http://www.alessiobrands.com:8080/jewelry/<%=hm4.get(ar2.get(i))%>" width="50" height="70"/>
+      </td>
+      <td><%=hm1.get(ar2.get(i))%></td>
+      <td><%=hm2.get(ar2.get(i))%></td>
+      <td><%=hm3.get(ar2.get(i))%></td>
+      
+      </tr>
+    
+      <%}%>
+  </table>
+
+</td>
+<td valign="top">
+    <table>
+<tr><td><table>
+            <tr><td><b>Shipping Details</b></td></tr>
+        <tr><td>Name:</td><td><%=ship_bill.getShip_f_name()%>&nbsp;<%=ship_bill.getShip_l_name()%></td></tr>
+        <tr><td>Street Address:</td><td><%=ship_bill.getShip_street()%></td></tr>
+        <tr><td>City</td><td><%=ship_bill.getShip_city()%>&nbsp;<%=ship_bill.getShip_state()%>&nbsp;<%=ship_bill.getShip_zip()%>
+        &nbsp;<%=ship_bill.getShip_country()%></td></tr>
+        <tr><td>Phone</td><td>&nbsp;<%=ship_bill.getShip_phone()%>&nbsp;<%=ship_bill.getShip_a_phone()%></td></tr>
+        <tr><td>Shipping Method:</td><td><%=ship_bill.getShip_method()%></td></tr>
+     </table></td>
+        </tr>
+        <tr><td><table>
+                    <tr><td><b>Billing Address</b></td></tr>
+        <tr><td>Name:</td><td><%=ship_bill.getBill_f_name()%>&nbsp;<%=ship_bill.getBill_l_name()%></td></tr>
+        <tr><td>Street Address:</td><td><%=ship_bill.getBill_street()%></td></tr>
+        <tr><td>City</td><td><%=ship_bill.getBill_city()%>&nbsp;<%=ship_bill.getBill_state()%>&nbsp;<%=ship_bill.getBill_zip()%>
+        &nbsp;<%=ship_bill.getBill_country()%></td></tr>
+        <tr><td>Phone</td><td>&nbsp;<%=ship_bill.getBill_phone()%>&nbsp;<%=ship_bill.getBill_a_phone()%></td></tr>
+        <tr><td>Shipping Method:</td><td><%=ship_bill.getBill_method()%></td></tr>
+     </table></td>
+        </tr>
+    <tr><td><table>
+        <tr><td>EMAIL ADDRESS</td></tr>
+        <tr><td>Enter your email address</td><td><input type="text" name="buyerMail" size="22"></td></tr>
+        <tr><td>
+        <input type="checkbox" name="sames" onClick="validatechk(sames)"> I wish to receive emails from Alessio </td></tr>
+    
+     <input type="hidden" name="ship_f_name" value="<%=ship_bill.getShip_f_name()%>">
+<input type="hidden" name="ship_l_name" value="<%=ship_bill.getShip_l_name()%>">
+              <input type="hidden" name="ship_street" value="<%=ship_bill.getShip_street()%>">
+            <input type="hidden" name="ship_city" value="<%=ship_bill.getShip_city()%>">
+<input type="hidden" name="ship_state" value="<%=ship_bill.getShip_state()%>">
+           <input type="hidden" name="ship_zip" value="<%=ship_bill.getShip_zip()%>">
+        <input type="hidden" name="ship_country" value="<%=ship_bill.getShip_country()%>">           
+            <input type="hidden" name="ship_phone" value="<%=ship_bill.getShip_phone()%>">
+<input type="hidden" name="ship_a_phone" value="<%=ship_bill.getShip_a_phone()%>">
+           <input type="hidden" name="ship_method" value="<%=ship_bill.getShip_method()%>">
+            
+           
+              <input type="hidden" name="bill_f_name" value="<%=ship_bill.getBill_f_name()%>">
+<input type="hidden" name="bill_l_name" value="<%=ship_bill.getBill_l_name()%>">
+              <input type="hidden" name="bill_street" value="<%=ship_bill.getBill_street()%>">
+            <input type="hidden" name="bill_city" value="<%=ship_bill.getBill_city()%>">
+<input type="hidden" name="bill_state" value="<%=ship_bill.getBill_state()%>">
+           <input type="hidden" name="bill_zip" value="<%=ship_bill.getBill_zip()%>">
+        <input type="hidden" name="bill_country" value="<%=ship_bill.getBill_country()%>">
+           
+            <input type="hidden" name="bill_phone" value="<%=ship_bill.getBill_phone()%>">
+<input type="hidden" name="bill_a_phone" value="<%=ship_bill.getBill_a_phone()%>">
+           <input type="hidden" name="bill_method" value="<%=ship_bill.getBill_method()%>">
+           
+           <input type="hidden" name="itemQuantity" value="<%=tot_quantity%>">
+           <input type="hidden" name="itemName" value="jewelry">
+            <input type="hidden" name=itemAmount" value="<%=tot_amount%>">
+            <input type="hidden" name=paymentType" value="Sale">
+            
+            
+           <tr><td><img src="./img/paypal-checkout.png" onclick="item_order()"/></td></tr>
+    
+            
+            
+    </table></td></tr>
+    
+    </table>
+</td>
+        </table></td>
+        </tr>
+        
+        </form>
+        </table>
+            
+            <div class="clear"></div>
+        <div id="footerone" align="center"></div>
+        <div id="footer">
+            
+            <table  border="0" align="center" style="padding-right:30px>
+     
+         
+       <tr><td>  <table class="tablefoot">
+<tr><td> 
+ <A href="./Faq.jsp" STYLE="TEXT-DECORATION: NONE"><font color="grey">FAQ </a>
+| <A href="./Sitemap.jsp" STYLE="TEXT-DECORATION: NONE"><font color="grey">SITEMAP </a>
+    
+   |<A href="./fm_home.do?name=gb" STYLE="TEXT-DECORATION: NONE"><font color="grey">GIVING BACK </a>
+| <A href="#" STYLE="TEXT-DECORATION: NONE"><font color="grey">SHIPPING </a>
+    
+ |<A href="./fm_home.do?name=career" STYLE="TEXT-DECORATION: NONE"><font color="grey">CAREERS </a>
+| <A href="./Term.jsp" STYLE="TEXT-DECORATION: NONE"><font color="grey">TERM </a>
+  |<A href="./privacy.jsp" STYLE="TEXT-DECORATION: NONE"><font color="grey">PRIVACY</a>
+| <A href="./Copyright.jsp" STYLE="TEXT-DECORATION: NONE"><font color="grey">COPYRIGHT </a>&nbsp;
+  <a href="http://www.facebook.com/dialog/feed?app_id=194448880576583&link=http://www.alessiobrands.com&picture=http://fbrell.com/f8.jpg&name=Alessio Brands&caption=Imagine walking into any room feeling confident, beautiful, and fabulous.&description=Live a more exciting life, live an ALESSIO life.&message=Guys!%20Check%20out%20this%20jewelry%20store!&redirect_uri=http://www.facebook.com" target="_blank">
+    <img src="./aless//facebook.gif" height="21px" style="border-style:none; alt="Share on Facebook" /></a>&nbsp;&nbsp;
+  <a href="http://twitter.com/share?url=www.alessiobrands.com&text=Imagine walking into any room feeling confident beautiful & fabulous %0ALive a more exciting life live an ALESSIO life.%0Awww.alessiobrands.com" target="_blank">
+ <img src="./aless/twitter.gif" height="21px" style="border-style:none; alt="Share on Twitter" /></a>
+       
+  </td></tr>   
+            <tr><td align="center"> </td></tr> 
+       
+       </table>             
+</td></tr>
+                
+       </table>
+	</div>
+            
+    </div>
+    </body>
+</html>

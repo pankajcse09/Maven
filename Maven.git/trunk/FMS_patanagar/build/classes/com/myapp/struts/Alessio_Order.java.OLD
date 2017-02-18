@@ -1,0 +1,171 @@
+/*
+ * Alessio_Order.java
+ *
+ * Created on January 21, 2013, 4:24 PM
+ */
+
+package com.myapp.struts;
+
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
+import java.io.PrintWriter;
+import java.io.UnsupportedEncodingException;
+import java.util.ArrayList;
+import java.util.Iterator;
+import java.util.LinkedHashMap;
+import java.util.List;
+import java.util.Map;
+
+import javax.servlet.ServletException;
+import javax.servlet.http.HttpServlet;
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
+import javax.servlet.http.HttpSession;
+import javax.xml.parsers.ParserConfigurationException;
+
+import org.xml.sax.SAXException;
+
+import urn.ebay.api.PayPalAPI.DoExpressCheckoutPaymentReq;
+import urn.ebay.api.PayPalAPI.DoExpressCheckoutPaymentRequestType;
+import urn.ebay.api.PayPalAPI.DoExpressCheckoutPaymentResponseType;
+import urn.ebay.api.PayPalAPI.DoUATPExpressCheckoutPaymentReq;
+import urn.ebay.api.PayPalAPI.DoUATPExpressCheckoutPaymentRequestType;
+import urn.ebay.api.PayPalAPI.DoUATPExpressCheckoutPaymentResponseType;
+import urn.ebay.api.PayPalAPI.ExecuteCheckoutOperationsReq;
+import urn.ebay.api.PayPalAPI.ExecuteCheckoutOperationsRequestType;
+import urn.ebay.api.PayPalAPI.ExecuteCheckoutOperationsResponseType;
+import urn.ebay.api.PayPalAPI.ExternalRememberMeOptOutReq;
+import urn.ebay.api.PayPalAPI.ExternalRememberMeOptOutRequestType;
+import urn.ebay.api.PayPalAPI.ExternalRememberMeOptOutResponseType;
+import urn.ebay.api.PayPalAPI.GetExpressCheckoutDetailsReq;
+import urn.ebay.api.PayPalAPI.GetExpressCheckoutDetailsRequestType;
+import urn.ebay.api.PayPalAPI.GetExpressCheckoutDetailsResponseType;
+import urn.ebay.api.PayPalAPI.PayPalAPIInterfaceServiceService;
+import urn.ebay.api.PayPalAPI.SetExpressCheckoutReq;
+import urn.ebay.api.PayPalAPI.SetExpressCheckoutRequestType;
+import urn.ebay.api.PayPalAPI.SetExpressCheckoutResponseType;
+import urn.ebay.apis.CoreComponentTypes.BasicAmountType;
+import urn.ebay.apis.eBLBaseComponents.AddressType;
+import urn.ebay.apis.eBLBaseComponents.ApprovalSubTypeType;
+import urn.ebay.apis.eBLBaseComponents.ApprovalTypeType;
+import urn.ebay.apis.eBLBaseComponents.AuthorizationRequestType;
+import urn.ebay.apis.eBLBaseComponents.BillingAgreementDetailsType;
+import urn.ebay.apis.eBLBaseComponents.BillingApprovalDetailsType;
+import urn.ebay.apis.eBLBaseComponents.BillingCodeType;
+import urn.ebay.apis.eBLBaseComponents.BuyerDetailType;
+import urn.ebay.apis.eBLBaseComponents.CountryCodeType;
+import urn.ebay.apis.eBLBaseComponents.CurrencyCodeType;
+import urn.ebay.apis.eBLBaseComponents.DoExpressCheckoutPaymentRequestDetailsType;
+import urn.ebay.apis.eBLBaseComponents.ExecuteCheckoutOperationsRequestDetailsType;
+import urn.ebay.apis.eBLBaseComponents.ExternalRememberMeOwnerDetailsType;
+import urn.ebay.apis.eBLBaseComponents.IdentificationInfoType;
+import urn.ebay.apis.eBLBaseComponents.InfoSharingDirectivesType;
+import urn.ebay.apis.eBLBaseComponents.ItemCategoryType;
+import urn.ebay.apis.eBLBaseComponents.MerchantPullPaymentCodeType;
+import urn.ebay.apis.eBLBaseComponents.MobileIDInfoType;
+import urn.ebay.apis.eBLBaseComponents.OrderDetailsType;
+import urn.ebay.apis.eBLBaseComponents.PaymentActionCodeType;
+import urn.ebay.apis.eBLBaseComponents.PaymentDetailsItemType;
+import urn.ebay.apis.eBLBaseComponents.PaymentDetailsType;
+import urn.ebay.apis.eBLBaseComponents.PaymentDirectivesType;
+import urn.ebay.apis.eBLBaseComponents.PaymentInfoType;
+import urn.ebay.apis.eBLBaseComponents.RememberMeIDInfoType;
+import urn.ebay.apis.eBLBaseComponents.SetDataRequestType;
+import urn.ebay.apis.eBLBaseComponents.SetExpressCheckoutRequestDetailsType;
+
+import com.paypal.exception.ClientActionRequiredException;
+import com.paypal.exception.HttpErrorException;
+import com.paypal.exception.InvalidCredentialException;
+import com.paypal.exception.InvalidResponseDataException;
+import com.paypal.exception.MissingCredentialException;
+import com.paypal.exception.SSLConfigurationException;
+import com.paypal.sdk.exceptions.OAuthException;
+
+
+/**
+ *
+ * @author user
+ * @version
+ */
+public class Alessio_Order extends HttpServlet {
+    
+    
+  
+ 
+   public void doPost(HttpServletRequest request, HttpServletResponse response)
+    throws ServletException, IOException {
+     
+       PrintWriter out=response.getWriter();
+		HttpSession session = request.getSession();
+		session.setAttribute("url", request.getRequestURI());
+                  response.setContentType("text/html");
+		 try {
+			PayPalAPIInterfaceServiceService service = new PayPalAPIInterfaceServiceService(this
+					.getClass().getResourceAsStream("/sdk_config.properties"));
+                        
+			
+				SetExpressCheckoutRequestType setExpressCheckoutReq = new SetExpressCheckoutRequestType();
+				SetExpressCheckoutRequestDetailsType details = new SetExpressCheckoutRequestDetailsType();
+
+				StringBuffer url = new StringBuffer();
+				url.append("http://");
+				url.append(request.getServerName());
+				url.append(":");
+				url.append(request.getServerPort());
+				url.append(request.getContextPath());
+                                out.println(url);
+                                String returnURL = url.toString() + "/create_cart.do?method=create_cart";
+				String cancelURL = url.toString() + "/create_cart.do?method=create_cart";
+
+				details.setReturnURL(returnURL + "?currencyCodeType=USD");
+                                   details.setBuyerEmail(request.getParameter("buyerMail"));
+
+				session.setAttribute("paymentType","Sale");
+                                
+                                double itemTotal = 0.00;
+				double orderTotal = 0.00;
+				// populate line item details
+				String amountItems = request.getParameter("itemAmount");
+				String qtyItems = request.getParameter("itemQuantity");
+				String names = request.getParameter("itemName");
+                              List<PaymentDetailsItemType> lineItems = new ArrayList<PaymentDetailsItemType>();
+
+				PaymentDetailsItemType item = new PaymentDetailsItemType();
+				BasicAmountType amt = new BasicAmountType();
+				amt.setCurrencyID(CurrencyCodeType.fromValue("USD"));
+				amt.setValue(amountItems);
+				item.setQuantity(new Integer(qtyItems));
+				item.setName(names);
+				item.setAmount(amt);
+				item.setItemCategory(ItemCategoryType.fromValue("Physical"));
+				item.setDescription("jewelry");
+                                
+				lineItems.add(item);
+                                
+                               
+					item.setTax(new BasicAmountType(CurrencyCodeType.fromValue(request.getParameter("USD")),"0.0"));
+							
+				
+				itemTotal += Double.parseDouble(qtyItems) * Double.parseDouble(amountItems);
+				orderTotal += itemTotal;
+				
+				List<PaymentDetailsType> payDetails = new ArrayList<PaymentDetailsType>();
+				PaymentDetailsType paydtl = new PaymentDetailsType();
+				paydtl.setPaymentAction(PaymentActionCodeType.fromValue("Sale"));
+						
+                              
+					BasicAmountType shippingTotal = new BasicAmountType();
+					shippingTotal.setValue("0.0");
+					shippingTotal.setCurrencyID(CurrencyCodeType
+							.fromValue("USD"));
+					orderTotal += Double.parseDouble("0.0");
+					paydtl.setShippingTotal(shippingTotal);
+				
+                       
+                 }catch(Exception E)
+                        {}
+       
+       
+}
+    }

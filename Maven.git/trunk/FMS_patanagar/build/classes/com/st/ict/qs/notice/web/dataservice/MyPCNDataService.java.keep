@@ -1,0 +1,94 @@
+
+package com.st.ict.qs.notice.web.dataservice;
+
+
+import java.text.SimpleDateFormat;
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import com.st.ict.qs.notice.manager.BeanFactory;
+import com.st.ict.qs.notice.manager.HomeManager;
+import com.st.ict.qs.notice.web.constants.PageConstants;
+import com.st.ict.qs.notice.web.formBean.MyPCNBean;
+
+import st.ict.qs.core.basepage.AppDefaultPage;
+import st.liotrox.WRequest;
+import st.liotrox.db.dataservice.DataService;
+import st.liotrox.db.dataservice.DataServiceContext;
+
+public class MyPCNDataService extends AppDefaultPage implements DataService {
+	
+	Logger logger = LoggerFactory.getLogger(MyPCNDataService.class);
+	HomeManager homeManager = (HomeManager)BeanFactory.getBean(PageConstants.HOME_MANAGER);
+	
+
+	@Override
+	public void addItem(Object arg0, DataServiceContext arg1) {
+		
+	}
+
+	@Override
+	public void beginTransaction(DataServiceContext arg0) {
+		
+	}
+
+	@Override
+	public void commit(DataServiceContext arg0) {
+		
+	}
+
+	@Override
+	public void deleteItem(Object arg0, DataServiceContext arg1) {
+		
+	}
+
+	@Override
+	public List getItems(DataServiceContext ctx) {
+		
+		List items =  new ArrayList();
+		List newItems = new ArrayList();
+		try{
+			SimpleDateFormat dateFormat = new SimpleDateFormat("dd-MMM-yyyy");
+			MyPCNBean pcnBean   = null;
+           
+		  WRequest request = WRequest.getCurrentInstance();
+		 String euid = request.getUserProfile().getUID();
+	
+            int lowerBound =  ctx.getStartRow() - 1;
+           // int upperBound =  ctx.getPageSize() + ctx.getStartRow() -1;
+            int pageSize = ctx.getPageSize();
+           // newItems = homeManager.getMyNotice(euid);
+            for(int j=0 ; j<newItems.size() ;j++)
+            {
+            	Object[] data = (Object[]) newItems.get(j);           	
+            	pcnBean = new MyPCNBean();
+    			items.add(pcnBean);
+		}
+		
+		}catch(Exception e)
+		{
+			e.printStackTrace();
+		}
+		return items;
+	}
+
+	@Override
+	public int getTotalRows(DataServiceContext arg0) {
+		return 0;
+	}
+
+	@Override
+	public void rollback(DataServiceContext arg0) {
+		
+	}
+
+	@Override
+	public void updateItem(Object arg0, Object arg1, String[] arg2,
+			DataServiceContext arg3) {
+		
+	}
+
+}

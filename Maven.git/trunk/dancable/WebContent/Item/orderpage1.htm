@@ -1,0 +1,26 @@
+<HTML>
+<head>
+<title>Connect Payment Example </title>
+</head>
+<body>
+<h1>Heading<hr></h1>
+<h3>Product/Price</h3>
+<p>Description about the product</p>
+<br clear=left>
+<form method="post" action="https://www.staging.yourpay.com/lpcentral/servlet/lppay">
+<input type="hidden" name="storename" value="1909051263">
+            <input type="hidden" name="chargetotal" value="30">
+            <input type="hidden" name="mode" value="PayOnly">
+            <input type="hidden" name="subchargetotal" value="25">
+            <input type="hidden" name="shipping" value="5">
+		<input type="hidden" name="tax" value="0">
+
+<p>Item : 25.00<br>
+Shipping: 5.00<br>
+Tax : 0<br>
+Total: 30.00</p>
+<p><input type="submit" value="Continue to Secure Payment Form"></p>
+</form>
+</body>
+</HTML>
+

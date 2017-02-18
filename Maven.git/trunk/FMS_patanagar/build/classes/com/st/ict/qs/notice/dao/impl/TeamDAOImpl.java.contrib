@@ -1,0 +1,91 @@
+package com.st.ict.qs.notice.dao.impl;
+
+import java.util.List;
+
+import org.hibernate.HibernateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+
+import st.ict.qs.core.db.DAOException;
+import st.ict.qs.core.parser.XmlReader;
+
+import com.st.ict.qs.notice.businessbean.UserDetail;
+import com.st.ict.qs.notice.businessbean.UserRole;
+import com.st.ict.qs.notice.dao.TeamDAO;
+import com.st.ict.qs.notice.web.constants.QueryConstant;
+
+public class TeamDAOImpl extends BaseDAOImpl implements TeamDAO{
+	private Logger logger = LoggerFactory.getLogger(TeamDAOImpl.class);
+	
+	
+	@Override
+	public void saveUserDetail(UserDetail userDetail) throws DAOException {
+		try {
+			logger.debug("TeamDAOImpl : saveUserDetail : Started ");
+			saveOrUpdateObject(userDetail);
+			sessionFlush();
+			evictEntity(userDetail);
+			logger.debug("TeamDAOImpl : saveUserDetail : Ended ");
+		} catch (HibernateException e) {
+			logger.debug("TeamDAOImpl : saveUserDetail : HibernateException Caught");
+			throw new DAOException(e);
+		} catch (Exception e) {
+			logger.debug("TeamDAOImpl : saveUserDetail : Exception Caught");
+			throw new DAOException(e);
+		}
+	}
+	
+	@Override
+	public UserDetail getUserDetail(String stEduid) throws DAOException { 
+
+		// TODO Auto-generated method stub
+		try {
+			logger.debug("TeamDAOImpl : getUserDetail : Start of Method (Start of DB Call as well)");
+			Object o = getObjectforId(UserDetail.class,stEduid);
+			logger.debug("TeamDAOImpl : getUserDetail : End of Method (End of DB Call as well)");
+			return ((UserDetail)o);
+		} catch (DAOException e) {
+			logger.debug("TeamDAOImpl : getUserDetail: DAOException Caught");
+			throw new DAOException(e);
+		}
+
+	
+	}
+	
+	@Override
+	public void addUser(UserRole role) throws DAOException {
+		try {
+			logger.debug("TeamDAOImpl : addUser : Started ");
+			saveOrUpdateObject(role);
+			sessionFlush();
+			evictEntity(role);
+			logger.debug("TeamDAOImpl : addUser : Ended ");
+		} catch (HibernateException e) {
+			logger.debug("TeamDAOImpl : addUser : HibernateException Caught");
+			throw new DAOException(e);
+		} catch (Exception e) {
+			logger.debug("TeamDAOImpl : save : Exception Caught");
+			throw new DAOException(e);
+		}
+	}
+
+	@Override
+	public List<UserRole> getTeamRoles(int noticeId) throws DAOException { 
+		List<UserRole> userRolesList = null;
+		// TODO Auto-generated method stub
+		try {
+			String query = XmlReader.getQuery(QueryConstant.GET_USER_ROLES_BY_NOTICE_ID);
+			userRolesList = getDataForQuery(query);
+		} catch (DAOException e) {
+			logger.debug("TeamDAOImpl : getTeamRoles: DAOException Caught");
+			throw new DAOException(e);
+		}
+		return userRolesList;
+
+	
+	}
+
+	 
+
+}

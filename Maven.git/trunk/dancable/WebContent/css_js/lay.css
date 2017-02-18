@@ -1,0 +1,191 @@
+/* 
+    Document   : lay
+    Created on : May 25, 2013, 6:48:18 PM
+    Author     : kapil
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+
+#header
+{
+    width: 100%;
+    height: 457px;
+    border: 0px solid red;
+}
+
+#topdesign
+{
+    background: url('../images/CD for ballet/grey-bar.png');
+  width: 100%;
+height: 135px;
+position: relative;
+border: 0px solid green;  
+}
+
+#headdesign
+{
+width: 100%;
+height: 105px;
+position: relative;
+border: 0px solid green;
+}
+.header1{
+    position: relative;
+height: 72px;
+float: left;
+padding: 30px 0px 0px 20px;
+border: 0px solid yellow;
+}
+
+.header2
+{
+ position: relative;
+width: 700px;
+height: 88px;
+padding: 15px 0px 0px 270px; 
+  border: 0px solid yellow;
+}
+.header2 header2_1
+{
+    width: 750px;
+    text-align: right;
+}
+.header2_2
+{
+    position: relative;
+    width: auto;
+    border: 0px solid orange;
+}
+
+.user{
+   position: relative;
+width: auto;
+height: 20px;
+/*line-height: 25px;*/
+color: white;
+border: 0px solid orange;
+text-align: right;
+right: 15px;
+}
+
+.tb{
+    background: url('../images/homepage/Homepage background-3.png') no-repeat;
+    width: 100%;
+    height:457px;
+    border: 0px solid yellow;
+}
+
+.cel{
+    padding: 50px 0px 0px 70px;
+}
+
+.cel1{
+    padding: 60px 0px 0px 0px;
+    width: 91%;
+}
+
+.pad
+{
+    padding: 30px 0px 0px 10px;
+    
+}
+.pad1
+{
+    padding: 20px 0px 0px 20px;
+    
+}
+
+.shadow
+{
+    background: url('../images/homepage/bottom grey box.png');
+    width: 98%;
+    height: 180px;
+    
+    -moz-box-shadow: 0 0 25px 1px #A7ABA9;
+-webkit-box-shadow: 0 0 25px 1px #A7ABA9;
+box-shadow: 5px 5px 25px 1px #A7ABA9;
+padding: 0 5px 10px 5px;
+  
+}
+
+.fnt{
+     font-family:arial, verdana, sans-serif;
+     font-weight: 800;
+     height: 35px;
+}
+
+.fnt1
+{
+    font-family: arial;
+     font-weight: bold;
+     color: black;
+  }
+  .fnt2
+  {
+      font-family: arial;
+      font-size: 15px;
+     font-weight: bold;
+  }
+  
+  .fnt3
+  {
+      font-family: arial;
+      font-size: 12px;
+     
+  }
+  .a:visited
+  {
+      color: black;
+  }
+  .a:link
+  {
+      color: black;
+  }
+  
+  .b:visited
+  {
+      font-family: arial;
+      text-decoration: none;
+      color: white;
+  }
+  .b:link
+  {
+      font-family: arial;
+      text-decoration: none;
+      color: white;
+  }
+  
+  .tbl
+  {
+      background: url('../images/homepage/bottom grey.png');
+      border-radius: 5px;
+    width: 100%;
+    height: 225px;
+    padding-left: 10px;
+    padding-top: 15px;
+  }
+  .tbl1
+  {
+      background: url('../images/homepage/GREEN BOX.png');
+    width: 100%;
+    height: 225px;
+    padding-left: 15px;
+    padding-top: 20px;
+    }
+    
+.logoimg
+{
+    width: 240px;
+    border: 0px;
+}
+    
+.topmenu_tb
+{
+    width: 700px;
+    height: 60px;
+    padding: 0px 0px 0px 25px;
+}
+  
+ 
+

@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xmlns:context="http://www.springframework.org/schema/context"
+	xmlns:util="http://www.springframework.org/schema/util"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans-3.0.xsd                        
+                        http://www.springframework.org/schema/aop 
+                        http://www.springframework.org/schema/aop/spring-aop-3.0.xsd
+                        http://www.springframework.org/schema/context
+                        http://www.springframework.org/schema/context/spring-context-3.0.xsd
+                        http://www.springframework.org/schema/util 
+                        http://www.springframework.org/schema/util/spring-util-3.0.xsd">
+                         
+
+ 	<bean id="actionWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+	 <property name="serviceInterface" value="st.qs.eventmgt.ws.endpoint.ActionServiceEndPoint"/>
+	    <property name="wsdlDocumentUrl"  value="http://eul2148.sgp.st.com:8080/actionws/aws?wsdl"/>
+	    <property name="namespaceUri"     value="${actionNamespaceUri}"/>
+	    <property name="serviceName"      value="${actionServiceName}"/>
+	    <property name="portName" value="${actionServicePort}"/>
+	   	<property name="username"             value="${actionUser}"/>
+	    <property name="password"              value="${actionPwd}"/>
+	</bean>
+	
+ 	<bean id="actionIntegrationManager" class="com.st.ict.qs.notice.integration.impl.ActionIntegrationManagerImpl">
+	    <property name="actionProxy">
+	                  <ref local="actionWebService" />
+	    </property>
+	    
+ 	</bean> 
+ 	
+ 	<bean id="pcmsWebService" class="org.springframework.remoting.jaxws.JaxWsPortProxyFactoryBean">
+	 <property name="serviceInterface" value="${pcmsServiceInterface}"/>
+	    <property name="wsdlDocumentUrl"  value="${pcmsWsdlDocumentUrl}"/>
+	    <property name="namespaceUri"     value="${pcmsNamespaceUri}"/>
+	    <property name="serviceName"      value="${pcmsServiceName}"/>
+	    <property name="portName" value="${pcmsServicePort}"/>
+	   	<property name="username"             value="${pcmsUser}"/>
+	    <property name="password"              value="${pcmsPwd}"/>
+	</bean>
+	
+ 	<bean id="pcmsIntegrationManager" class="com.st.ict.qs.notice.integration.impl.PcmsIntegrationManagerImpl">
+	    <property name="proxy">
+	                  <ref local="pcmsWebService" />
+	    </property>
+	    
+ 	</bean> 
+	
+</beans>

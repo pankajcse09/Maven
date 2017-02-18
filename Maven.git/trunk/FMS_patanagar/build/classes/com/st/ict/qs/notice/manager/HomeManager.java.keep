@@ -1,0 +1,11 @@
+package com.st.ict.qs.notice.manager;
+
+import java.util.List;
+
+import st.ict.qs.core.manager.ManagerException;
+
+public interface HomeManager {
+
+	List getMyNotice(String euid) throws ManagerException;
+
+}

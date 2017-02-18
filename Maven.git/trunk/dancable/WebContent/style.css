@@ -1,0 +1,38 @@
+BODY {
+	BACKGROUND-COLOR: #33cc00; MARGIN: 0px
+}
+.style1 {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 14px
+}
+
+
+.style2 {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif; FONT-SIZE: 13px
+}
+.style3 {
+	FONT-SIZE: 14px
+}
+A:link {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A:visited {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A:hover {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+A:active {
+	COLOR: #000000; TEXT-DECORATION: none
+}
+H1 {
+	COLOR: #000000; FONT-SIZE: 16px
+}
+.style12 {
+	FONT-SIZE: 14px; FONT-WEIGHT: bold
+}
+.style14 {
+	FONT-FAMILY: Verdana, Arial, Helvetica, sans-serif
+}
+.style5 {
+	FONT-SIZE: 18px; FONT-WEIGHT: bold
+}

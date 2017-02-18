@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<configuration>
+ <property name="USER_HOME" value="/home/bhartip/log_recv"/>
+ <appender name="FILE" class="ch.qos.logback.core.rolling.RollingFileAppender">
+                <File>${USER_HOME}/noticeLogFile.log</File>
+                <rollingPolicy class="ch.qos.logback.core.rolling.TimeBasedRollingPolicy">
+                        <FileNamePattern>
+                                ${USER_HOME}/cmslogFile_%d{yyyy-MM-dd}.log
+                        </FileNamePattern>
+                        <!-- keep 30 days worth of history -->
+                        <MaxHistory>15</MaxHistory>
+                </rollingPolicy>
+                <layout class="ch.qos.logback.classic.PatternLayout">
+                        <Pattern>%d{yyyy-MM-dd HH:mm:ss.SSS} [%thread] %-5level %logger{36} - %msg%n</Pattern>
+                </layout>
+        </appender>
+
+
+        <logger name="com.st" level="INFO"/>
+        
+        <logger name="org.hibernate" level="WARN"/>
+         <logger name="st.liotrox" level="WARN"/>
+
+        <logger name="org.apache.commons" level="ERROR"/>
+        <logger name="org.jboss" level="WARN"/>
+        <logger name="org.hibernate" level="WARN"/>
+
+        <root>
+               <!--  <appender-ref ref="STDOUT" />  -->
+                 <appender-ref ref="FILE"/>
+        </root>
+</configuration>

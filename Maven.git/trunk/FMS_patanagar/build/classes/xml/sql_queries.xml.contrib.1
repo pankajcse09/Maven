@@ -1,0 +1,264 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<messages>
+	<message id="GET_IMPACTED_PRODUCTS">
+		SELECT
+		DISTINCT
+		PCDV.PRODUCT_LINE_CODE,CP.CODE,CP.FG,
+		CPMS.ID,PCDV.ORGXPG_ORGANIZATION_CODE ,PCDV.PNL_FAMILY_CODE,
+		PCDV.PRODUCT_GROUP_CODE, PCDV.PRODUCT_DIVISION_CODE,1
+		,NVL(RNP.PUBLICATION_TARGET,'C'),PID.INDUSTRY_DOMAIN__CODE,
+		PM_CP.PRODUCT_MATURITY__CODE , CP.INPUT
+		FROM
+		(
+		SELECT
+		DISTINCT
+		PLM_BOM_HEADER__CODE CODE, PLM_MATERIAL__CODE FG ,PLM_MATERIAL__CODE
+		INPUT
+		FROM PLM_BOM_ITEM
+		WHERE ACTIVITY_STATUS__CODE='30' AND
+		PLM_BOM_HEADER_TYPE__CODE = 'CP'
+		START WITH PLM_MATERIAL_TYPE__CODE =
+		'WAF'
+		AND PLM_MATERIAL__CODE IN
+		(SELECT DISTINCT PM.CODE FROM
+		PLM_MATERIAL PM WHERE PM.PRODUCT_MATURITY__CODE
+		&lt; '90' AND PM.MTART
+		!= 'PSDO'
+		
+	</message>
+
+	<message id="GET_IMPACTED_PRODUCTS_CONDITION">
+		CONNECT BY PRIOR PLM_BOM_HEADER__CODE = PLM_MATERIAL__CODE AND PRIOR
+		PLM_BOM_HEADER_TYPE__CODE = PLM_MATERIAL_TYPE__CODE
+		AND PRIOR
+		ACTIVITY_STATUS__CODE='30') CP,RN_PRODUCT_VW RNP,
+		PCN_CP_DATA_VIEW
+		PCDV, COMM_PRODT_MULTPL_SOURCE CPMS, PLM_MATERIAL
+		PM_CP, PLM_MATERIAL
+		PM_FG ,PRODUCT_X_INDUSTRY_DOM PID,
+		INDUSTRY_DOMAIN ID
+		WHERE
+		CP.CODE =
+		PM_CP.CODE AND PM_CP.TYPE='CP' AND PM_CP.MTART != 'PSDO' AND
+		PM_CP.PRODUCT_LINE__CODE=PCDV.PRODUCT_LINE_CODE
+		AND
+		PM_CP.PRODUCT_MATURITY__CODE >= '10' and PM_CP.PRODUCT_MATURITY__CODE
+		&lt; '50' AND PM_CP.CODE = RNP.COMMERCIAL_PRODUCT__CODE(+) AND
+		CPMS.COMMERCIAL_PRODUCT__CODE=CP.CODE AND
+		CPMS.FINISHED_GOOD__CODE=CP.FG AND CPMS.ACTIVITY_STATUS__CODE='30' AND
+		PM_FG.CODE=CP.FG AND PM_FG.TYPE='FG'
+		AND PM_FG.MTART != 'PSDO' AND
+		PM_FG.PRODUCT_MATURITY__CODE >= '10' and
+		PM_FG.PRODUCT_MATURITY__CODE  <![CDATA[<= ]]>
+		'90' AND CP.FG = RPAD(PID.PRODUCT__CODE(+),16,' ')
+		AND
+		PID.PRODUCT_TYPE__CODE(+) = 2 AND PID.INDUSTRY_DOMAIN__CODE(+) = '10'
+		AND PID.INDUSTRY_DOMAIN__CODE = ID.CODE(+) AND
+		PID.ACTIVITY_STATUS__CODE(+) != '90'
+		AND PCDV.PRODUCT_GROUP_CODE !=
+		'11'
+
+	</message>
+
+	<message id="GET_IMPACTED_CUSTOMERS">
+		SELECT
+		DISTINCT VW.CODE VW_CODE, VW.SHORT_NAME
+		VW_SHORT_NAME,VW.FIELD_SALES_ENGR__CODE VW_FIELD_SALES_ENGR__CODE,
+		VW.DESCR VW_DESCR ,
+		VW.CUSTOMER_TYPE__CODE
+		VW_CUSTOMER_TYPE__CODE,'Y',MIN(MS.MACRO_SEGMENT__CODE) MS_CODE
+		FROM
+		MV_CPCN_CUSTOMER_LIST VW,NOTICE_IMPACTED_PRODUCTS TPXCP
+		,CUSTOMER_SHIP_TO CST,
+		MARKET_SEGMENT MS
+		WHERE TPXCP.CP =
+		trim(VW.COMMERCIAL_PRODUCT__CODE) AND TPXCP.FG =
+		trim(VW.FINISHED_GOOD__CODE)
+		AND VW.PARENT_COMPANY_ORG__CODE= 'STM' AND
+		VW.CUSTOMER_SHIP_TO__CODE=CST.ID AND
+		CST.MARKET_SEGMENT__CODE=MS.CODE
+		AND NOT EXISTS ( SELECT 1 FROM COMM_PRODT_MULTPL_SOURCE CPMS ,
+		CP_MULTPL_SOURCE_X_CUST CPMSXC WHERE CPMS.ID =
+		CPMSXC.CPRODT_MULTPL_SOURCE__ID AND
+		SUBSTR(VW.CUSTOMER_SHIP_TO__CODE,1,8) = CPMSXC.CUSTOMER__CODE
+		AND
+		TPXCP.CP = CPMS.COMMERCIAL_PRODUCT__CODE AND
+		CPMS.ACTIVITY_STATUS__CODE = '30' AND CPMSXC.ACTIVITY_STATUS__CODE
+		='30')
+		AND NOT EXISTS
+
+
+
+		( SELECT 1 FROM CP_MULTPL_SOURCE_X_CUST CPMSXC2,
+		COMM_PRODT_MULTPL_SOURCE CPMS1 WHERE TPXCP.CPMS_ID =
+		CPMSXC2.CPRODT_MULTPL_SOURCE__ID AND
+		CPMS1.ID=CPMSXC2.CPRODT_MULTPL_SOURCE__ID
+		AND CPMSXC2.CUSTOMER__CODE !=
+		VW.CODE AND CPMS1.ACTIVITY_STATUS__CODE =
+		'30' AND
+		CPMSXC2.ACTIVITY_STATUS__CODE = '30' AND
+		CPMS1.RESERVED_FLAG='YS'
+		AND
+		TPXCP.FG != CPMS1.FINISHED_GOOD__CODE)
+
+		GROUP BY
+		VW.CODE,VW.SHORT_NAME,VW.FIELD_SALES_ENGR__CODE,VW.DESCR,VW.CUSTOMER_TYPE__CODE
+
+		UNION
+		SELECT DISTINCT VW.CODE VW_CODE, VW.SHORT_NAME
+		VW_SHORT_NAME,VW.FIELD_SALES_ENGR__CODE
+		VW_FIELD_SALES_ENGR__CODE,
+		VW.DESCR VW_DESCR,VW.CUSTOMER_TYPE__CODE
+		VW_CUSTOMER_TYPE__CODE,'Y',MIN(MS.MACRO_SEGMENT__CODE) MS_CODE
+		FROM
+		MV_CPCN_CUSTOMER_LIST VW,NOTICE_IMPACTED_PRODUCTS TPXCP,
+		CP_MULTPL_SOURCE_X_CUST CPMSXC
+		,CUSTOMER_SHIP_TO CST, MARKET_SEGMENT MS
+
+		WHERE
+		TPXCP.CPMS_ID = CPMSXC.CPRODT_MULTPL_SOURCE__ID AND TPXCP.CP =
+		trim(VW.COMMERCIAL_PRODUCT__CODE)
+		AND TPXCP.FG =
+		trim(VW.FINISHED_GOOD__CODE) AND
+		CPMSXC.ACTIVITY_STATUS__CODE = '30'
+		AND CPMSXC.CUSTOMER__CODE = VW.CODE AND VW.PARENT_COMPANY_ORG__CODE=
+		'STM' AND VW.CUSTOMER_SHIP_TO__CODE=CST.ID
+		AND
+		CST.MARKET_SEGMENT__CODE=MS.CODE GROUP BY
+		VW.CODE,VW.SHORT_NAME,VW.FIELD_SALES_ENGR__CODE,VW.DESCR,VW.CUSTOMER_TYPE__CODE
+	</message>
+
+	<message id="INSERT_TMP_IMPACTED_PRODUCTS">
+		INSERT INTO NOTICE_IMPACTED_PRODUCTS VALUES (?,?,?)
+
+	</message>
+
+	<message id="SELECT_ALL_PRODUCT_GROUP">
+		select CODE From PRODUCT_GROUP
+	</message>
+
+	<message id="SELECT_PRODUCT_DIV_BY_GRP">
+		select CODE from PRODUCT_DIVISION where
+		PRODUCT_GROUP__CODE = ?
+	</message>
+
+	<message id="SELECT_ALL_COMM_PRODUCT">
+		select CODE from PLM_MATERIAL where TYPE= 'CP'
+	</message>
+
+	<message id="SELECT_FG_BY_CP">
+		select PlM_MATERIAL__CODE from PLM_BOM_ITEM where
+		PLM_BOM_HEADER__CODE = ?
+	</message>
+
+
+
+	<message id="GET_PROD_GRP_CONTACT">
+		from ProductGroup
+	</message>
+
+	<message id="GET_NOTIFICATION_LIST_FOR_NOTICE">
+		FROM Notification as notification WHERE notification.status =
+		'GENERATED' and notification.autoEmail = 'Y'
+		<!-- SELECT cntct.customer_name, cntct.customer_email FROM noticedb.t_notification 
+			n JOIN noticedb.tm_address addrs ON n.address= addrs.address JOIN noticedb.tm_contact 
+			cntct message ON addrs.address_id = cntct.address__id WHERE n.status='GENERATED' 
+			AND N.auto_email='Y' -->
+	</message>
+
+	<message id="GET_CUSTOMER_LIST_FOR_NOTICE">
+		SELECT cntct.customer_name, cntct.customer_email,
+		cntct.to_or_cc
+		FROM noticedb.tm_address ad
+		JOIN noticedb.tm_contact
+		cntct
+		ON ad.address_id = cntct.address__id
+		WHERE ad.customer_code = ?
+	</message>
+	<message id="S_ALL_CUSTOMER_GRP">
+		from CustomerGroup
+	</message>
+	<message id="S_ALL_CUSTOMER_ADDRESS">
+		from CustomerAddressEntity
+	</message>
+
+	<message id="S_ALL_CUSTOMER_NOTIFICATION">
+		from Notification where notice.internalId=?
+	</message>
+
+	<message id="GET_NOTIFICATION_DETAILS">
+		from Notification notification WHERE notification.internalId in
+	</message>
+	<message id="GET_NOTIFICATIONDETAIL_BY_NOTIFICATIONID">
+		from NotificationDetail ND where
+		ND.notification.internalId in 
+	</message>
+	<message id="GET_NOTIFICATIONDETAIL_BY_NOTICEID">
+		from NotificationDetail ND where
+		ND.notification.notice.internalId=?
+	</message>
+	<message id="GET_ONGOING_PCPN_BY_CUSTOMERCODE">
+		select notice from Notice notice inner join
+		notice.notificationList
+		notification
+		where
+		notification.customerName in
+	</message>
+
+	<message id="GET_NOTIFICATIONDETAIL_FOR_NOTIFICATIONID">
+		from Notification notification WHERE notification.internalId in
+	</message>
+
+	<message id="GET_NOTIFICATIOND_BY_NOTICEID">
+		from Notification notification where 
+		notification.type in ('GENERATED') 
+		and	notice.internalId =? 
+		and notification.fseEduid = ? 
+	</message>
+	<message id="GET_NOTIFICATIOND_BY_NOTICEID">
+		from Notification notification where 
+		notification.type in ('GENERATED') 
+		and	notice.internalId =? 		
+	</message>
+	<message id="GET_IMPACTED_PRODUCTS_BY_NOTICEID">
+		from ImpactedProduct where notice.internalId = ?
+	</message>
+	<message id="GET_IMPACTED_PRODUCTS_WHERE_ID_IS">
+		from ImpactedProduct where impacted_product_id in
+	</message>
+	<message id="GET_INPUT_PRODUCTS_BY_NOTICEID">
+		from InputProduct where notice.internalId = ?
+	</message>
+	<message id="GET_ONGOING_PCN">
+		select notice from Notice notice inner join
+		notice.impactedProductList
+		impactedProduct where notice.status in (
+		'DRAFT','OPEN') and
+		impactedProduct.finishGood in
+	</message>
+
+	<message id="SELECT_CUSTOMER_DESC">
+		select CODE,DESCR from customer_group
+	</message>
+	<message id="SELECT_CUSTOMER_NAME">
+		select CODE,NAME from customer 
+
+	</message>
+	<message id="SELECT_CUSTOMER_SHIP_TO">
+		select ID,ID id1 from customer_ship_to
+	</message>
+
+	<message id="SELECT_CUSTOMER_DESC_RELEASE">
+		select CODE,DESCR from customer_group
+	</message>
+
+	<message id="SELECT_CUSTOMER_GROUPING_ENTITY">
+		from CustomerGroup
+	</message>
+<message id="SELECT_CUSTOMER_RELEASE_ENTITY">
+		from ReleaseEntity
+	</message>
+	
+	
+</messages>

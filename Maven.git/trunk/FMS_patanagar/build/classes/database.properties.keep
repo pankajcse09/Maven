@@ -1,0 +1,32 @@
+hibernate.connection.driver_class=com.mysql.jdbc.Driver
+#hibernate.connection.url=jdbc:mysql://eul2c2.sgp.st.com:3306/cmsdb
+hibernate.connection.url=jdbc:mysql://lxora.dlh.st.com:3346/noticedb
+hibernate.connection.username=notice
+#hibernate.connection.password=noticeDB#prod#123
+hibernate.connection.password=ENC(VYKubQtFaX/RfOVO/iySBYKPM0C+0IpHpGfgo336Gi4=)
+hibernate.dialect=org.hibernate.dialect.MySQLDialect
+hibernate.show_sql=true
+
+#hibernate.connection.driver_class=oracle.jdbc.driver.OracleDriver
+#hibernate.connection.url=jdbc:oracle:thin:@pkgqcenv.dlh.st.com:1561:qs10g
+#hibernate.connection.username=wfo
+#hibernate.connection.password=wfo01
+#hibernate.dialect=org.hibernate.dialect.OracleDialect
+#hibernate.show_sql=true
+
+#Connection Pooling
+
+hibernate.c3p0.minPoolSize=5
+hibernate.c3p0.maxPoolSize=20
+hibernate.c3p0.timeout=1800
+hibernate.c3p0.max_statement=50
+
+# 8D  db parameter
+#8d.hibernate.connection.driver_class=oracle.jdbc.driver.OracleDriver
+#8d.hibernate.connection.url=jdbc:oracle:thin:@eup2148.sgp.st.com:2501:ppapqa
+#8d.hibernate.connection.username=actionplan
+#8d.hibernate.connection.password=ilp89apt
+#8d.hibernate.dialect=org.hibernate.dialect.OracleDialect
+#8d.hibernate.show_sql=true
+
+

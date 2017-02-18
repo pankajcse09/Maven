@@ -1,0 +1,18 @@
+/* 
+    Document   : drop_down
+    Created on : May 25, 2013, 5:01:24 PM
+    Author     : kapil
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+#nav {
+background: url('../images/homepage/menu-bar.png'); 
+border: 0px solid black; 
+margin: 0px 0px 0px 0px; 
+list-style:none; 
+position:relative; 
+z-index:800; 
+font-family:arial, verdana, sans-serif;
+}
+/*.transBack{background-color: rgba(0,0,0,0.20);}*/

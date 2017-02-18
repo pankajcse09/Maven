@@ -1,0 +1,391 @@
+package com.st.ict.qs.notice.manager.impl;
+
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
+import org.slf4j.LoggerFactory;
+
+import st.ict.qs.core.db.DAOException;
+import st.ict.qs.core.exception.ValidationException;
+import st.ict.qs.core.manager.ManagerException;
+import st.ict.qs.core.util.GeneralUtils;
+import st.liotrox.WRequest;
+
+import com.st.ict.qs.notice.businessbean.ImpactedProduct;
+import com.st.ict.qs.notice.businessbean.InputProduct;
+import com.st.ict.qs.notice.businessbean.Notice;
+import com.st.ict.qs.notice.dao.ImpactedProductDAO;
+import com.st.ict.qs.notice.integration.PlmIntegrationManager;
+import com.st.ict.qs.notice.manager.BaseManager;
+import com.st.ict.qs.notice.manager.ImpactedProductManager;
+import com.st.ict.qs.notice.manager.NoticeManager;
+import com.st.ict.qs.notice.web.constants.ApplicationConstant;
+import com.st.ict.qs.notice.web.formBean.NameValueBean;
+
+public class ImpactedProductManagerImpl extends BaseManager implements ImpactedProductManager {
+	private org.slf4j.Logger logger = LoggerFactory
+			.getLogger(ImpactedProductManagerImpl.class);
+	ImpactedProductDAO impactedProductDAO;
+	PlmIntegrationManager plmIntegrationManager;
+	NoticeManager noticeManager;
+	
+	
+	public NoticeManager getNoticeManager() {
+		return noticeManager;
+	}
+
+	public void setNoticeManager(NoticeManager noticeManager) {
+		this.noticeManager = noticeManager;
+	}
+
+	public PlmIntegrationManager getPlmIntegrationManager() {
+		return plmIntegrationManager;
+	}
+
+	public void setPlmIntegrationManager(
+			PlmIntegrationManager plmIntegrationManager) {
+		this.plmIntegrationManager = plmIntegrationManager;
+	}
+
+	public ImpactedProductDAO getImpactedProductDAO() {
+		return impactedProductDAO;
+	}
+
+	public void setImpactedProductDAO(ImpactedProductDAO impactedProductDAO) {
+		this.impactedProductDAO = impactedProductDAO;
+	}
+
+	@Override
+	public void saveImpactedProduct(List<ImpactedProduct> impactedProduct,
+			int noticeId) throws ManagerException {
+		try {
+			logger.debug("ImpactedProductManagerImpl : saveImpactedProduct : Started ");
+			
+			Notice notice = new Notice();
+			notice.setInternalId(noticeId);
+			impactedProductDAO.saveImpactedProduct(impactedProduct, notice);
+			logger.debug("ImpactedProductManagerImpl : saveImpactedProduct : ended ");
+		} catch (DAOException e) {
+			logger.error(" Exception Caught in saveImpactedProduct : "
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		}
+
+	}
+
+	@Override
+	public void deleteImpactedProduct(List<ImpactedProduct> impactedProduct,
+			int noticeId) throws ManagerException, ValidationException {
+		try {
+			logger.debug("ImpactedProductManagerImpl : deleteImpactedProduct : Started ");
+
+			for (ImpactedProduct imProduct : impactedProduct) {
+				if (ApplicationConstant.DELETED.equalsIgnoreCase(imProduct
+						.getType())) {
+					throw new ValidationException("Product is already deleted");
+				} else {
+					imProduct.setPreviousType(imProduct.getType());
+					imProduct.setType(ApplicationConstant.DELETED);
+				}
+			}
+			Notice notice = new Notice();
+			notice.setInternalId(noticeId);
+			impactedProductDAO.saveImpactedProduct(impactedProduct, notice);
+			logger.debug("ImpactedProductManagerImpl : deleteImpactedProduct : ended ");
+
+		} catch (DAOException e) {
+			logger.error(" Exception Caught in deleteImpactedProduct : "
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		}
+
+	}
+
+	@Override
+	public List<ImpactedProduct> getNotificationProducts(int noticeId)
+			throws ManagerException {
+		List<ImpactedProduct> impactedProducts = null;
+		;
+		try {
+			logger.debug("ImpactedProductManagerImpl : getNotificationProducts : Started ");
+
+			impactedProducts = impactedProductDAO
+					.getNotificationProducts(noticeId);
+			
+			logger.debug("ImpactedProductManagerImpl : getNotificationProducts : Ended ");
+
+		} catch (DAOException e) {
+			logger.error(" Exception Caught in getNotificationProducts : "
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		}
+		return impactedProducts;
+	}
+
+	@Override
+	public void unDeleteImpactedProduct(String itemIds)
+			throws ManagerException, ValidationException {
+		try {
+			logger.debug("ImpactedProductManagerImpl : unDeleteImpactedProduct : Started ");
+			List<ImpactedProduct> impactedProducts = impactedProductDAO
+					.getImpactedProductByIds(itemIds);
+			Notice notice = impactedProducts.get(0).getNotice();
+			for (ImpactedProduct product : impactedProducts) {
+
+				if (ApplicationConstant.DELETED.equalsIgnoreCase(product
+						.getType())) {
+					product.setType(product.getPreviousType());
+				} else {
+					throw new ValidationException(
+							"Can not undelete the selected ImpactedProduct(s). To undelete an item the status should be Deleted");
+				}
+
+			}
+			impactedProductDAO.saveImpactedProduct(impactedProducts, notice);
+			logger.debug("ImpactedProductManagerImpl : unDeleteImpactedProduct : Ended ");
+
+		} catch (DAOException de) {
+			logger.error(" Exception Caught in unDeleteImpactedProduct : "
+					+ GeneralUtils.getStackTrace(de));
+			throw new ManagerException(de, de.getMessage());
+		}
+
+	}
+
+	/*
+	 * (non-Javadoc)
+	 * 
+	 * @see
+	 * com.st.ict.qs.notice.manager.ImpactedProductManager#refereshProductList
+	 * (int)
+	 */
+	public void refereshProductList(int noticeId) throws ManagerException {
+
+		logger.debug("ImpactedProductManagerImpl : refereshProductList : Started ");
+
+		// Step 1 : Fatch all input product for the notice Id
+		try {
+				WRequest request =WRequest.getCurrentInstance();
+				String eduid = request.getUserProfile().getUID();
+				List<ImpactedProduct> plmImpactedProductList = getImpactedProductFromPlm(noticeId);
+
+				List<ImpactedProduct> dbImpactedProducts = impactedProductDAO
+					.getNotificationProducts(noticeId);
+
+			Map<String, ImpactedProduct> dbImpactedProductsMap = createForDbImpactedProducts(dbImpactedProducts);
+
+			String key = null;
+			String keySeprator = "@";
+			Notice notice = noticeManager.getNotice(noticeId);			
+			notice.setRefreshDateOfImpactedProduct(new Date());			
+			Map<String, ImpactedProduct> refreshImpactedProdcutMap = new HashMap<>();
+			// Looking new added impacted Product in PLM and adding into the
+			// refresh list
+			for (ImpactedProduct impactedProduct : plmImpactedProductList) {
+				
+				key = impactedProduct.getInputProduct() + keySeprator
+						+ impactedProduct.getCommercialProduct() + keySeprator
+						+ impactedProduct.getFinishGood();
+				if (dbImpactedProductsMap.containsKey(key)) {
+					refreshImpactedProdcutMap.put(key,
+							dbImpactedProductsMap.get(key));
+				} else {
+					refreshImpactedProdcutMap.put(key, impactedProduct);
+				}
+			}
+			// looking for all manually added impacted product and adding into
+			// refresh list
+			for (ImpactedProduct impactedProduct : dbImpactedProducts) {
+				
+				key = impactedProduct.getInputProduct() + keySeprator
+						+ impactedProduct.getCommercialProduct() + keySeprator
+						+ impactedProduct.getFinishGood();
+				if (!refreshImpactedProdcutMap.containsKey(key)) {
+					refreshImpactedProdcutMap.put(key, impactedProduct);
+				}
+			}
+
+			logger.debug("ImpactedProductManagerImpl : refereshProductList : Ended ");
+		
+			List<ImpactedProduct> refreshImpactedProductList = new ArrayList<>(
+					refreshImpactedProdcutMap.values());
+			
+			impactedProductDAO.saveImpactedProduct(refreshImpactedProductList,
+					notice);
+			
+			/*if(cpMaturitySelection == true)
+			{
+			impactedProductDAO.saveImpactedProduct(refreshImpactedProductList,
+					notice);
+			}
+			else
+			{
+				List<ImpactedProduct> refreshImpactedProductList1 = refreshImpactedProductList;
+				for(ImpactedProduct product : refreshImpactedProductList1)
+				{
+					if(product.getCpMaturity() .equals( "50"))
+					{
+						refreshImpactedProductList.remove(product);
+					}				
+					
+				}
+				impactedProductDAO.saveImpactedProduct(refreshImpactedProductList,
+						notice);
+			}*/
+		} catch (DAOException e) {
+			logger.error(" Exception Caught in refereshProductList : "
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		}
+
+	}
+
+	public void getImpactedProduct(int noticeId) throws ManagerException {
+		try {
+			logger.debug("ImpactedProductManagerImpl : getImpactedProduct : Started ");
+			List<ImpactedProduct> notificationProduts = impactedProductDAO
+					.getNotificationProducts(noticeId);
+			if (notificationProduts == null || notificationProduts.size() == 0) {
+				List<ImpactedProduct> plmImpactedProductList = getImpactedProductFromPlm(noticeId);
+				Notice notice = new Notice();
+				notice.setInternalId(noticeId);
+
+				impactedProductDAO.saveImpactedProduct(plmImpactedProductList,
+						notice);
+				logger.debug("ImpactedProductManagerImpl : getImpactedProduct : Started ");
+			}
+		} catch (DAOException e) {
+			logger.error(" Exception Caught in getImpactedProduct : "
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		}
+	}
+
+	private List<ImpactedProduct> getImpactedProductFromPlm(int noticeId)
+			throws ManagerException {
+		logger.debug("ImpactedProductManagerImpl : getImpactedProductFromPlm : Started ");
+		List<ImpactedProduct> plmImpactedProductList = null;
+
+		try {
+			List<InputProduct> inputProductList = noticeManager.getInputProduct(noticeId);
+			plmImpactedProductList = plmIntegrationManager
+					.getImpactedProducts(inputProductList);
+		} catch (ManagerException e) {
+			logger.error(" Exception Caught in getImpactedProduct : "
+					+ GeneralUtils.getStackTrace(e));
+			throw e;
+		}
+		logger.debug("ImpactedProductManagerImpl : getImpactedProductFromPlm : Started ");
+		return plmImpactedProductList;
+
+	}
+
+	private Map<String, ImpactedProduct> createForDbImpactedProducts(
+			List<ImpactedProduct> dbImpactedProducts) {
+		logger.debug("ImpactedProductManagerImpl : createForDbImpactedProducts : Started ");
+		String key = null;
+		String keySeprator = "@";
+		Map<String, ImpactedProduct> impactedProdcutMap = new HashMap<>();
+		for (ImpactedProduct impactedProduct : dbImpactedProducts) {
+			key = impactedProduct.getInputProduct() + keySeprator
+					+ impactedProduct.getCommercialProduct() + keySeprator
+					+ impactedProduct.getFinishGood();
+			impactedProdcutMap.put(key, impactedProduct);
+		}
+		logger.debug("ImpactedProductManagerImpl : createForDbImpactedProducts : Started ");
+		return impactedProdcutMap;
+	}
+
+	@Override
+	public void saveImpactedProducts(List<ImpactedProduct> impactedProduct)
+			throws ManagerException {
+		try {
+			logger.debug("ImpactedProductManagerImpl : saveImpactedProducts : Started ");
+			impactedProductDAO.saveImpactedProducts(impactedProduct);
+			logger.debug("ImpactedProductManagerImpl : saveImpactedProducts : Started ");
+		} catch (DAOException e) {
+			logger.error(" Exception Caught in refereshProductList : "
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		}
+
+	}
+
+	@Override
+	public List<Notice> getOngoingPCNList(String finishGood) throws ManagerException {
+		
+			List<Notice> onGoingPCNList = null;
+			
+			try {
+				logger.debug("ImpactedProductManagerImpl : getOngoingPCNList : Started ");
+
+				onGoingPCNList = impactedProductDAO.getOngoingPCNList(finishGood);
+				logger.debug("ImpactedProductManagerImpl : getOngoingPCNList : Ended ");
+
+			} catch (DAOException e) {
+				logger.error(" Exception Caught in getNotificationProducts : "
+						+ GeneralUtils.getStackTrace(e));
+				throw new ManagerException(e, e.getMessage());
+			}
+			return onGoingPCNList;
+		}
+	@Override
+	public Map getCommProduct(String searchParameter) throws ManagerException {
+		logger.info("ImpactedProductManagerImpl : getCommProduct : Started ");
+		
+		try {
+			
+			Map commercialProductMap = plmIntegrationManager.getCommProduct(searchParameter);
+			int cntlist = 0;
+			List list = (List) commercialProductMap.get(ApplicationConstant.MAP_COLLECTION);
+			List returnList = new ArrayList<>();
+			for(int index = 0;index <list.size();index ++) {
+				String code = list.get(index).toString();
+				returnList.add(new NameValueBean(code,code));
+			}
+			Map retMap = this.getMapToReturnFromList(cntlist, returnList);
+			logger.info("ImpactedProductManagerImpl : getCommProduct : Ended ");
+			
+			return retMap;
+
+		}  catch (Exception e) {
+
+			logger.debug("ImpactedProductManagerImpl : getCommProduct : Exception Caught "
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, ApplicationConstant.UNKNOWN_ERROR);
+		}
+	}
+	
+	
+	@Override
+	public Map getFGByCommProduct(String commProduct,String searchParameter) throws ManagerException {
+		logger.info("ImpactedProductManagerImpl : getFGByCommProduct : Started ");
+		
+		try {
+			
+			Map finishGoodMap = plmIntegrationManager.getFGByCommProduct(commProduct, searchParameter);		
+			int cntlist = 0;
+			List list = (List) finishGoodMap.get(ApplicationConstant.MAP_COLLECTION);
+			List returnList = new ArrayList<>();
+			for(int index = 0;index <list.size();index ++) {
+				String code = list.get(index).toString();
+				returnList.add(new NameValueBean(code,code));
+			}
+			Map retMap = this.getMapToReturnFromList(cntlist, returnList);						
+			logger.info("ImpactedProductManagerImpl : getFGByCommProduct : Ended ");
+			return retMap;
+
+		}  catch (Exception e) {
+
+			logger.debug("ImpactedProductManagerImpl : getFGByCommProduct : Exception Caught "
+					+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, ApplicationConstant.UNKNOWN_ERROR);
+		}
+	}
+	
+	
+	
+}

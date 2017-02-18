@@ -1,0 +1,199 @@
+package com.st.ict.qs.notice.dao.impl;
+
+
+import java.util.List;
+
+import org.hibernate.Hibernate;
+import org.hibernate.HibernateException;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import st.ict.qs.core.db.DAOException;
+import st.ict.qs.core.parser.XmlReader;
+import st.ict.qs.core.util.GeneralUtils;
+
+import com.st.ict.qs.notice.businessbean.InputProduct;
+import com.st.ict.qs.notice.businessbean.Notice;
+import com.st.ict.qs.notice.businessbean.Notification;
+import com.st.ict.qs.notice.businessbean.NotificationContacts;
+import com.st.ict.qs.notice.dao.NoticeDAO;
+import com.st.ict.qs.notice.web.constants.QueryConstant;
+
+public class NoticeDAOImpl extends BaseDAOImpl implements NoticeDAO {
+	
+	Logger logger = LoggerFactory.getLogger(NoticeDAOImpl.class);
+	
+	private NoticeDAO noticeDAO;
+
+	public NoticeDAO getNoticeDAO() {
+		return noticeDAO;
+	}
+
+	public void setNoticeDAO(NoticeDAO noticeDAO) {
+		this.noticeDAO = noticeDAO;
+	}
+	
+		
+	@Override
+	public void saveNotice(Notice notice) throws DAOException {
+		try {
+			logger.debug("NoticeDAOImpl : saveNotice : Started ");
+			saveOrUpdateObject(notice);
+			sessionFlush();
+			logger.debug("IccDAOImpl : saveNotice : Ended ");
+		} catch (HibernateException e) {
+			logger.debug("NoticeDAOImpl : saveNotice : HibernateException Caught");
+			throw new DAOException(e);
+
+		} catch (Exception e) {
+			logger.debug("NoticeDAOImpl : saveNotice : Exception Caught");
+			throw new DAOException(e);
+		}
+	}
+
+	@Override
+	public Notice getNotice(int noticeIdFromUi) throws DAOException {
+		logger.debug("NoticeDAOImpl : getNotice : Started ");
+		StringBuilder querySql = null;
+		Notice notice = null;
+		try {
+			notice = (Notice)sessionFactory.getCurrentSession().get(Notice.class, noticeIdFromUi);
+			
+			if (notice!=null)
+			{
+				Hibernate.initialize(notice.getUserRolesList());
+				return notice;
+			}
+			else{
+				throw new DAOException("No Data found for NoticeId : "+noticeIdFromUi);
+			}
+
+		} catch (HibernateException e) {
+			logger.debug("NoticeDAOImpl : getNotice : HibernateException Caught");
+			throw new DAOException(e);
+
+		} catch (Exception e) {
+			logger.debug("NoticeDAOImpl : getNotice : Exception Caught");
+			throw new DAOException(e);
+		}
+	
+	}
+	
+	@Override
+	public Notice getNotice() throws DAOException {
+		logger.debug("NoticeDAOImpl : getNotice : Started ");
+		StringBuilder querySql = null;
+		Notice notice = null;
+		try {
+			
+			String query = XmlReader
+					.getQuery(QueryConstant.GET_NOTIFICATION_LIST_FOR_NOTICE);
+			//String query = "FROM Notification as notification WHERE notification.status = 'GENERATED' and notification.autoEmail = 'Y'";
+			
+			List<Notification> l = getDataForQuery(query);
+			sessionFlush();
+
+			logger.debug("NoticeDAOImpl : getNotificationListforNotice : End ");
+			return notice;
+		} catch (HibernateException e) {
+			logger.debug("NoticeDAOImpl : getNotice : HibernateException Caught");
+			throw new DAOException(e);
+
+		} catch (Exception e) {
+			logger.debug("NoticeDAOImpl : getNotice : Exception Caught");
+			throw new DAOException(e);
+		}
+	
+	}
+
+	@Override
+	public List getCustomerDetialsListforNotice(String customerGroupCode)
+			throws DAOException {
+		try {
+			logger.debug("NoticeDAOImpl : getCustrDetialsListforNotice : Start ");
+			
+			String query = XmlReader.getQuery(QueryConstant.GET_CUSTOMER_LIST_FOR_NOTICE);
+			//String query = "";
+			
+			List<NotificationContacts> l = searchNativeSQL(query, new Object[] { customerGroupCode });
+			sessionFlush();
+
+			logger.debug("NoticeDAOImpl : getCustrDetialsListforNotice : End ");
+			return l;
+
+		} catch (DAOException e) {
+			logger.debug("NoticeDAOImpl : getCustrDetialsListforNotice : Exception Caught");
+			throw new DAOException(e);
+		}
+	}
+
+	@Override
+	public List<Notification> getNotificationListforNotice()
+			throws DAOException {
+		try {
+			logger.debug("NoticeDAOImpl : getNotificationListforNotice : Start ");
+			
+			String query = XmlReader
+					.getQuery(QueryConstant.GET_NOTIFICATION_LIST_FOR_NOTICE);
+			//String query = "FROM Notification as notification WHERE notification.status = 'GENERATED' and notification.autoEmail = 'Y'";
+			
+			List<Notification> l = getDataForQuery(query);
+			sessionFlush();
+
+			logger.debug("NoticeDAOImpl : getNotificationListforNotice : End ");
+			return l;
+
+		} catch (DAOException e) {
+			logger.debug("NoticeDAOImpl : getNotificationListforNotice : Exception Caught");
+			throw new DAOException(e);
+		}
+	}
+
+	@Override
+	public void saveInputProdcut(List<InputProduct> inputProducts) throws DAOException {
+		
+		try{
+			logger.debug("NoticeDAOImpl : saveInputProdcut : Started ");
+
+				for(InputProduct inputProduct:inputProducts){
+					
+					saveOrUpdateObject(inputProduct);
+				}
+			
+			logger.debug("NoticeDAOImpl : saveInputProdcut : Ended ");
+
+		}
+		catch(DAOException de){
+			logger.error(" Exception Caught in saveInputProdcut : "
+					 + GeneralUtils.getStackTrace(de));
+			throw de;
+
+		}
+	}
+
+	@Override
+	public List<InputProduct> getInputProduct(int noticeId) throws DAOException {
+		List<InputProduct> inputProducts = null;
+		try{
+			logger.debug("NoticeDAOImpl : getInputProduct : Started ");
+			String query = XmlReader.getQuery(QueryConstant.GET_INPUT_PRODUCTS_BY_NOTICEID);
+			Object [] param = new Object[1];
+			param[0] = noticeId;
+			inputProducts = getDataForQuery(query,param);
+			logger.debug("NoticeDAOImpl : getInputProduct : Ended ");
+		}
+		catch(DAOException de)
+		{
+			logger.error(" Exception Caught in getImpactedProduct : "
+					 + GeneralUtils.getStackTrace(de));
+			throw de;
+		}
+
+		return inputProducts;
+
+		
+	}
+
+	
+
+}

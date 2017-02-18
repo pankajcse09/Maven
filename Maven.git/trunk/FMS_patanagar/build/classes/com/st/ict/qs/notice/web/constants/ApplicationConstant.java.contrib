@@ -1,0 +1,286 @@
+package com.st.ict.qs.notice.web.constants;
+
+public class ApplicationConstant {
+
+	public static final int customerTab = 0;
+	public static final int DOCUMENTTAB = 6;
+	public static final String IMPACTED_CUSTOMER_TAB = "3";
+	public static final String CONFIRM_SENDING_TAB = "9";
+
+	public static final String EIGHTD_APP_URL = "8D_APP_URL";
+	public static final String QDWH_URL = "QDWH_URL";
+	public static final String EIGHTD_URL = "8D_URL";
+
+	public static final String MAP_COUNT = "totalRows";
+	public static final String MAP_COLLECTION = "rows";
+
+	public static final String COMPANY_NAME_ST = "ST";
+	public static final String COMPANY_NAME_STE = "EM";
+	public static final String GROUP_NAME_STE = "STE";
+
+	public static final String CC = "CC";
+	public static final String TO = "TO";
+	public static final String TEMPLATE = "TEMPLATE";
+	public static final String SUBJECT = "SUBJECT";
+
+	public static final String ORACLE_DRIVER = "ORACLE_DRIVER";
+	public static final String S2_DB_URL = "S2_DB_URL";
+	public static final String S2_DB_USER = "S2_DB_USER";
+	public static final String S2_DB_PWD = "S2_DB_PWD";
+
+	public static final String SELECT_BY_TYPE_QUERY = "from ReferentialData r  where r.type = ? ";
+	public static final String ACTIVE_QUERY_FRAGMENT_BY_TYPE = " and r.activity ='A' ";
+	public static final String ACTIVE_QUERY_FRAGMENT_FOR_ALL = " where r.activity ='A' ";
+	public static final String ORDERED_QUERY_FRAGMENT_BY_TYPE = " order by r.id";
+
+	public static final String ORDER_BY_ID = "ORDER_BY_ID";
+
+	public static final String WHERE = " where ";
+	public static final String AND = " and ";
+
+	public static final String STORAGE_PATH = "STORAGE_PATH";
+	public static final int STORAGE_NAME_MAX_CHARS = 128;
+	public static final String QUERY_ORDER_BY_DESCR = " r.orderBy ='D' order by r.description ";
+	public static final String QUERY_ORDER_BY_ID = " r.orderBy ='I' order by r.id";
+	public static final String ORDER_BY_DESCR = "ORDER_BY_DESCR";
+
+	public static final String COMBO_ACTION_IN_SUPPLIER_DECISION = "ACTION";
+
+	public static final String COMBO_REASON_IN_SUPPLIER_DECISION = "REASON";
+
+	public static final String SELECT_ALL_QUERY = "from ReferentialData r ";
+
+	public static final String ALL_VALUES = "-----";
+	public static final String COMBO_TEAM_ROLES = "TEAM_ROLE";
+	public static final String COMBO_TEAM_DELEGATE_ROLES = "TEAM_DELEGATE_ROLE";
+
+
+	public static String CREATE_DOCUMENT_REC = "Document Record Created";
+	public static String UPDATE_DOCUMENT_REC = "Document Record Updated";
+	public static String PROCESS_DOCUMENT = "DOCUMENT";
+
+	public static final String REQUEST_GET_PARAMETER_START = "start";
+	public static final String REQUEST_GET_PARAMETER_LIMIT = "limit";
+	public static final String REQUEST_GET_PARAMETER_QUERY = "query";
+	public static final String UNKNOWN_ERROR = "Unknown Error";
+
+	public static final String RETURN_MESSAGE = "message";
+	public static final String RETURN_MESSAGE_TYPE = "messageType";
+	public static final String GET_PCP_DATE_SUCCESS = "Get Data from PCMS is successfully";
+	public static final String NOTICE_SUCCESS = "SUCCESS";
+	public static final String ERROR_OCCURRED = "Application error has occurred. Please contact system administrator.";
+	public static final String NOTICE_DRAFT_STATUS = "DRAFT";
+	public static final String NOTIFICATION_ENTITY_LEVEL = "NE";
+	public static final String FSE_REMOVED = "REMOVED FSE";
+	public static final String FSE_GENERATED = "GENERATED";
+	public static final String RELEASE_ENTITY_LEVEL = "RE";
+	public static final String ALL = "ALL";
+	public static final String FSE_INSERTED = "INSERTED FSE";
+	public static final String NOTIFICATION_MANAGER = "notificationManager";
+	public static final String NOTICE_COORDINATOR = "PCN Coordinator";
+	public static final String JSON_NOTICE_COORDINATOR = "pcnCoordinator";
+	public static final String NOTICE_LEADER = "PCN Leader";
+	public static final String JSON_NOTICE_LEADER = "pcnLeader";
+
+	public static final String TEAM_DISTRIBUTION_FLAG = "Y";
+	public static final String TEAM_DISTRIBUTION_FLAG_OFF = "N";
+	public static final String TEAM_SUBSCRIBER_FLAG = "Y";
+	public static final String TEAM_SUBSCRIBER_FLAG_OFF = "N";
+	public static final String TEAM_DEFAULT_VALUE = "Y";
+	public static final String TEAM_DEFAULT_VALUE_OFF = "N";
+	public static final String TEAM_DELEGATE_VALUE = "Y";
+	public static final String TEAM_DELEGATE_VALUE_OFF = "N";
+	public static final String TEAM_ISDEFAUULT_VALUE = "Y";
+	public static final String TEAM_ISDEFAUULT_VALUE_OFF = "N";
+	public static final String PCP_IDS = "PCP_IDS";
+
+	public static final String DELETED = "DELETED";
+	public static final String GENERATED = "GENERATED";
+	public static final String OPEN = "OPEN";
+	
+	public static final String NOT_DEFINED = "NOT_DEFINED";
+	// add constants for visibility
+	public static final String APPROVALPANEL_VB_XML = "ApprovalPanel_visibility.xml";
+	public static final String CREATIONPANEL_VB_XML = "CreationPanel_visibility.xml";
+	public static final String CUSTOMERFEEDBACKPANEL_VB_XML = "CustomerFeedbackPanel_visibility.xml";
+	public static final String CUSTOMERVALIDATIONPANEL_VB_XML = "CustomerValidationPanel_visibility.xml";
+	public static final String DASHBOARDPANEL_VB_XML = "DashboardPanel_visibility.xml";
+	public static final String DOCUMENTPANEL_VB_XML = "DocumentPanel_visibility.xml";
+	public static final String IMPACTEDCUSTOMERPANEL_VB_XML = "ImpactedCustomerPanel_visibility.xml";
+	public static final String IMPACTEDPRODUCTPANELVB_XML = "ImpactedProductPanel_visibility.xml";
+	public static final String REVIEWPANEL_VB_XML = "ReviewPanel_visibility.xml";
+	public static final String SAMPLEPANEL_VB_XML = "SamplePanel_visibility.xml";
+	public static final String TEAMPANEL_VB_XML = "TeamPanel_visibility.xml";
+	public static final String CONFIRMSENDINGPANELVB_XML = "SendingPanel_visibility.xml";
+	// public static final String IMPACTEDCUTOMERPANELVB_XML =
+	// "ImpactedCustomerPanel_visibility.xml";
+	public static final String PUBLISHED = "PUBLISHED";
+	public static final String REPORT_MANAGER = "reportManager";
+	public static final String DELETED_BY_REFRESH = "DELETED BY REFRESH";
+	public static final String INSERTED = "INSERTED";
+	public static final String DELETEDMANUALLY = "DELETEDMANUALLY";
+	public static final String TO_SEND = "TO SEND";
+	public static final String SENT_MANUALLY = "SENT MANUALLY";
+	public static final String DECIDED_NOT_TO_SEND = "DECIDED NOT TO SEND";
+	public static final String ASTRIX = "*";
+	public static final String PCP_LEADER = "PCP LEADER";
+	public static final String LEADER = "LEADER"; 
+	public static final String ALLOWED_FILE_FORMATS="ALLOWED_FILE_FORMATS";
+	public static final String ACTIVE_TAB = "ACTIVE_TAB";
+	public static final String NO_IMPACTED_PRODUCT_FOUND = "No impacted product found for the given input prodcut";
+	public static final String PRODCUT_MANAGER_DMS_APPROVER = "PRODCUT MANAGER";
+	public static final String MARKETING_MANAGER_DMS_APPROVER = "MARKETING MANAGER";
+	public static final String QUALITY_MANAGER_DMS_APPROVER = "QUALITY MANAGER";
+	public static String PROCESS_OWNER_DMS_APPROVER = "PROCESS OWNER";
+	public static String CORPORATE_QUALITY_MANAGER_DMS_APPROVER = "CORPORATE QUALITY MANAGER";
+	public static final String GENERIC_EXCEPTION_TEAM_MGR_IMPL = "Generic Exception in TeamManagerImpl";
+	public static final String AUTO_EMAIL_Y = "Y"; 
+	public static final String AUTO_EMAIL_N = "N";
+	public static final String QUALIFICATION_EXEC = "QUALIFICATION_EXEC";
+	public static final String QUALIFICATION_READY = "QUALIFICATION READY";
+	public static final String TO_BE_REVISED = "TO BE REVISED";
+	public static final String IMPLEMENTATION_EXEC = "IMPLEMENTATION_EXEC";
+	public static final String IMPLEMENTATION_READY = "IMPLEMENTATION_READY";
+	public static final String APPROVED = "APPROVED";
+	
+	public static final String WEB_SERVICE_ERROR_OCCURRED = "Error connecting Action web service. Please contact to system administrator.";
+	
+	public static final String ACTION_WEB_SERVICE_MANAGER = "actionWebServiceManager";
+	
+	
+
+	public static final String NOTICE_DIVISION_REVIEWER_TYPE="DIVISION";
+	public static final String NOTICE_FSE_REVIEWER_TYPE="FSE";
+	public static final String NOTICE_CRB_REVIEWER_TYPE="CRB";
+	
+	public static final String UNICODE_LUCIDA_SANS = "Lucida Sans Unicode";
+	public static final String DATE_FORMAT_DD_MMM_YYYY = "dd-MMM-yyyy";
+	public static final String APPLICATION_URL = "APPLICATION_URL";
+	
+	
+	 public static final String PCP_ROLE_LEADER = "LEADER";
+	 public static final String PCP_ROLE_ORIGINATOR = "ORIGINATOR";
+	 public static final String DESCRIPTION_NOT_DEFINED="(Not Defined)";
+	 public static final String PCP_PRIORITY_NORMAL = "Normal";
+	 public static final String PCP_PRIORITY_HIGH = "High";
+		
+		
+	public static final String ITEM_TYPE_TEST="TEST";
+	public static final String ITEM_TYPE_LOT="LOT EXPERIMENT";
+	public static final String ITEM_TYPE_ACTION="ACTION";
+	
+	public static final String LEMS_URL = "LEMS_URL";
+	public static final String ACTION_URL = "ACTION_URL";
+	
+	public static final String PCN_COORDINATOR_ROLE = "PCN COORDINATOR";
+	public static final String NOTICE_VALIDATION = "Validation";
+		public static final String NOTICE_VALIDATION_ERROR = "Validation Error";
+
+	public static final String NOTICE_ERROR = "ERROR";
+	//added by shaifali
+	 public static final String USER_PREF_MGR = "userPreferenceManager";
+	 public static final String HOME_MANAGER = "homeManager";
+		public static final String NOTICE_STATUS_DRAFT_DEFINE="DRAFT-DEFINE";
+		public static final String NOTICE_STATUS_DRAFT_REVIEW="DRAFT-REVIEW";
+		public static final String MAIL_EVENT_NOTICE_SEND_REVIEW="NOTICE_SEND_REVIEW";
+		public static final String MAIL_EVENT_NOTICE_CANCEL_REVIEW="NOTICE_CANCEL_REVIEW";
+		public static final String DATA_SAVED_SUCCESSFULLY = "Data saved successfully";
+		
+		// ---------------------------------------------------
+			// DMS PARAM START
+			// ---------------------------------------------------
+		public static String PARAM_USER_NAME = "username";
+		public static String PARAM_PASSWD = "passwd";
+		public static String PARAM_DOCBASE = "docbase";
+		public static String PARAM_TICKET = "ticket";
+
+		public static String PARAM_DOCID = "documentId";
+		public static String PARAM_VERSION = "version";
+		public static String PARAM_WKFNAME = "wkfName";
+		public static String PARAM_ATTR_NAME = "attrName";
+		public static String PARAM_ATTR_VALUE = "attrValue";
+		public static String PARAM_ATTR_CONDS = "conditions";
+		public static String PARAM_ATTR_OPERATORS = "opearators";
+		public static String PARAM_ATTR_R_NAME = "rattrName";
+		public static String PARAM_ATTR_R_VALUE = "rattrValue";
+		public static String PARAM_ATTR_TYPE = "attrType";
+
+		public static String PARAM_DICTIONARY_NAME = "dic_name";
+		public static String PARAM_TAXONOMY_NAME = "tax_name";
+		public static String PARAM_FILE_NAME = "filename";
+		public static String PARAM_FILE_CONTENT = "filecontent";
+		public static String PARAM_FILE_TYPE = "filetype";
+		public static String PARAM_DOCTYPE = "doctype";
+		public static String PARAM_XREF_NAME = "xrefname";
+		public static String PARAM_XREF_VALUE = "xrefvalue";
+
+		public static String PARAM_FIELD_OBJECTNAME = "objname";
+		public static String PARAM_FIELD_OBJECTTYPE = "objtype";
+		public static String PARAM_FIELD_VERSION = "version";
+		public static String PARAM_FIELD_STATUS = "status";
+		public static String PARAM_FIELD_EDITOR = "editor";
+		public static String PARAM_FIELD_TITLE = "title";
+		public static String PARAM_MATRIX_CNFG = "matrix_cnfg";
+		public static String PARAM_CONTENT_TYPE = "contentype";
+		public static String PARAM_CONTENT_NAME = "contenname";
+		public static String PARAM_RELATION_NAME = "relation_name";
+
+		public static String PARAM_SEARCH_FULLTEXT = "fulltext";
+		public static String PARAM_SEARCH_DEFAULT = "default";
+
+		public static String PARAM_OLDUSRNAME = "old_user_name";
+		public static String PARAM_EDUID = "eduid";
+		public static String PARAM_OLDUSRNAMELIST = "old_user_name_list";
+		public static String PARAM_NEWUSRNAMELIST = "new_user_name_list";
+		public static String PARAM_EDUIDUSRNAMELIST = "eduid_list";
+		
+		public static final String PARAM_REND_FILE_NAME = "rend_file_name";
+		public static final String PARAM_REND_TYPE = "rend_type";
+		public static final String PARAM_REND_FORMAT = "rend_format";
+
+		public static final String PARAM_RELCHILD_NAMES = "rel_child_names";
+		public static final String PARAM_RELCHILD_VERSIONS = "rel_child_versions";
+		public static final String PARAM_REL_NAMES = "rel_names";
+
+		public static final String PARAM_PROMOTE_OPTION = "promoteOption";
+		public static final String PARAM_HISTORY_FILE_NAME = "history_file_name";
+		public static final String CUSTOMER_BENEFITS_COMBO = "CUSTOMER_BENEFITS";
+		public static final String SENDING_REASON1_COMBO = "SENDING_REASON1";
+		public static final String SENDING_REASON_COMBO = "SENDING_REASON";
+		public static final String SAMPLES_AVAILABILITY_COMBO = "SAMPLES_AVAILABILITY";
+		
+			// STATUS
+		public static String STATUS_DRAFT = "DRAFT";
+		public static String STATUS_ABORTED = "ABORTED";
+		public static String STATUS_ACTIVE = "ACTIVE";
+		public static String STATUS_IN_DOC_CONTROL = "IN DOC CONTROL";
+		public static String STATUS_IN_REVIEW = "IN REVIEW";
+		public static String STATUS_IN_APPROVAL = "IN APPROVAL";
+		public static String STATUS_INACTIVE = "INACTIVE";
+		public static String STATUS_OBSOLETE = "OBSOLETE";
+
+		public static String DMS_URL_PATH = "DMS_URL_PATH";
+	    public static String DMS_USER_NAME_VAL = "DMS_USER_NAME_VAL";
+		public static String DMS_PASSWD_VAL = "DMS_PASSWD_VAL";
+		public static String DMS_DOCBASE_VAL = "DMS_DOCBASE_VAL";
+
+		public static String VERSION_LABEL_REFERENCE = "REFERENCE";
+
+		public static String OBJECT_NAME = "object_name";
+	
+		
+
+		int DMS_MAX_CONNECTION_ATTEMPT = 1;
+		public static final String APPLICATION_URL_WITH_PCP = "APPLICATION_URL_WITH_PCP";
+			// ---------------------------------------------------
+		public static final String MANY = "MANY";
+		public static final String PRODUCT_COMMENT = "Not involved";
+		public static final String CUSTOMER = "customer";
+			  
+
+			// DMS PARAM END
+			// ---------------------------------------------------
+		
+	
+}
+

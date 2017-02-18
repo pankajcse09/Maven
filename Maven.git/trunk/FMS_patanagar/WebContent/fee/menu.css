@@ -1,0 +1,104 @@
+BODY
+{font-family: verdana, tahoma, arial, sans-serif;
+font-size: 10pt;
+margin: 0px;
+padding: 0px;
+}
+img
+{
+border-style: none;
+}
+
+P
+{margin: 0px;
+margin-top: -11px;
+margin-right: 0px;
+margin-left: 0px;
+}
+
+H1
+{font-size: 10pt;
+font-weight: bold;
+padding-top: 15px;
+margin: 0;}
+
+table.navbar
+{font-size: 8pt;
+margin: 2px;
+padding: 2px; 
+border: 0px; 
+font-weight: bold;
+border: green;
+}
+table.nav
+{
+top margin =-5;
+}
+table.menu
+{font-size: 8pt;
+margin: 2px;
+padding: 2px;
+font-weight: bold;
+border : blue;
+
+}
+
+td.menuNormal
+{padding: 0px;
+color: black;
+font-weight: bold;
+vertical-align: top;
+}
+
+td.menuHover
+{padding: 0px;
+color: black;
+font-weight: bold;
+vertical-align: top;
+/*remove the following line for drop-down menu with images*/
+
+}
+
+div.menuNormal
+{display: none;
+position: static;
+
+}
+
+div.menuHover
+{border: 1px solid green;
+background-color: green;
+display: inline;
+position: absolute;
+
+}
+
+a.menuitem:link
+{text-decoration: none;
+color: green;
+background-color: red;
+display: block;
+
+}
+a.item:link
+{text-decoration: none;
+display: block;
+}
+a.menuitem:visited
+{text-decoration: none;
+color: red;
+background-color: #696969;
+display: block;}
+
+a.menuitem:hover
+{text-decoration: none;
+color: black;
+background-color: green;
+display: block;}
+
+a.menuitem:active
+{text-decoration: none;
+color: green;
+background-color: green
+display: block;}
+

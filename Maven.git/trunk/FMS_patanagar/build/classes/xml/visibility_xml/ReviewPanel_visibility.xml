@@ -1,0 +1,35 @@
+<?xml version="1.0"?>
+
+<pageVisibility>
+
+  <condition status="NOT_DEFINED" role="*">
+       <item display="editable" value="false" />
+		<item display="msgTemplate" value="true" />         
+        <item display = "cancelApp" value = "false"/>
+        
+  </condition>
+  
+    <condition status="*" role="*">
+        <item display = "editable" value = "true"/>
+        <item display = "cancelApp" value = "false"/>
+        <item display = "msgTemplate" value = "false"/>
+         
+  </condition>
+ 
+   <condition status="DRAFT-DEFINE" role="PCN COORDINATOR">
+        <item display = "editable" value = "true"/>
+        <item display = "cancelApp" value = "false"/>
+        <item display = "msgTemplate" value = "false"/>
+         
+  </condition>
+  <condition status="DRAFT-REVIEW" role="PCN COORDINATOR">
+        <item display = "editable" value = "false"/>
+        <item display = "cancelApp" value = "true"/>
+        <item display = "msgTemplate" value = "false"/>
+         
+  </condition>
+  
+  
+  
+  
+</pageVisibility>

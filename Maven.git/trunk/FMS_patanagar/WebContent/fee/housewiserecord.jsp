@@ -1,0 +1,162 @@
+<%@page contentType="text/html"%>
+<%@page pageEncoding="UTF-8"%>
+<%@page import="java.sql.*"%>
+<%@page import="com.myapp.struts.DataConnection"%>
+<%@page import="AO.*"%>
+<%@page import="EO.SchoolEO"%>
+<%@page import="java.util.*"%>
+
+
+   
+<html>
+    <head>
+     <title>School Management System</title>
+        <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+         <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/fee/mymenu.css">
+         <script language="javascript" src="<%=request.getContextPath()%>/fee/resolution.js"></script>
+ <link rel="stylesheet" type="text/css"  href="<%=request.getContextPath()%>/fee/menu.css">
+        <script language="javascript" src="<%=request.getContextPath()%>/fee/menu.js"></script>
+   <script language="javascript">
+       
+ function chkvalidate()
+{
+if(document.update.house.value=="")
+{
+alert("Enter Route/Area");
+document.update.house.focus();
+return false;
+}
+if(document.update.syear.value=="")
+{
+alert("Enter Starting Year of Session ");
+document.update.syear.focus();
+return false;
+}
+if(document.update.eyear.value=="")
+{
+alert("Enter Ending Year of Session ");
+document.update.eyear.focus();
+return false;
+}
+
+}
+
+
+ function Clickheretoprint()
+ { 
+  var disp_setting="toolbar=yes,location=no,directories=yes,menubar=yes,"; 
+  disp_setting+="scrollbars=yes,width=650, height=600, left=100, top=25"; 
+  var content_vlue = document.getElementById("printit").innerHTML;   
+   var docprint=window.open("","",disp_setting); 
+   docprint.document.open(); 
+   docprint.document.write('<html><head><style type="text/css">.table1{border-collapse:collapse}</style>'); 
+   docprint.document.write('</head><body onLoad="self.print()"><center>');          
+   docprint.document.write(content_vlue);          
+   docprint.document.write('</center></body></html>'); 
+   docprint.document.close(); 
+   docprint.focus();
+  }   
+   </script>
+    
+    </head>
+    <body>
+   
+<table width="800" cellpadding="0" cellspacing="0" bgcolor="#455A8B" align="center">
+<tr><td><jsp:include page="/fee/ftoplook.jsp"/></td></tr>
+<tr><td>
+<table border="0"  bgcolor="#EEEEEE" cellpadding=0 cellspacing =0 width="100%"  height="330">
+<tr><td width="100%"><jsp:include page="/fee/feeHomeLink.jsp"/></td></tr>   
+<tr><td valign="top">
+<table align="center"><tr><td><center><font color="#34282C" size="4"><u>House Wise Student's Record</u></font></center></td></tr></table>
+   
+<form name="update" method="post" action="<%=request.getContextPath()%>/hwrec.do?disp=disp" onsubmit="return chkvalidate()">
+<table cellpadding="0" cellspacing="0" width="100%" height=400><tr><td valign="top">  
+<table>
+<%  if((String)request.getAttribute("sub")!=null)
+    out.println("<font color='red'><b>"+(String)request.getAttribute("sub")+"</b></font>"); %>  
+<tr><td><font color=red size="2">Please enter the following detail</font></td></tr>
+<tr>
+<td><b>House:</b><select name="house">
+                        <option value="">-Select-</option>
+                        <option value="Gandhi">Gandhi House</option>
+                        <option value="Tilak">Tilak House</option>
+                        <option value="Nehru">Nehru House</option>
+                        <option value="Subhash">Subhash House</option></td>
+</tr>
+ <tr>
+<tr>  <td><b>Session:</b><select name="syear">
+ 
+           <option value="">select</option>
+       <%for(int i=2000;i<=2020;i++){%>   
+       <option value="<%=i%>"><%=i%></option>    
+      <%}%>
+     </select>
+     <select name="eyear"> -
+ 
+           <option value="">select</option>
+       <%for(int i=2000;i<=2020;i++){%>   
+       <option value="<%=i%>"><%=i%></option>    
+      <%}%>
+     </select></td>
+</tr>
+</td><td><input type="submit" value="Display"></td></tr> 
+</table>
+<hr>
+</form>
+<form name="up">
+<%String hs=(String)request.getAttribute("hs");
+String syear=(String)request.getParameter("syear");
+String eyear=(String)request.getParameter("eyear");
+if(hs==null)
+{ hs="";
+}
+if(syear==null)
+{
+syear="";    
+}
+if(eyear==null)
+{
+eyear="";    
+}%>
+   <div id="printit">
+   <table><td width="50%" align="left" valign="top"><a href="javascript:Clickheretoprint()"><font color="blue" size="2"><u><b>Click here to print</b></u></font></a></td></table>     
+<table align="center"><tr><td><b><%=hs%></b></td></tr>
+<tr><td><b><%=syear%>-<%=eyear%></b></td></tr></table>
+ <table align="center" cellpadding="2" cellspacing="2" border="1"><tr>
+ <td align="center"><b>SR.</b></td> <td align="center"><b>Scholars No.</b></td> <td align="center"><b>Student Name</b></td>
+<td align="center"><b>Class</b></td>
+ </tr>
+<% 
+   int k=0;
+try
+{ 
+ArrayList arr1=(ArrayList)request.getAttribute("arr");  
+ 
+
+SchoolEO seo=null;
+  %>
+
+  <% if(request.getAttribute("arr")!=null)
+ {%>           
+   
+   <% for(int i=0;i<arr1.size();i++)
+   { seo=(SchoolEO)arr1.get(i);
+%>
+<tr><td><%=++k%></td><td><%=seo.getSrnum()%></td><td><%=seo.getSname()%></td>
+<td><%=seo.getClasses()%>-<%=seo.getSection()%></td>
+
+</tr>
+
+
+  <%
+   } }
+   }catch(Exception e)
+       {}%>
+</form>   
+  </td></tr></table>
+   </div>  
+   
+     <tr><td bgcolor=#455A8B height=20><%@include file="/btmnavi.jsp"%></td></tr>
+     </table>    
+    </body>
+</html>

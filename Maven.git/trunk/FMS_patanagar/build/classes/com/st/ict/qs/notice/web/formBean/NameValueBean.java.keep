@@ -1,0 +1,36 @@
+package com.st.ict.qs.notice.web.formBean;
+
+public class NameValueBean {
+	
+	String name ;
+	String value;
+	String id;
+	
+	
+	public NameValueBean(String name, String value) {
+		super();
+		this.name = name;
+		this.value = value;
+	}
+	public String getName() {
+		return name;
+	}
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getValue() {
+		return value;
+	}
+	public void setValue(String value) {
+		this.value = value;
+	}
+	public String getId() {
+		return id;
+	}
+	public void setId(String id) {
+		this.id = id;
+	}
+	
+	
+
+}

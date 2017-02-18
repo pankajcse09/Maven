@@ -1,0 +1,33 @@
+table.res 
+{
+width :915;
+}
+<!-- main table -->
+
+
+td.main
+{
+width :850;
+}
+td.left
+{
+width: 20;
+}
+
+img.mp
+{
+width: 915;
+height: 120;
+}
+
+img.gps
+{
+width: 940;
+height: 320;
+}
+
+img.home
+{
+width: 850;
+height: 330;
+}

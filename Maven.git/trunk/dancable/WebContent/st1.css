@@ -1,0 +1,38 @@
+img {
+	border: none;
+}
+.tah10 {
+	font-family: Tahoma;
+	font-size: 10px;
+	text-decoration: none;
+}
+.tah11 {
+	font-family: Tahoma;
+	font-size: 11px;
+	text-decoration: none;
+}
+.ver10 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+}
+.ver11 {
+	font-family: Verdana, Arial, Helvetica, sans-serif;
+	font-size: 10px;
+	text-decoration: none;
+}
+.spec {
+	background-repeat: repeat-x;
+	background-position: bottom;
+}
+.tahbol {
+	font-family: Arial;
+	font-size: 13px;
+	text-decoration: none;
+	font-weight: bold;
+	color: #FDFFEC;
+}
+.tops {
+	background-repeat: repeat-x;
+	background-position: top;
+}

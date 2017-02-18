@@ -1,0 +1,97 @@
+BODY
+{
+margin-left: -100px;
+margin-right: -100px;
+padding: 0px;
+}
+a {
+color: #000000;
+}
+A:visited { 
+color: #005177;
+}
+a:hover{
+color: #005177;
+}
+table.st
+{
+
+font-family: Geneva;
+font-style: italic;
+font-size: 10pt;
+border-collapse: collapse;
+
+}
+
+table.st1
+{
+border-collapse: collapse;
+}
+
+td.col
+{
+border-collapse: collapse;
+}
+
+
+td.btnav {
+ background-color: #A52A2A; 
+WIDTH: 220px;
+PADDING-RIGHT: 2px;
+ PADDING-LEFT: 2px; 
+FONT-WEIGHT: bold; 
+FONT-SIZE: 12px;
+
+
+ PADDING-BOTTOM: 4px;
+  
+
+PADDING-TOP: 4px;
+  
+BORDER-BOTTOM: #ffffff 1px solid;
+
+}
+
+
+ td.btnav a {
+  text-decoration: none }
+a:link {
+  color: #ffffff }
+a:visited {
+  color: purple }
+
+
+
+
+.btnav1 {
+   background-color: #A52A2A; 
+WIDTH: 237px;
+PADDING-RIGHT: 0px;
+ PADDING-LEFT: 0px; 
+FONT-WEIGHT: bold; 
+FONT-SIZE: 12px;
+
+ PADDING-BOTTOM: 4px;
+  
+
+PADDING-TOP: 4px;
+  
+BORDER-BOTTOM: #ffffff 1px solid;
+
+}
+
+ td.btnav1 a {
+  text-decoration: none }
+a:link {
+  color: #ffffff }
+a:visited {
+  color: purple }
+
+td.footer a {
+  text-decoration: none }
+a:link {
+  color: #ffffff }
+a:visited {
+  color: purple }
+
+

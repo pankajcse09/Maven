@@ -1,0 +1,37 @@
+package com.st.ict.qs.notice.integration.impl;
+
+import java.util.Date;
+
+import st.ict.qs.core.exception.ValidationException;
+import st.ict.qs.core.manager.ManagerException;
+
+import com.st.ict.qs.notice.integration.ActionIntegrationManager;
+import com.st.ict.qs.notice.integration.bean.ActionBean;
+
+public class ActionIntegrationManagerImpl implements ActionIntegrationManager{
+
+	@Override
+	public ActionBean createAction(ActionBean action) {
+		return action;
+	}
+
+	@Override
+	public ActionBean getAction(String actionId) {
+		// TODO Auto-generated method stub
+		ActionBean action = new ActionBean();
+	//action.setActionId("AC0000101");
+		//action.setDescription("description");
+		action.setStatus("OPEN");
+	//	action.setTitle("title");
+		return action;
+	}
+
+	@Override
+	public ActionBean completeAction(String actionId, String comments,
+			Date completionDate) throws ValidationException, ManagerException {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+}

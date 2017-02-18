@@ -1,0 +1,47 @@
+package com.st.ict.qs.notice.manager.impl;
+
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import st.ict.qs.core.db.DAOException;
+import st.ict.qs.core.manager.ManagerException;
+
+import com.st.ict.qs.notice.dao.HomeDAO;
+import com.st.ict.qs.notice.manager.HomeManager;
+
+public class HomeManagerImpl implements HomeManager{
+		Logger logger = LoggerFactory.getLogger(HomeManagerImpl.class);
+	
+	private HomeDAO homeDAO;
+
+	public HomeDAO getHomeDAO() {
+		return homeDAO;
+	}
+	public void setHomeDAO(HomeDAO homeDAO) {
+		this.homeDAO = homeDAO;
+	}
+
+
+	@Override
+	public List getMyNotice(String euid) throws ManagerException {
+		logger.debug("HomeManagerImpl : getMyNotice() : Started");
+		List item=null;
+		try {
+			item=homeDAO.getMyNotice(euid);
+		}
+		catch(DAOException e){
+			logger.error("HomeManagerImpl : DAOException : Exception Caught ");
+			throw new ManagerException(e, e.getMessage());
+		}
+		catch(Exception e){
+			logger.error("HomeManagerImpl : Exception : Exception Caught ");
+			throw new ManagerException(e, e.getMessage());
+		}
+		return item;
+	}
+ 
+	
+
+}

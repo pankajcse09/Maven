@@ -1,0 +1,51 @@
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xmlns:p="http://www.springframework.org/schema/p"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+                        http://www.springframework.org/schema/beans/spring-beans.xsd                        
+                        http://www.springframework.org/schema/aop 
+                        http://www.springframework.org/schema/aop/spring-aop.xsd">
+	
+	 
+	<bean id="freeMarkerConfig" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+  		<property name="templateLoaderPath" >
+  			<value>classpath:mailTemplate/</value>
+  		</property>
+  		<property name="freemarkerVariables">
+    		<map>   <entry key="xml_escape" value-ref="fmXmlEscape"/>   </map>
+  		</property>
+	</bean>
+
+    <bean id="fmXmlEscape" class="freemarker.template.utility.XmlEscape"/>
+	 
+    <bean id="mailEventFactory" class = "com.st.ict.core.mail.util.MailEventFactory" init-method="init"/>
+    <bean id="mailUtil" class = "com.st.ict.core.mail.util.MailUtil" />
+		
+	
+	<bean id="mailContentManager" class = "com.st.ict.core.mail.impl.MailContentManagerImpl">
+		<property name="freeMarkerConfig"  ref="freeMarkerConfig"/> 
+	
+	</bean>
+	
+	<bean id="javaMailSender"  class= "org.springframework.mail.javamail.JavaMailSenderImpl">
+        <property name="host"><value>${mail.host}</value></property>        
+        <property name="username"><value>${mail.user}</value></property>
+        <property name="password"><value>${mail.password}</value></property>
+	</bean>
+
+	<bean id="genericMailManager" class=" com.st.ict.core.mail.impl.GenericMailManagerImpl">
+         <property name="javaMailSender"  ref="javaMailSender"/>
+         <property name="from">  <value>${mail.from}</value> </property>
+         <property name="sendMail">  <value>${mail.sendMail}</value> </property>
+    </bean>
+
+	<bean id="mailManager" class=" com.st.ict.core.mail.impl.MailManagerImpl">
+         <property name="genericMailManager"  ref="genericMailManager"/>
+         <property name="mailUtil"            ref="mailUtil"/>
+         <property name="mailEventFactory"    ref="mailEventFactory"/>
+         <property name="mailContentManager"  ref="mailContentManager"/>
+    </bean>
+
+    
+</beans>

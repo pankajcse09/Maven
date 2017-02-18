@@ -1,0 +1,39 @@
+/* 
+    Document   : b
+    Created on : Jun 5, 2013, 11:52:57 AM
+    Author     : kapil
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+._58mh {
+width: 399px;
+}
+._58mh .uiStickyPlaceholderInput {
+width: 194px;
+}
+._58mf .uiStickyPlaceholderInput {
+background: white;
+-webkit-border-radius: 5px;
+width: 399px;
+}
+._58mf ._58mg, ._58mf .uiStickyPlaceholderInput .placeholder {
+font-size: 18px;
+padding: 8px 10px;
+}
+._58mf .uiStickyPlaceholderInput .placeholder {
+-webkit-box-sizing: border-box;
+overflow: hidden;
+padding-left: 11px;
+text-overflow: ellipsis;
+white-space: nowrap;
+}
+
+._58mf ._58mg {
+border-color: #bdc7d8;
+-webkit-border-radius: 5px;
+margin: 0;
+width: 377px;
+}
+
+

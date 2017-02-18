@@ -1,0 +1,49 @@
+mystyle {
+	
+}
+BODY {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: ; FONT-FAMILY: Arial, Arial, Geneva, Helvetica, sans-serif
+}
+TD {
+	FONT-WEIGHT: normal; FONT-SIZE: 10pt; COLOR: ; FONT-FAMILY: Arial, Arial, Geneva, Helvetica, sans-serif
+}
+P {
+	FONT-WEIGHT: normal; FONT-SIZE: 8pt; COLOR: ; FONT-FAMILY: Arial, Arial, Geneva, Helvetica, sans-serif
+}
+H1 {
+	FONT-WEIGHT: normal; FONT-SIZE: 18pt; COLOR: ; FONT-FAMILY: Arial, Geneva, Helvetica, sans-serif; TEXT-ALIGN: center
+}
+H2 {
+	FONT-WEIGHT: normal; FONT-SIZE: 16pt; COLOR: ; FONT-FAMILY: Arial, Geneva, Helvetica, sans-serif
+}
+H3 {
+	FONT-SIZE: 12pt; FONT-FAMILY: Arial, Geneva, Helvetica, sans-serif; FONT-VARIANT: normal
+}
+
+
+A:link {
+	COLOR:  ; TEXT-DECORATION: none
+
+}
+A:visited {
+	COLOR:  ; TEXT-DECORATION: none
+
+}
+A:active {
+
+	COLOR:  ; TEXT-DECORATION: none
+
+}
+.mainspan OL {
+	MARGIN-TOP: 0.5em; TEXT-INDENT: 10px
+}
+.mainspan OL {
+	MARGIN-left: 20.5em; TEXT-INDENT: 10px
+
+}
+.mainspan  {
+	MARGIN-right: 21.5em; TEXT-INDENT: 10px
+}
+
+BORDER-TOP-WIDTH: 15px; BORDER-LEFT-WIDTH: 15px; Z-INDEX: 1;
+}

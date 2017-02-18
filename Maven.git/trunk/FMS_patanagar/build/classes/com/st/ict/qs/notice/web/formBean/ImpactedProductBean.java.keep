@@ -1,0 +1,188 @@
+package com.st.ict.qs.notice.web.formBean;
+
+import com.st.ict.qs.notice.baseobjects.ImpactedProductBaseObject;
+
+public class ImpactedProductBean extends  ImpactedProductBaseObject{
+
+	public int getInternalId() {
+		return internalId;
+	}
+	public void setInternalId(int internalId) {
+		this.internalId = internalId;
+	}
+	
+
+	public String getInputProduct() {
+		return inputProduct;
+	}
+	public void setInputProduct(String inputProduct) {
+		this.inputProduct = inputProduct;
+	}
+	public String getInputProductType() {
+		return inputProductType;
+	}
+	public void setInputProductType(String inputProductType) {
+		this.inputProductType = inputProductType;
+	}
+	public String getCommercialProduct() {
+		return commercialProduct;
+	}
+	public void setCommercialProduct(String commercialProduct) {
+		this.commercialProduct = commercialProduct;
+	}
+	public String getFinishGood() {
+		return finishGood;
+	}
+	public void setFinishGood(String finishGood) {
+		this.finishGood = finishGood;
+	}
+	public String getCpMaturity() {
+		return cpMaturity;
+	}
+	public void setCpMaturity(String cpMaturity) {
+		this.cpMaturity = cpMaturity;
+	}
+	public String getIndustryDomain() {
+		return industryDomain;
+	}
+	public void setIndustryDomain(String industryDomain) {
+		this.industryDomain = industryDomain;
+	}
+	public String getPublicProduct() {
+		return publicProduct;
+	}
+	public void setPublicProduct(String publicProduct) {
+		this.publicProduct = publicProduct;
+	}
+	public String getBuCode() {
+		return buCode;
+	}
+	public void setBuCode(String buCode) {
+		this.buCode = buCode;
+	}
+	public String getStatus() {
+		return status;
+	}
+	public void setStatus(String status) {
+		this.status = status;
+	}
+	public String getComment() {
+		return comment;
+	}
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
+	public String getNewFG() {
+		return newFG;
+	}
+	public void setNewFG(String newFG) {
+		this.newFG = newFG;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}
+	public String getRefreshDate() {
+		return refreshDate;
+	}
+	public void setRefreshDate(String refreshDate) {
+		this.refreshDate = refreshDate;
+	}
+	public String getPreviousType() {
+		return previousType;
+	}
+	public void setPreviousType(String previousType) {
+		this.previousType = previousType;
+	}
+	public int getCpmsId() {
+		return cpmsId;
+	}
+	public void setCpmsId(int cpmsId) {
+		this.cpmsId = cpmsId;
+	}
+	public String getOrganizationCode() {
+		return organizationCode;
+	}
+	public void setOrganizationCode(String organizationCode) {
+		this.organizationCode = organizationCode;
+	}
+	public String getIndustryDomainCompliancy() {
+		return industryDomainCompliancy;
+	}
+	public void setIndustryDomainCompliancy(String industryDomainCompliancy) {
+		this.industryDomainCompliancy = industryDomainCompliancy;
+	}
+	
+	public String getProductLineCode() {
+		return productLineCode;
+	}
+	public void setProductLineCode(String productLineCode) {
+		this.productLineCode = productLineCode;
+	}
+	public String getBuDesc() {
+		return buDesc;
+	}
+	public void setBuDesc(String buDesc) {
+		buDesc = buDesc;
+	}
+	public String getGroupDesc() {
+		return groupDesc;
+	}
+	public void setGroupDesc(String groupDesc) {
+		this.groupDesc = groupDesc;
+	}
+	public String getGroupCode() {
+		return groupCode;
+	}
+	public void setGroupCode(String groupCode) {
+		this.groupCode = groupCode;
+	}
+	
+	
+	public String getIndustryDomainDescription() {
+		return industryDomainDescription;
+	}
+
+	public void setIndustryDomainDescription(String industryDomainDescription) {
+		this.industryDomainDescription = industryDomainDescription;
+	}
+	
+
+	/*public String getRefreshDate() {
+		return refreshDate;
+	}
+	public void setRefreshDate(String refreshDate) {
+		this.refreshDate = refreshDate;
+	}*/
+
+	/*public String getDate() {
+		return date;
+	}
+	public void setDate(String date) {
+		this.date = date;
+	}*/
+	
+	public String getFgMaturity() {
+		return fgMaturity;
+	}
+	public void setFgMaturity(String fgMaturity) {
+		this.fgMaturity = fgMaturity;
+	}
+	
+	public String getProductLineDescr() {
+		return productLineDescr;
+	}
+
+	public void setProductLineDescr(String productLineDescr) {
+		this.productLineDescr = productLineDescr;
+	}
+	
+}

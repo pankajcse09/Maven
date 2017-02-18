@@ -1,0 +1,93 @@
+BODY
+{font-family: verdana, tahoma, arial, sans-serif;
+font-size: 10pt;
+margin: 0px;
+margin-left: 100px;
+margin-right: 100px;
+padding: 0px;}
+
+P
+{padding-top: 10px;
+margin: 0px;}
+
+H1
+{font-size: 12pt;
+font-weight: bold;
+padding-top: 15px;
+margin: 0;}
+
+table.navbar
+{font-size: 8pt;
+margin: 0px;
+padding: 0px; 
+border: 0px; 
+font-weight: bold;
+border: blue;
+}
+
+table.menu
+{font-size: 8pt;
+margin: 0px;
+padding: 0px;
+font-weight: bold;
+border : blue;
+
+}
+
+td.menuNormal
+{padding: 0px;
+color: black;
+font-weight: bold;
+vertical-align: top;
+background-color: #CCCCCC ;
+
+}
+
+td.menuHover
+{padding: 0px;
+color: black;
+font-weight: bold;
+vertical-align: top;
+/*remove the following line for drop-down menu with images*/
+
+}
+
+div.menuNormal
+{display: none;
+position: static;
+
+}
+
+div.menuHover
+{border: 1px solid #993333;
+background-color:#993333;
+display: inline;
+position: absolute;
+
+}
+
+a.menuitem:link
+{text-decoration: none;
+color: black;
+background-color:#993333;
+display: block;
+
+}
+
+a.menuitem:visited
+{text-decoration: none;
+color: black;
+background-color: #993333;
+display: block;}
+
+a.menuitem:hover
+{text-decoration: none;
+color: blue;
+background-color: #993333;
+display: block;}
+
+a.menuitem:active
+{text-decoration: none;
+color: black;
+<background-color: lightblue>
+display: block;}

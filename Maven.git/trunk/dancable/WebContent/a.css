@@ -1,0 +1,58 @@
+/* 
+    Document   : a
+    Created on : Jun 5, 2013, 11:52:51 AM
+    Author     : kapil
+    Description:
+        Purpose of the stylesheet follows.
+*/
+
+.clearfix {
+zoom: 1;
+}
+
+.mrm {
+margin-right: 10px;
+}
+.lfloat {
+float: left;
+}
+.uiStickyPlaceholderInput {
+display: inline-block;
+position: relative;
+}
+div.uiStickyPlaceholderEmptyInput .placeholder {
+display: block;
+}
+.uiStickyPlaceholderInput .placeholder {
+color: #999;
+cursor: text;
+display: none;
+height: 100%;
+left: 0;
+padding: 4px 0 0 5px;
+position: absolute;
+top: 0;
+width: 100%;
+}
+
+.uiStickyPlaceholderInput input, .uiStickyPlaceholderInput textarea {
+background-color: transparent;
+position: relative;
+}
+
+.inputtext, .inputpassword {
+padding-bottom: 4px;
+}
+textarea, .inputtext, .inputpassword {
+border: 1px solid #bdc7d8;
+margin: 0;
+padding: 3px;
+-webkit-appearance: none;
+-webkit-border-radius: 0;
+}
+
+body, button, input, label, select, td, textarea {
+font-family: 'lucida grande',tahoma,verdana,arial,sans-serif;
+font-size: 11px;
+}
+

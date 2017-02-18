@@ -1,0 +1,93 @@
+package com.st.ict.qs.notice.integration.impl;
+
+import java.lang.reflect.InvocationTargetException;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import st.ict.qs.core.manager.ManagerException;
+import st.ict.qs.core.util.GeneralUtils;
+
+import com.st.ict.qs.notice.common.BeanConverter;
+import com.st.ict.qs.notice.integration.PcmsIntegrationManager;
+import com.st.ict.qs.notice.integration.bean.PcpBean;
+import com.st.ict.qs.pcms.ws.service.impl.IllegalAccessException_Exception;
+import com.st.ict.qs.pcms.ws.service.impl.InvocationTargetException_Exception;
+import com.st.ict.qs.pcms.ws.service.impl.ManagerException_Exception;
+import com.st.ict.qs.pcms.ws.service.impl.NoSuchPcpExistException_Exception;
+import com.st.ict.qs.pcms.ws.service.impl.PCMSWebServiceImpl;
+import com.st.ict.qs.pcms.ws.service.impl.Pcp;
+import com.st.ict.qs.pcms.ws.service.impl.PcpIdMandatoryException_Exception;
+import com.st.ict.qs.pcms.ws.service.impl.PcpSummary;
+import com.st.ict.qs.pcms.ws.service.impl.SearchCriteria;
+import com.st.ict.qs.pcms.ws.service.impl.SearchException_Exception;
+import com.st.ict.qs.pcms.ws.service.impl.SecurityException_Exception;
+import com.st.ict.qs.pcms.ws.service.impl.UnauthorizedWebServiceAccessException_Exception;
+
+public class PcmsIntegrationManagerImpl implements PcmsIntegrationManager{
+	
+	
+	public static final Logger log = LoggerFactory.getLogger(PcmsIntegrationManagerImpl.class);
+	 PCMSWebServiceImpl proxy = null;
+	 
+	 
+	public PCMSWebServiceImpl getProxy() {
+		
+		return proxy;
+	}
+
+	public void setProxy(PCMSWebServiceImpl proxy) {
+		this.proxy = proxy;
+	}
+
+	@Override
+	public List<PcpSummary> searchPcp(String subPcpId) throws ManagerException {
+		SearchCriteria ss=new SearchCriteria();
+        List<PcpSummary> lst=null;
+        
+        ss.setDisplayId(subPcpId);
+                    try {
+						lst =proxy.searchPCP(ss);
+					} catch (NoSuchPcpExistException_Exception
+							| IllegalAccessException_Exception
+							| InvocationTargetException_Exception
+							| UnauthorizedWebServiceAccessException_Exception
+							| SearchException_Exception
+							| ManagerException_Exception
+							| PcpIdMandatoryException_Exception
+							| SecurityException_Exception e) {
+						log.error("PcmsIntegrationManagerImpl : searchPcp : Exception Caught"+ GeneralUtils.getStackTrace(e));
+						throw new ManagerException(e, e.getMessage());
+					
+					}
+                    
+        return lst;
+	}
+	
+	
+	@Override
+	public PcpBean getPcp(String pcpId) throws ManagerException {
+		
+		PcpBean pcpBean=new PcpBean();
+		
+		Pcp pcp;
+		try {
+			pcp = proxy.getPCP(pcpId);
+			BeanConverter.noticePcpWsToPcpBeanWs(pcpBean,pcp);
+		} catch (NoSuchPcpExistException_Exception
+				| UnauthorizedWebServiceAccessException_Exception
+				| ManagerException_Exception
+				| PcpIdMandatoryException_Exception|IllegalAccessException | InvocationTargetException
+				| SecurityException_Exception e) {
+			log.error("PcmsIntegrationManagerImpl : getPcp : Exception Caught"+ GeneralUtils.getStackTrace(e));
+			throw new ManagerException(e, e.getMessage());
+		
+		}
+		
+		return pcpBean;
+	}
+
+	
+
+}

@@ -1,0 +1,20 @@
+package com.st.ict.qs.notice.dao;
+
+import java.util.List;
+
+import st.ict.qs.core.db.DAOException;
+
+import com.st.ict.qs.notice.businessbean.UserDetail;
+import com.st.ict.qs.notice.businessbean.UserRole;
+
+public interface TeamDAO {
+
+	void saveUserDetail(UserDetail userDetail) throws DAOException;
+
+	void addUser(UserRole role) throws DAOException;
+
+	UserDetail getUserDetail(String stEduid) throws DAOException;
+
+	List<UserRole> getTeamRoles(int noticeId) throws DAOException;
+
+}

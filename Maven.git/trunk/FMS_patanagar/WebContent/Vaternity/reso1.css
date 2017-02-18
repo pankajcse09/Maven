@@ -1,0 +1,31 @@
+table.hh   
+{
+width :1000;
+<!-- main table -->
+}
+table.tt 
+{
+width :170;
+height :280;
+<!-- left navi -->
+}
+td.dd  
+{
+width :170;
+height :280;
+<!-- coming events -->
+}
+img.nn
+{
+border-style: none;
+height :280;
+width :550;
+<!-- middle image -->
+}
+td.nn1
+{
+border-style: none;
+height :280;
+width :280;
+<!--top right image -->
+}

@@ -1,0 +1,201 @@
+package com.st.ict.qs.notice.web.pages;
+
+import static com.st.ict.qs.notice.web.constants.ApplicationConstant.STORAGE_NAME_MAX_CHARS;
+import static com.st.ict.qs.notice.web.constants.ApplicationConstant.STORAGE_PATH;
+import static com.st.ict.qs.notice.web.constants.PageConstants.DOCUMENT_FORM_PATH;
+import static st.ict.qs.core.constant.GenericConstant.ALERT_MESSAGE;
+
+import java.io.File;
+import java.util.ArrayList;
+import java.util.Date;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import st.ict.qs.core.basepage.AppDefaultPage;
+import st.ict.qs.core.exception.ValidationException;
+import st.ict.qs.core.manager.ManagerException;
+import st.ict.qs.core.util.GeneralUtils;
+import st.liotrox.Event;
+import st.liotrox.WRequest;
+import st.liotrox.template.element.control.UploadItem;
+
+import com.st.ict.qs.notice.manager.DocumentManager;
+import com.st.ict.qs.notice.web.constants.ApplicationConstant;
+import com.st.ict.qs.notice.web.constants.PageConstants;
+import com.st.ict.qs.notice.web.formBean.DocumentForm;
+import com.st.ict.qs.notice.web.formBean.NoticeBean;
+
+public class AddDocumentPage extends AppDefaultPage {
+
+	NoticeBean noticeBean = new NoticeBean();
+	Logger logger = LoggerFactory.getLogger(AddDocumentPage.class);
+
+	public void uploadDocument(WRequest request, Event evt)
+			throws ValidationException {
+		this.handleSubmit(request);
+		DocumentForm documentForm = (DocumentForm) request
+				.resolveBean(DOCUMENT_FORM_PATH);
+
+		try {
+
+			UploadItem infoUpload = documentForm.getInfoUpload();
+			if (log.isDebugEnabled())
+				log.debug("doc title =" + documentForm.getTitle()
+						+ " fileName=" + infoUpload.getFileName()
+						+ " file abspath="
+						+ infoUpload.getFile().getAbsolutePath()
+						+ " file path=" + infoUpload.getFile().getPath());
+			
+			String parentId = evt.getParameter("notificationId");
+			if(evt.getParameter("notificationId") != null)
+				parentId = evt.getParameter("notificationId").trim();
+	
+			String noticeId = evt.getParameter("noticeId");
+					if(evt.getParameter("noticeId") != null)
+						noticeId = evt.getParameter("noticeId").trim();
+					
+			DocumentManager docMgr = (DocumentManager) getBean(PageConstants.DOCUMENT_MGR);
+			File file = infoUpload.getFile();
+			String fileName = infoUpload.getFileName();
+			long ldate = new Date().getTime();
+			String newFileName = parentId + "_" + ldate + "_"
+					+ this.getNormalizedFileName(fileName);
+			try {
+				if (log.isDebugEnabled())
+					log.debug("storagePath=" + STORAGE_PATH + " ; newFileName="
+							+ newFileName);
+
+				String filePath = st.ict.qs.core.util.PropertyUtils
+						.getPropertyValue(STORAGE_PATH);
+				if (log.isDebugEnabled())
+					log.debug("storagePath=" + filePath + " ; newFileName="
+							+ newFileName);
+
+				documentForm.setStorageLocation(filePath);
+				documentForm.setStorageName(newFileName);
+				documentForm.setStorageSystem("SERVER");
+				documentForm.setOriginalFileName(fileName);
+
+				int extensionIndex = newFileName.lastIndexOf(".");
+				if ((extensionIndex > 0)
+						&& (extensionIndex < newFileName.length())) {
+					documentForm.setFormat(newFileName
+							.substring(extensionIndex + 1));
+					if (log.isDebugEnabled())
+						log.debug("File extension=" + documentForm.getFormat());
+				}
+				String fileFormat = documentForm.getFormat();
+				if (null == fileFormat || "".equals(fileFormat)) {
+					throw new ValidationException(
+							"Unable to get the File format");
+				}
+				if (!checkFileFormat(fileFormat)) {
+
+					request.setParameter(ALERT_MESSAGE,
+							"Please upload correct file format");
+
+				} else {
+
+					File newFile = new File(filePath + newFileName);
+
+					boolean ok = docMgr.createFile(Integer.parseInt(parentId),
+							file, newFile);
+					if (ok) {
+						if (log.isDebugEnabled())
+							log.debug("DocumentPage : uploadDocument : file moved succesfully at path " +filePath + newFileName);
+						request.setAttribute("noticeId", noticeId);
+						request.setParameter("noticeId", noticeId);
+						request.setAttribute(ApplicationConstant.ACTIVE_TAB,ApplicationConstant.IMPACTED_CUSTOMER_TAB);
+						request.setPagePath(PageConstants.NOTICE_BASE_PAGE);
+
+					}
+				}
+
+			} catch (ManagerException me) {
+				log.error("DocumentPage : uploadDocument : Failed to move file.");
+
+			}
+
+		} catch (ValidationException e) {
+
+			log.error("UploadDocumentTab : uploadDocument : ValidationException Caught : "
+					+ e.getMessage() + GeneralUtils.getStackTrace(e));
+			throw e;
+		} catch (ManagerException e) {
+			log.error("UploadDocumentTab : uploadDocument : ManagerException Caught : "
+					+ e.getMessage() + GeneralUtils.getStackTrace(e));
+		} catch (Exception e) {
+
+			log.error("DocumentPage : uploadDocument : Exception Caught : "
+					+ e.getMessage() + GeneralUtils.getStackTrace(e));
+		}
+	}
+
+	private String getNormalizedFileName(String fileName) {
+		if (fileName == null) {
+			return null;
+		}
+
+		String temp1 = fileName;
+
+		if (fileName.indexOf(' ') != -1) {
+			temp1 = fileName.replace(' ', '_'); // space -> _
+		}
+
+		String temp2 = temp1;
+
+		if (temp1.indexOf('\'') != -1) {
+			temp2 = temp1.replace('\'', '_'); // ' -> _
+		}
+
+		String temp3 = temp2;
+
+		if (temp2.indexOf('"') != -1) {
+			temp3 = temp2.replace('"', '_'); // " -> _
+		}
+
+		String normalizedFileName = temp3.toLowerCase();
+
+		if (normalizedFileName.length() > STORAGE_NAME_MAX_CHARS) {
+			int index = temp3.lastIndexOf('.');
+
+			if (index != -1) {
+				String extension = temp3.substring(index);
+				int maxCharsWoExtension = STORAGE_NAME_MAX_CHARS
+						- extension.length();
+
+				// in DB max. filename size is STORAGE_NAME_MAX_CHARS chars with
+				// extension
+				// change for sonar points
+				String fileNameWoExtension = temp3.substring(0, index);
+				String fileNameWoExtensionFinal = fileNameWoExtension;
+
+				if (fileNameWoExtension.length() > maxCharsWoExtension) {
+					fileNameWoExtensionFinal = fileNameWoExtension.substring(0,
+							maxCharsWoExtension);
+				}
+				normalizedFileName = fileNameWoExtensionFinal + extension;
+			}
+		}
+
+		return normalizedFileName;
+	}
+
+	private boolean checkFileFormat(String fileFormat) throws Exception {
+		log.info("AddDocumentPage : checkFileFormat : Started");
+		boolean formatAllowed = true;
+		List<String> format = new ArrayList<>();
+		format.add("pdf");
+		format.add("txt");
+		format.add("xlsx");
+		format.add("xls");
+		if (format.contains(fileFormat)) {
+			return true;
+		}
+		logger.info("AddDocumentPage : checkFileFormat : Ended");
+		return formatAllowed;
+	}
+
+}

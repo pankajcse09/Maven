@@ -1,0 +1,26 @@
+package com.st.ict.qs.notice.manager;
+
+import org.springframework.context.ApplicationContext;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+public class BeanFactory {
+	//static final ApplicationContext applicationContext =  new ClassPathXmlApplicationContext("applicationContext.xml");;
+	//static final ApplicationContext applicationContextValidation =new ClassPathXmlApplicationContext("applicationContextValidation.xml");;
+	//private static WebApplicationContext ctx = null;
+	private static ApplicationContext applicationContext  = new ClassPathXmlApplicationContext("applicationContext.xml");;
+	
+	public static Object getBean(String beanName) {
+		//applicationContext =  new ClassPathXmlApplicationContext("applicationContext.xml");;
+		return applicationContext.getBean(beanName);
+	}
+	
+//	public static Object getValidationBean(String beanName) {
+//		return applicationContextValidation.getBean(beanName);
+//	}
+	
+	public static String getErrorMessage(String messageCode)
+	{
+		return applicationContext.getMessage(messageCode, null, null);
+	}
+
+}

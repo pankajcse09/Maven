@@ -1,0 +1,38 @@
+table.res   
+{
+width :1020;
+<!-- main table -->
+}
+
+table.base   
+{
+width :832;
+<!-- main table -->
+}
+
+td.main
+{
+width :1020;
+}
+
+td.left
+{
+width: 20;
+}
+
+img.mp
+{
+width: 1020;
+height: 120;
+}
+
+img.gps
+{
+width: 1020;
+height: 350;
+}
+img.home
+{
+width: 1000;
+height: 330;
+}

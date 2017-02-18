@@ -1,0 +1,105 @@
+package com.st.ict.qs.notice.web.formBean;
+
+import java.util.Date;
+
+public class DocumentBean {
+	private int cpcnId;
+	private int order;	
+	private String format;	
+	private String source;
+	private String originalFileName;
+	private String description;
+	protected String storageSystem = null;
+	protected String storageLocation = null;
+	protected String storageName = null;
+	protected int internalId;
+	private String updatedBy;
+	private Date updatedDate;
+	protected String type = null;
+	protected String annotate=null; 
+	
+	public int getCpcnId() {
+		return cpcnId;
+	}
+	public void setCpcnId(int cpcnId) {
+		this.cpcnId = cpcnId;
+	}
+	public int getOrder() {
+		return order;
+	}
+	public void setOrder(int order) {
+		this.order = order;
+	}
+	public String getFormat() {
+		return format;
+	}
+	public void setFormat(String format) {
+		this.format = format;
+	}
+	public String getSource() {
+		return source;
+	}
+	public void setSource(String source) {
+		this.source = source;
+	}
+	public String getOriginalFileName() {
+		return originalFileName;
+	}
+	public void setOriginalFileName(String originalFileName) {
+		this.originalFileName = originalFileName;
+	}
+	public String getDescription() {
+		return description;
+	}
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	public String getStorageSystem() {
+		return storageSystem;
+	}
+	public void setStorageSystem(String storageSystem) {
+		this.storageSystem = storageSystem;
+	}
+	public String getStorageLocation() {
+		return storageLocation;
+	}
+	public void setStorageLocation(String storageLocation) {
+		this.storageLocation = storageLocation;
+	}
+	public String getStorageName() {
+		return storageName;
+	}
+	public void setStorageName(String storageName) {
+		this.storageName = storageName;
+	}
+	public int getInternalId() {
+		return internalId;
+	}
+	public void setInternalId(int internalId) {
+		this.internalId = internalId;
+	}
+	public String getUpdatedBy() {
+		return updatedBy;
+	}
+	public void setUpdatedBy(String updatedBy) {
+		this.updatedBy = updatedBy;
+	}
+	public Date getUpdatedDate() {
+		return updatedDate;
+	}
+	public void setUpdatedDate(Date updatedDate) {
+		this.updatedDate = updatedDate;
+	}
+	public String getType() {
+		return type;
+	}
+	public void setType(String type) {
+		this.type = type;
+	}
+	public String getAnnotate() {
+		return annotate;
+	}
+	public void setAnnotate(String annotate) {
+		this.annotate = annotate;
+	}
+}

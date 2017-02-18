@@ -1,0 +1,352 @@
+/*
+Design by Metamorphosis Design
+http://www.metamorphozis.com
+Released for free under a Creative Commons Attribution 2.5 License
+*/
+
+*
+{
+margin: 0px;
+padding: 0px;
+}
+
+
+#logo_t p { padding: 6px 0px 0px 0px;}
+
+#logo_t2 { 
+	font: bold 16px Arial, Helvetica, sans-serif;
+	color: #FFFFFF;
+	
+}
+
+a:link {
+	color: #4DA0C6;
+}
+
+a:hover {
+	text-decoration: underline;
+	color: #FF0000;
+}
+
+a:visited {
+	color: #4DA0C6;
+}
+
+body {
+	
+	background: #3ABCF8 url(image/img/bg.jpg) 278px ;
+	font: 13px Arial, Helvetica, sans-serif;
+	color: #000000;
+	margin-top: 10px;
+}
+
+#content
+{
+	margin: 0 auto;
+	width: 837px;
+	text-align: left;
+	
+}
+
+#main
+{
+padding-top: 0px;
+background: url(image/img/bg_c.gif) repeat-y;
+}
+
+#main2
+{
+padding-top: 0px;
+background: url(image/img/main2.gif) top no-repeat;
+}
+
+
+#header {
+	height: 250px;
+	background:url(image/img/new.jpg) top no-repeat;
+}
+
+
+#logo {
+text-align: left;
+background: url(image/img/oduvan.jpg) no-repeat;
+padding: 40px 0px 0px 40px;
+height: 169px;
+}
+
+
+#logo a {
+	text-decoration: none;
+	text-transform: lowercase;
+	font-style: italic;
+	font-size: 18px;
+	color: #ffffff;
+}
+#logo H2 a
+{
+font-size: 10px;
+text-transform: uppercase;
+}
+
+
+#menu
+{
+margin: 0 auto;
+width: 817px;
+height: 37px;
+margin-top: 0px;
+background: url(image/img/menu.gif) center no-repeat;
+text-align: center;
+padding-left: 20px;
+}
+
+#menu ul {
+	list-style: none;
+}
+
+#menu li {
+	
+	display: inline; 
+	
+}
+
+#menu a {
+	float: left;
+	width: 160px;
+	height: 27px;
+	display: block;
+	text-align: center;
+	text-decoration: none;
+	color: #ffffff;
+	font-weight: bold;
+	padding-top: 10px;
+	font-size: 14px;
+	text-transform: uppercase;
+}
+
+#menu a:hover {
+	width: 160px;
+	color: #ffffff;
+	text-decoration: underline;
+	background: url(image/img/b2.jpg) 0px 2px repeat-x;
+}
+
+
+
+
+#left
+{
+		
+	width: 549px;
+	padding: 6px 8px 0px 26px;
+	margin-left: 0px;
+	float:left;
+}
+
+#left H2 {
+	background:url(image/img/bg_tl.jpg) 0px 0px no-repeat;
+	border-bottom: 1px dashed #C58E36;
+	font-family:Arial, Helvetica, sans-serif;
+	font-size:14px;
+	color:#C58E36;
+	padding: 10px 0px 5px 0px;
+	font-weight: bold;
+	
+}
+
+.titl_right
+{
+height: 25px;
+padding-top: 10px;
+font-size: 14px;
+font-weight: bold;
+padding-left: 21px;
+text-transform: uppercase;
+color: #ffffff;
+background: url(image/img/tit_r.gif) center no-repeat;
+margin: 0px 0px 0px 0px;
+}
+
+#right ul {
+	list-style: none;
+	margin-bottom: 10px;
+}
+
+
+#left li ul {
+	border: 0px;
+	margin-left: 20px;
+	margin-bottom: 10px;
+	padding-top: 15px;
+	padding: 0px;
+	
+	
+}
+
+#right .ug li {
+	margin: 4px 0px;
+	background:url(image/img/fish.gif) 0px 5px no-repeat;
+	padding-left: 10px;
+}
+
+#left ol {
+	margin: 10px 25px;
+}
+
+#left a {
+	color: #4DA0C6;
+	text-decoration: none;
+}
+
+#left a:hover {
+	color: #4DA0C6;
+	text-decoration: underline;
+}
+
+#left a:visited {
+	color: #4DA0C6;
+}
+
+
+.ug {
+	background: url(image/img/tit_r_bg.jpg) 0px 0px  no-repeat;
+	padding: 20px 30px 20px 30px;
+}
+	
+
+#calendar {
+	background: url(image/img/tit_r_bg.jpg) 0px 0px no-repeat ;
+}
+
+#calendar1 {
+	padding: 15px 30px 20px 20px;
+}
+
+#calendar table {
+	width: 100%;
+	text-align: center;
+}
+
+#calendar thead {
+
+}
+
+#calendar tbody td {
+	border: 1px solid #B9B9B9;
+}
+
+#calendar #prev {
+	text-align: left;
+}
+
+#calendar #next {
+	text-align: right;
+}
+
+#calendar tfoot a {
+	text-decoration: none;
+	font-weight: bold;
+}
+
+#calendar #now {
+	background: #696969;
+	border: 1px solid #ff0000;
+	font-weight: bold;
+	color: #ffffff
+}
+
+#right
+{
+float: right;
+width: 236px;
+
+}
+
+#right H4
+{	
+	margin: 0;
+	font-size: 12px;
+	color: #4DA0C6;
+	padding-left: 10px;
+}
+
+#right a
+{
+color: #4DA0C6;
+text-decoration: none;
+}
+
+#right a:hover
+{
+color: #4DA0C6;
+text-decoration: underline;
+}
+
+#right a:visited
+{
+color: #4DA0C6;
+text-decoration: none;
+}
+
+#right p {
+	margin: 0;
+	padding: 0px 10px 0px 10px;
+	padding-bottom: 10px;
+}
+
+#right h2 {
+	height: 27px;
+	padding: 5px 0px 0px 20px;
+	margin: 0;
+	color: #ffffff;
+	background: url(image/img/titl2.jpg) no-repeat;
+	font-size: 18px;
+}
+
+
+
+
+.date {
+	text-align: right;
+	color: #4DA0C6;
+	font-size: 11px;
+}
+
+.date a {
+	color: #4DA0C6;
+}
+
+#bottom {
+background:url(image/img/bottom.png) bottom no-repeat;
+height: 18px;
+}
+
+
+#footer {
+	height: 48px;
+	clear: both;
+	padding-top: 18px;
+	background: url(image/img/bot_bg.jpg) repeat-x;
+}
+
+#footer p {
+	margin: 0;
+	font-size: 10px;
+	text-align: center;
+	color: #000000;
+}
+
+#footer a {
+	color: #000000;
+}
+
+#bok_l {
+	width: 1250px;
+	background: url(image/img/bok_l.jpg) left top no-repeat;
+	margin: 0 auto;
+}
+
+#bok_r {
+	width: 1250px;
+	background: url(image/img/bok_r.jpg) right top no-repeat;
+}

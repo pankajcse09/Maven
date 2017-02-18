@@ -1,0 +1,17 @@
+BODY
+{font-family: verdana, tahoma, arial, sans-serif;
+margin: 0px;
+padding: 0px;
+}
+img
+{
+border-style: none;
+}
+
+
+a.menuitem:link
+{text-decoration: none;
+color: black;
+display: block;
+
+}

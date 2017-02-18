@@ -1,0 +1,13 @@
+pcmsServiceInterface=com.st.ict.qs.pcms.ws.service.impl.PCMSWebServiceImpl
+pcmsWsdlDocumentUrl=http://eul2c3.sgp.st.com:25000/pcmsWS/pcmsWS?wsdl 
+#http://dlhl0664:41600/pcmsWS/pcmsWS?wsdl
+pcmsNamespaceUri=http://impl.service.ws.pcms.qs.ict.st.com
+pcmsServiceName=PCMSService
+pcmsServicePort=PCMSWebServiceImplPort
+pcmsSecureFlag=true
+pcmsUser=pcmsUser
+pcmsPwd=password
+#actionPwd=ENC(oxoRSvqJE28pGwLVwhXTHQ==)
+
+pcmsWsdlDocumentUrl_dev=http://dlhl0664:41600/pcmsWS/pcmsWS?wsdl 
+pcmsWsdlDocumentUrl_qa=http://eul2c3.sgp.st.com:25000/pcmsWS/pcmsWS?wsdl

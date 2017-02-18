@@ -1,0 +1,183 @@
+package com.st.ict.qs.notice.web.dataservice;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import st.liotrox.db.dataservice.DataService;
+import st.liotrox.db.dataservice.DataServiceContext;
+
+import com.st.ict.qs.notice.web.formBean.ImpactedProductBean;
+
+public class ImpactedProductsDataService implements DataService {
+
+	@Override
+	public void addItem(Object arg0, DataServiceContext arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void beginTransaction(DataServiceContext arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void commit(DataServiceContext arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void deleteItem(Object arg0, DataServiceContext arg1) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public List getItems(DataServiceContext arg0) {
+		List<ImpactedProductBean> l = new ArrayList<ImpactedProductBean>();
+		ImpactedProductBean i = new ImpactedProductBean();
+		i.setBuCode("01");
+		//i.setBuDesc("buDesc1");
+		i.setComment("Testing");
+		i.setCommercialProduct("M24C01-WDW6");
+		i.setCpMaturity("60");
+		//i.setDate("27-May-2013");
+		i.setFinishGood("M24C01-WDW6/GBA");
+		//i.setFgMaturity("50");
+		//i.setGrpCode("0001");
+		//i.setGrpDesc("AAMS");
+		//i.setIndustryDomainCode("10");
+		//i.setIndustryDomainComp("3");
+		i.setIndustryDomain("AUTOMOTIVE");
+		//i.setOrganizationCode("05");
+		//i.setProdLineCode("24011L");
+		i.setInputProduct("M24C01-WDW6");
+		i.setInputProductType("M24C01-WDW6");
+		i.setPublicProduct("publicProduct");
+		//i.setType("DELETED");
+		i.setNewFG("12345");
+		i.setStatus("12345");
+		l.add(i);
+		
+		 i = new ImpactedProductBean();
+			i.setBuCode("01");
+			//i.setBuDesc("buDesc1");
+			i.setComment("Testing");
+			i.setCommercialProduct("M24C01-WDW6");
+			i.setCpMaturity("60");
+			//i.setDate("27-May-2013");
+			i.setFinishGood("M24C01-WDW6/GBA");
+			//i.setFgMaturity("50");
+			//i.setGrpCode("0001");
+			//i.setGrpDesc("AAMS");
+			//i.setIndustryDomainCode("10");
+			//i.setIndustryDomainComp("3");
+			i.setIndustryDomain("AUTOMOTIVE");
+			//i.setOrganizationCode("05");
+			//i.setProdLineCode("24011L");
+			i.setInputProduct("M24C01-WDW6");
+			i.setInputProductType("M24C01-WDW6");
+			i.setPublicProduct("publicProduct");
+			//i.setType("DELETED");
+			i.setNewFG("12345");
+			i.setStatus("12345");
+			l.add(i);
+		
+			 i = new ImpactedProductBean();
+				i.setBuCode("01");
+				//i.setBuDesc("buDesc1");
+				i.setComment("Testing");
+				i.setCommercialProduct("M24C01-WDW6");
+				i.setCpMaturity("60");
+				//i.setDate("27-May-2013");
+				i.setFinishGood("M24C01-WDW6/GBA");
+				//i.setFgMaturity("50");
+				//i.setGrpCode("0001");
+				//i.setGrpDesc("AAMS");
+				//i.setIndustryDomainCode("10");
+				//i.setIndustryDomainComp("3");
+				i.setIndustryDomain("AUTOMOTIVE");
+				//i.setOrganizationCode("05");
+				//i.setProdLineCode("24011L");
+				i.setInputProduct("M24C01-WDW6");
+				i.setInputProductType("M24C01-WDW6");
+				i.setPublicProduct("publicProduct");
+				//i.setType("DELETED");
+				i.setNewFG("12345");
+				i.setStatus("12345");
+				l.add(i);
+		
+				 i = new ImpactedProductBean();
+					i.setBuCode("01");
+					//i.setBuDesc("buDesc1");
+					i.setComment("Testing");
+					i.setCommercialProduct("M24C01-WDW6");
+					i.setCpMaturity("60");
+					//i.setDate("27-May-2013");
+					i.setFinishGood("M24C01-WDW6/GBA");
+					//i.setFgMaturity("50");
+					//i.setGrpCode("0001");
+					//i.setGrpDesc("AAMS");
+					//i.setIndustryDomainCode("10");
+					//i.setIndustryDomainComp("3");
+					i.setIndustryDomain("AUTOMOTIVE");
+					//i.setOrganizationCode("05");
+					//i.setProdLineCode("24011L");
+					i.setInputProduct("M24C01-WDW6");
+					i.setInputProductType("M24C01-WDW6");
+					i.setPublicProduct("publicProduct");
+					//i.setType("DELETED");
+					i.setNewFG("12345");
+					i.setStatus("12345");
+					l.add(i);
+					
+					
+					i = new ImpactedProductBean();
+						i.setBuCode("01");
+						//i.setBuDesc("buDesc1");
+						i.setComment("Testing");
+						i.setCommercialProduct("M24C01-WDW6");
+						i.setCpMaturity("60");
+						//i.setDate("27-May-2013");
+						i.setFinishGood("M24C01-WDW6/GBA");
+						//i.setFgMaturity("50");
+						//i.setGrpCode("0001");
+						//i.setGrpDesc("AAMS");
+						//i.setIndustryDomainCode("10");
+						//i.setIndustryDomainComp("3");
+						i.setIndustryDomain("AUTOMOTIVE");
+						//i.setOrganizationCode("05");
+						//i.setProdLineCode("24011L");
+						i.setInputProduct("M24C01-WDW6");
+						i.setInputProductType("M24C01-WDW6");
+						i.setPublicProduct("publicProduct");
+						//i.setType("DELETED");
+						i.setNewFG("12345");
+						i.setStatus("12345");
+						l.add(i);
+		
+		return l;
+	}
+
+	@Override
+	public int getTotalRows(DataServiceContext arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void rollback(DataServiceContext arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateItem(Object arg0, Object arg1, String[] arg2,
+			DataServiceContext arg3) {
+		// TODO Auto-generated method stub
+		
+	}
+
+}

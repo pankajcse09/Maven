@@ -1,0 +1,10 @@
+<database>
+<pool name="edocs">
+<driver>oracle.jdbc.driver.OracleDriver</driver>
+<url>jdbc:oracle:thin:@eux070.sgp.st.com:1551:s2te</url>
+<username>sicomdba</username>
+<userpasswd>52:41:13:58:84:96:63:83:87:71:53:10:100:80:26:73:80</userpasswd>
+<minpoolsize>1</minpoolsize>
+<maxpoolsize>5</maxpoolsize>
+<increment>1</increment></pool>
+</database>

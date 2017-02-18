@@ -1,0 +1,145 @@
+package com.st.ict.qs.notice.web.dataservice;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
+import st.liotrox.WRequest;
+import st.liotrox.db.dataservice.DataService;
+import st.liotrox.db.dataservice.DataServiceContext;
+
+import com.st.ict.qs.notice.web.formBean.CustomerNotificationBean;
+
+public class CustomerNotificationDataService implements DataService {
+	
+	Logger logger = LoggerFactory.getLogger(CustomerNotificationDataService.class);
+
+	WRequest request = WRequest.getCurrentInstance();
+
+	List<CustomerNotificationBean> addOrUpdateCustomerNotificationBean;
+	List<CustomerNotificationBean> deleteCustomerNotificationBean;
+
+
+
+	@Override
+	public void addItem(Object addObj, DataServiceContext arg1) {
+		logger.info("CustomerNotificationDataService : addItem: Start");
+		
+		CustomerNotificationBean notificationBean = (CustomerNotificationBean) addObj;
+			
+		addOrUpdateCustomerNotificationBean.add(notificationBean);
+		logger.info("CustomerNotificationDataService : addItem: End");
+	}
+	@Override
+	public void beginTransaction(DataServiceContext arg0) {
+		logger.info("CustomerNotificationDataService : beginTransaction: Start");
+		addOrUpdateCustomerNotificationBean = new ArrayList<CustomerNotificationBean>();
+		deleteCustomerNotificationBean = new ArrayList<CustomerNotificationBean>();
+		logger.info("CustomerNotificationDataService : beginTransaction: End");
+	}
+
+	@Override
+	public void commit(DataServiceContext arg0) {
+		logger.info("CustomerNotificationDataService : commit: Start");
+		request = WRequest.getCurrentInstance();
+		
+    	//CustomerNotificationTab notificationTab = (CustomerNotificationTab) request.resolveBean(PageConstants.CUST_NOTIFICATION_PAGE);
+		// String iccString = request.getParameter("ajaxParams");
+
+		if (addOrUpdateCustomerNotificationBean!= null && addOrUpdateCustomerNotificationBean.size() > 0) {
+			try {
+				//notificationTab.replaceNotification(request,addOrUpdateCustomerNotificationBean);
+			} catch (Exception e) {
+				System.out.println(e);
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+
+		if (deleteCustomerNotificationBean != null && deleteCustomerNotificationBean.size() > 0) {
+			try {
+			//	request = WRequest.getCurrentInstance();
+			//	addressTab = (CustomerAddressTab) request.resolveBean(PageConstants.CUST_ADDRESS_PAGE);
+
+				//notificationTab.deleteNotification(request,deleteCustomerNotificationBean);
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}logger.info("CustomerNotificationDataService : commit: End");
+	}
+
+	@Override
+	public void deleteItem(Object deletedObj, DataServiceContext arg1) {
+		logger.info("CustomerNotificationDataService : deleteItem: Start");
+		deleteCustomerNotificationBean.add((CustomerNotificationBean) deletedObj);
+		logger.info("CustomerNotificationDataService : deleteItem: End");
+	}
+
+	@Override
+	public List<CustomerNotificationBean> getItems(DataServiceContext arg0) {
+	/*	List<CustomerNotificationBean> l = new ArrayList<CustomerNotificationBean>();
+		CustomerNotificationBean c = new CustomerNotificationBean();
+		c.setCustomerName("NOKIA_INDIA");
+		//c.setEmailId("info@nokia.com");
+		//c.setModeToCc("CC_info@nokia.com");
+		l.add(c);
+		return l; */
+		logger.info("CustomerNotificationDataService : getItems: Start");
+		List<CustomerNotificationBean> customerNotificationBeanList = new ArrayList<CustomerNotificationBean>();
+			request = WRequest.getCurrentInstance();
+			if(arg0.get("selectedId")!=null)
+			{
+				int selectedAddress = Integer.parseInt((String)arg0.get("selectedId"));
+				
+				request.setSessionAttribute("selectedAddressId", selectedAddress);
+				
+				//CustomerNotificationTab customerNotificationTab = (CustomerNotificationTab) request.resolveBean(PageConstants.CUST_NOTIFICATION_PAGE);
+				
+				/*try {
+					customerNotificationBeanList = customerNotificationTab.getCustomerNotification(selectedAddress);
+				} catch (ManagerException e) {
+					
+				}*/
+			}
+			return customerNotificationBeanList;
+			
+		}
+
+
+
+	@Override
+	public int getTotalRows(DataServiceContext arg0) {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
+	@Override
+	public void rollback(DataServiceContext arg0) {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	public void updateItem(Object newObject, Object arg1, String[] arg2,
+			DataServiceContext arg3) {
+		{
+			
+			logger.info("CustomerNotificationDataService : updateItem: Start");
+			WRequest request = WRequest.getCurrentInstance();
+			CustomerNotificationBean CustomerNotificationBean=(CustomerNotificationBean)newObject;
+					
+			CustomerNotificationBean.setUpdatedBy(request.getUserProfile().getUID());
+			//CustomerNotificationBean.setUpdatedDate(new Date());
+			
+			addOrUpdateCustomerNotificationBean.add(CustomerNotificationBean);
+			logger.info("CustomerNotificationDataService : updateItem: End");
+			
+		}
+
+		
+	}
+
+}

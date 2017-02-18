@@ -1,0 +1,37 @@
+package com.st.ict.qs.notice.web.constants;
+
+public interface PageConstants {
+	
+	String REF_MGR = "referentialManager";
+
+	public static final String CPCN_BASE_PAGE = "/pages/cpcn/CpcnBasePage";
+	public static final String NOTICE_BASE_PAGE = "/pages/notice/NoticeBasePage";
+	public static final String CPCN_BEAN = "/comp/cpcn/CpcnBean";
+	public static final String NOTICE_BEAN = "/comp/notice/NoticeBean";
+	public static final String CUST_GROUP_PAGE = "/pages/notice/CustomerGrouping";
+
+	public static final String CUST_ADDRESS_PAGE = "/pages/notice/CustomerAddressTab";
+	public static final String IMP_CUST_PAGE = "/pages/notice/ImpactedCustomers";
+	public static final String FSE_CONFIGURATION_MANAGER = "FSEConfigurationManager";
+	public static final String IMP_CUST_MANAGER = "NotificationManager";
+
+	public static final String SAMPLE_OWNER_CONFIG = "pages/notice/NoticeFeedBasePage";
+	public static final String SAMPLE_OWNER_CONFIG_BEAN = "pages/notice/SampleOwnersConfiguBean";
+	public static final String FEEDBACK_CONFIG_MANAGER = "feedbackConfigManager";
+
+	public static final String PCMS_INTEGRATION_MANAGER = "pcmsIntegrationManager";
+	public static final String NOTICE_MANAGER = "noticeManager";
+	public static final String TEAM_MANAGER = "teamManager";
+	public static final String HOME_MANAGER = "homeManager";
+
+	public static final String NOTICE_REV_BASE_PAGE = "/pages/notice/NoticeRevBasePage";
+    public static final String REVIEW_MANAGER= "reviewManager";
+	public static final String  CUST_RELEASE_ENTITY= "/pages/notice/CustReleaseEntity";
+	public static final String IMPACTED_CUSTOMERS="pages/notice/ImpactedCustomers";
+	
+	public static final String IMPACTED_PRODUCT_PAGE="pages/notice/ImpactedProductPage";
+	 public static final String IMPACTED_PRODUCT_MANAGER= "impactedProductManager";
+	 public static final String ApprovalPanel_VB = "/pages/notice/ApprovalPanelVB";
+	 public static final String CREATIONPANEL_VB = "/pages/notice/CreationPanelVB";
+	 public static final String CONFIRMSENDINGPANEL_VB = "/pages/notice/ConfirmSendingPanelVB";
+}
