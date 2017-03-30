@@ -12,11 +12,13 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
+	<classpathentry kind="src" path="src/main/resource"/>
 	<classpathentry kind="con" path="org.eclipse.m2e.MAVEN2_CLASSPATH_CONTAINER">
 		<attributes>
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
+	<classpathentry kind="lib" path="D:/DevelopmentTools/eclipse-jee-oxygen-M3-win32-x86_64/eclipse/plugins/org.mule.tooling.server.3.7.3.ee_5.4.0.201603210449/mule/lib/boot/slf4j-api-1.7.7.jar"/>
 	<classpathentry kind="output" path="target/classes"/>
 </classpath>
